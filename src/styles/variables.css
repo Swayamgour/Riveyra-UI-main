@@ -1,0 +1,30 @@
+:root {
+  /* ── Backgrounds ── */
+  --bg:        #050b18;
+  --surface:   #080f1f;
+  --card:      #0c1628;
+  --card-hover:#0f1d34;
+  --border:    rgba(99, 179, 237, 0.12);
+  --border-hover: rgba(99, 179, 237, 0.28);
+
+  /* ── Accent palette ── */
+  --accent:    #60a5fa;   /* sky blue  — primary   */
+  --accent2:   #c084fc;   /* violet    — secondary  */
+  --accent3:   #34d399;   /* emerald   — tertiary   */
+  --danger:    #f87171;   /* red       — alert      */
+  --gold:      #fbbf24;   /* amber     — highlight  */
+
+ --text:        #f0f6ff;      /* headings — already near white ✓ */
+--text-body:   #ffffff;      /* ← change from #c8d8f0 to white */
+--text-sub:    #e2eeff;      /* ← change from #8fafd4 to brighter */
+--muted:       rgba(255,255,255,0.60); /* ← change from rgba(160,195,240,0.55) */
+
+  /* ── Fonts ── */
+  --font-display: 'Syne', sans-serif;           /* headings */
+  --font-body:    'Plus Jakarta Sans', sans-serif; /* body  */
+  --font-mono:    'JetBrains Mono', monospace;     /* code/tags */
+
+  /* ── Motion ── */
+  --ease-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-back: cubic-bezier(0.34, 1.56, 0.64, 1);
+}
