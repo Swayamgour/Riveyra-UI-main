@@ -360,77 +360,7 @@ export default function DraggableCube() {
           </motion.p>
 
           {/* Drag hint */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.35 }}
-            style={{
-              display: "flex",
-              alignItems: "center",
-              gap: 10,
-              marginBottom: 36,
-            }}
-          >
-            <div
-              style={{
-                display: "flex",
-                alignItems: "center",
-                gap: 8,
-                padding: "8px 16px",
-                borderRadius: 8,
-                background: "rgba(96,165,250,0.06)",
-                border: "1px solid rgba(96,165,250,0.18)",
-                cursor: "pointer",
-              }}
-              onClick={() => {
-                stopSpin();
-                let speed = 4;
-                const burst = () => {
-                  speed = Math.max(0.6, speed * 0.96);
-                  rotY.set(rotY.get() + speed);
-                  autoSpin.current = requestAnimationFrame(burst);
-                  if (speed <= 0.62) {
-                    cancelAnimationFrame(autoSpin.current);
-                    startSpin();
-                  }
-                };
-                autoSpin.current = requestAnimationFrame(burst);
-              }}
-            >
-              <span style={{ fontSize: 14, animation: "pulse 2s infinite" }}>
-                {isMobile ? "✦" : "⟳"}
-              </span>
-              <span
-                style={{
-                  fontSize: 11.5,
-                  color: "rgba(96,165,250,0.65)",
-                  fontFamily: "var(--font-mono)",
-                  letterSpacing: 2,
-                  textTransform: "uppercase",
-                }}
-              >
-                {isMobile ? "Touch & drag" : "Drag to spin"}
-              </span>
-            </div>
-            <div
-              style={{
-                width: 1,
-                height: 20,
-                background: "rgba(255,255,255,0.08)",
-              }}
-            />
-            <span
-              style={{
-                fontSize: 11.5,
-                color: "rgba(255,255,255,0.3)",
-                fontFamily: "var(--font-mono)",
-                letterSpacing: 1.5,
-              }}
-            >
-              {FACES.length} services
-            </span>
-          </motion.div>
+         
 
           {/* Stats */}
           <motion.div

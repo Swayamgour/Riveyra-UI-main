@@ -15,6 +15,11 @@ import CareerPage from './pages/CareerPage'
 // import ContactPopup from './components/ui/Contactpopup'
 import ServiceDetail from './components/sections/ServiceDetail'
 import ContactPopup from './components/ui/Contactpopup'
+import Admin from './pages/Admin/Admin'
+import ServicesManager from './pages/Admin/ServicesManager'
+import PortfolioManager from './pages/Admin/PortfolioManager'
+import CareerManager from './pages/Admin/CareerManager'
+import AdminLayout from './pages/Admin/AdminLayout'
 
 function AppShell() {
   // useScrollReveal()
@@ -31,13 +36,18 @@ function AppShell() {
   //   return () => lenis.destroy()
   // }, [location.pathname])
 
+
+  const location = useLocation()
+  const isAdminRoute = location.pathname.startsWith('/admin');
+
+  console.log(location.pathname)
+
   return (
     <>
       <CustomCursor />
 
-      <ContactPopup />
-
-      <Navbar />
+      {!isAdminRoute && <ContactPopup />}
+      {!isAdminRoute && <Navbar />}
 
       <Routes>
         <Route path="/" element={<Home />} />
@@ -48,6 +58,14 @@ function AppShell() {
         <Route path="/career" element={<CareerPage />} />
         <Route path="/ServiceDetail/:id" element={<ServiceDetail />} />
 
+
+        <Route path="/admin" element={<AdminLayout />}>
+          <Route path="/admin" element={<Admin />} />
+          <Route path="dashboard" element={<Admin />} />
+          <Route path="services" element={<ServicesManager />} />
+          <Route path="portfolio" element={<PortfolioManager />} />
+          <Route path="careers" element={<CareerManager />} />
+        </Route>
       </Routes>
 
       <a
@@ -69,14 +87,16 @@ function AppShell() {
       </a>
 
       {/* <ScrollToTop /> */}
-      <Footer />
+      {/* <Footer /> */}
+      {!isAdminRoute && <Footer />}
+
     </>
   )
 }
 
 export default function App() {
   return (
-    <BrowserRouter basename="/NewWeb">
+    <BrowserRouter >
       <AppShell />
     </BrowserRouter>
   )

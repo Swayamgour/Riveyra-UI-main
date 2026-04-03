@@ -158,7 +158,7 @@ const STYLE = `
 
   .srv-section-label {
     display: inline-flex; align-items: center; gap: 8px;
-    font-family: 'JetBrains Mono', monospace;
+    // font-family: 'JetBrains Mono', monospace;
     font-size: 11px; font-weight: 500;
     color: #4F8EF7;
     letter-spacing: 1.5px;

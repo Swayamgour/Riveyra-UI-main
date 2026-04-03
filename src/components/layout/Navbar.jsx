@@ -89,7 +89,7 @@ export default function Navbar() {
         }}
       >
         <div onClick={handleLogoClick} style={{ cursor:'pointer', zIndex:1001 }} data-hover>
-          <Logo height={scrolled ? 28 : 34} animate />
+          <Logo height={34} animate />
         </div>
 
         {!isMobile && (

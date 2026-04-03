@@ -356,12 +356,12 @@ export default function About() {
             Riveyra Infotech is Kanpur's premier software development company with over 7 years of proven excellence, delivering reliable and innovative digital solutions across India and beyond.
           </motion.p>
 
-          <motion.p
+          {/* <motion.p
             initial={{ opacity:0, y:20 }} whileInView={{ opacity:1, y:0 }} viewport={{ once:true }} transition={{ delay:0.3 }}
             style={{ fontSize: isMobile ? 14.5 : 16, lineHeight:1.85, color:'rgba(255,255,255,0.82)', marginBottom: isMobile ? 24 : 40, fontFamily:'var(--font-body)' }}
           >
             From web and mobile to digital marketing and enterprise ERP — we are your all-in-one technology partner engineered for sustainable, measurable growth.
-          </motion.p>
+          </motion.p> */}
 
           {/* Mobile: image slider */}
           {isMobile && <MobileSlider />}

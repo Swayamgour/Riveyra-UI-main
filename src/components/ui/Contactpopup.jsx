@@ -13,6 +13,7 @@ const ContactPopup = () => {
   });
   const [submitted, setSubmitted] = useState(false);
   const [focused, setFocused] = useState("");
+  const [isSelectOpen, setIsSelectOpen] = useState(false)
 
   useEffect(() => {
     const timer = setTimeout(() => setIsVisible(true), 1500);
@@ -30,6 +31,7 @@ const ContactPopup = () => {
 
   const handleChange = (e) => {
     let { name, value } = e.target;
+    setIsSelectOpen(false) // 👈 close on change
 
     // 👉 Phone ke liye special handling
     if (name === "phone") {
@@ -432,7 +434,7 @@ const ContactPopup = () => {
                       <input
                         type="tel"
                         name="phone"
-                        placeholder="+91 00000 00000"
+                        placeholder="+91 9876543210"
                         value={formData.phone}
                         onChange={handleChange}
                         onFocus={() => setFocused("phone")}
@@ -455,23 +457,38 @@ const ContactPopup = () => {
                     />
                   </div>
 
-                  <div className={`riv-field${focused === "service" ? " active" : ""}`}>
+                  <div className={`riv-field ${focused === "service" ? "active" : ""}`}>
                     <label>Service Needed</label>
-                    <select
-                      name="service"
-                      value={formData.service}
-                      onChange={handleChange}
-                      onFocus={() => setFocused("service")}
-                      onBlur={() => setFocused("")}
-                    >
-                      <option value="" disabled>Select a service...</option>
-                      <option value="web">Web Development</option>
-                      <option value="app">Mobile App Development</option>
-                      <option value="ui">UI/UX Design</option>
-                      <option value="cloud">Cloud Solutions</option>
-                      <option value="ai">AI / ML Solutions</option>
-                      <option value="other">Other</option>
-                    </select>
+
+                    <div className="select-wrapper">
+                      <select
+                        name="service"
+                        value={formData.service}
+                        onChange={handleChange}
+                        onFocus={() => {
+                          setFocused("service")
+                          setIsSelectOpen(true)   // 👈 open
+                        }}
+                        onBlur={() => {
+                          setFocused("")
+                          setIsSelectOpen(false)  // 👈 close
+                        }}
+                      >
+                        <option value="" disabled>Select a service...</option>
+                        <option value="web">Web Development</option>
+                        <option value="app">Mobile App Development</option>
+                        <option value="ui">UI/UX Design</option>
+                        <option value="cloud">Cloud Solutions</option>
+                        <option value="ai">AI / ML Solutions</option>
+                        <option value="other">Other</option>
+                      </select>
+
+                      {/* Icon */}
+                      {/* <span className="select-icon">▼</span> */}
+                      <span className={`select-icon ${isSelectOpen ? "open" : ""}`}>
+                        ▼
+                      </span>
+                    </div>
                   </div>
 
                   <div className={`riv-field${focused === "message" ? " active" : ""}`}>
