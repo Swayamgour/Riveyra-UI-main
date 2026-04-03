@@ -10,9 +10,6 @@ import AboutPage from './pages/AboutPage'
 import ServicesPage from './pages/ServicesPage'
 import PortfolioPage from './pages/PortfolioPage'
 import CareerPage from './pages/CareerPage'
-// import ScrollToTop from './components/ui/scrolltotop'
-// import { useScrollReveal } from './hooks/useScrollReveal'
-// import ContactPopup from './components/ui/Contactpopup'
 import ServiceDetail from './components/sections/ServiceDetail'
 import ContactPopup from './components/ui/Contactpopup'
 import Admin from './pages/Admin/Admin'
@@ -20,6 +17,7 @@ import ServicesManager from './pages/Admin/ServicesManager'
 import PortfolioManager from './pages/Admin/PortfolioManager'
 import CareerManager from './pages/Admin/CareerManager'
 import AdminLayout from './pages/Admin/AdminLayout'
+import ScrollToTop from './components/ScrollToTop'
 
 function AppShell() {
   // useScrollReveal()
@@ -45,6 +43,7 @@ function AppShell() {
   return (
     <>
       <CustomCursor />
+      <ScrollToTop />
 
       {!isAdminRoute && <ContactPopup />}
       {!isAdminRoute && <Navbar />}

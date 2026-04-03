@@ -275,6 +275,8 @@ export default function ServicesPage() {
   const { isMobile, isTablet } = useBreakpoint()
   const [selected, setSelected] = useState(null)
   const [filter, setFilter] = useState('All')
+  const [hovered, setHovered] = useState(null)
+
 
   const categories = ['All', 'AI & Data', 'Development', 'Infrastructure', 'Design']
   const categoryMap = {
@@ -289,7 +291,7 @@ export default function ServicesPage() {
     : SERVICES.filter(s => (categoryMap[filter] || []).includes(s.title))
 
 
-  const { navigate } = useNavigate()
+  const  navigate  = useNavigate()
 
   return (
     <div style={{ background: 'var(--bg)', minHeight: '100vh' }}>
@@ -390,69 +392,82 @@ export default function ServicesPage() {
       }}>
         <div style={{ maxWidth: 1200, margin: '0 auto' }}>
 
-          {/* Filter tabs */}
-          {/* <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            style={{
-              display: 'flex', gap: isMobile ? 8 : 10, flexWrap: 'wrap',
-              marginBottom: isMobile ? 28 : 44,   // ← tightened
-            }}
-          >
-            {categories.map(cat => (
-              <button
-                key={cat}
-                onClick={() => setFilter(cat)}
-                style={{
-                  padding: isMobile ? '7px 14px' : '8px 18px',
-                  borderRadius: 8,
-                  fontSize: isMobile ? 11 : 12,
-                  fontFamily: 'var(--font-mono)', fontWeight: 500, letterSpacing: 0.5,
-                  cursor: 'pointer', transition: 'all 0.2s',
-                  border: `1px solid ${filter === cat ? '#60a5fa' : 'rgba(255,255,255,0.1)'}`,
-                  background: filter === cat ? 'rgba(96,165,250,0.12)' : 'rgba(255,255,255,0.03)',
-                  color: filter === cat ? '#60a5fa' : 'rgba(255,255,255,0.5)',
-                  boxShadow: filter === cat ? '0 0 16px rgba(96,165,250,0.15)' : 'none',
-                  whiteSpace: 'nowrap',
-                }}
-              >
-                {cat}
-              </button>
-            ))}
-          </motion.div> */}
+
 
           {/* Grid — align-items stretch so all cards in a row share the same height */}
           <motion.div
-            layout
-            style={{
-              display: 'grid',
-              gridTemplateColumns: isMobile ? '1fr' : isTablet ? 'repeat(2,1fr)' : 'repeat(3,1fr)',
-              gap: isMobile ? 14 : 20,
-              alignItems: 'stretch',   // ← KEY: equal card heights per row
-            }}
+            initial={{ opacity: 0, y: 28 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+            style={{ textAlign: 'center', display: 'flex', flexDirection: 'column', alignItems: 'center' }}
           >
-            <AnimatePresence mode="popLayout">
-              {filtered.map((svc, i) => (
-                <motion.div
-                  key={svc.slug}
-                  layout
-                  initial={{ opacity: 0, scale: 0.95 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  exit={{ opacity: 0, scale: 0.95 }}
-                  transition={{ duration: 0.3 }}
-                  style={{ display: 'flex' }}   // ← lets ServiceCard grow to full height
-                // onClick={() => navigate('/ServiceDetail/' + svc.slug)}
-                >
-                  <ServiceCard
-                    svc={svc} i={i}
-                    onSelect={setSelected}
-                    isSelected={selected?.slug === svc.slug}
-                    isMobile={isMobile}
-                  />
-                </motion.div>
-              ))}
-            </AnimatePresence>
+
+
+            <div className="srv-grid">
+              {SERVICES?.map((s, i) => {
+                const isHov = hovered === i
+                return (
+                  <motion.div
+                    key={s.title}
+                    className="srv-card"
+                    initial={{ opacity: 0, y: 30 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: i * 0.06, duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+                    onMouseEnter={() => setHovered(i)}
+                    onMouseLeave={() => setHovered(null)}
+                    onClick={() => navigate(s.path)}
+                  >
+                    {/* Top accent bar — always visible on mobile via CSS, hover-only on desktop */}
+                    <div
+                      className="srv-card-top-bar"
+                      style={{ background: `linear-gradient(90deg, ${s.accent}, transparent)` }}
+                    />
+
+                    <div
+                      className="srv-icon-wrap"
+                      style={{
+                        background: `${s.accent}14`,
+                        border: `1px solid ${s.accent}30`,
+                        color: s.accent,
+                        boxShadow: isHov ? `0 0 20px ${s.accent}22` : 'none',
+                      }}
+                    >
+                      {s.icon}
+                    </div>
+
+                    <h3 className="srv-title">{s.title}</h3>
+                    <p className="srv-desc">{s.desc}</p>
+
+                    <div className="srv-tags">
+                      {s.tags.map(t => (
+                        <span key={t} className="srv-tag" style={{ background: `${s.accent}10`, color: s.accent, border: `1px solid ${s.accent}22` }}>
+                          {t}
+                        </span>
+                      ))}
+                    </div>
+
+                    {/* Arrow — always visible on mobile (isMobile bypasses framer opacity:0),
+                    hover-animated on desktop */}
+                    <motion.div
+                      className="srv-arrow"
+                      animate={{
+                        opacity: isMobile ? 1 : isHov ? 1 : 0,
+                        x: isMobile ? 0 : isHov ? 0 : -8,
+                      }}
+                      transition={{ duration: 0.25 }}
+                      style={{ color: s.accent, marginTop: isMobile ? 16 : 20 }}
+                    >
+                      Explore Service
+                      <svg viewBox="0 0 16 16" width="14" height="14" fill="none" stroke="currentColor" strokeWidth="2">
+                        <path d="M3 8h10M9 4l4 4-4 4" />
+                      </svg>
+                    </motion.div>
+                  </motion.div>
+                )
+              })}
+            </div>
           </motion.div>
         </div>
       </section>

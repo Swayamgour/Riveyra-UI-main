@@ -198,7 +198,7 @@ function MagCard({ title, sub, iconKey, accent, i, isTouch }) {
         {/* Text */}
         <div style={{ padding: 16 }}>
           <div style={{ color: '#fff', fontWeight: 700, fontFamily: 'var(--font-display)' }}>{title}</div>
-          <div style={{ color: accent }}>{sub}</div>
+          <p style={{ color: accent }}>{sub}</p>
         </div>
 
         {/* ✅ FIXED glare */}

@@ -227,10 +227,14 @@ export default function Services() {
           style={{ textAlign: 'center', display: 'flex', flexDirection: 'column', alignItems: 'center' }}
         >
           <p className="srv-section-label">What We Offer</p>
-          <h2 className="srv-h2">
-            Deep Technical Expertise,<br />
-            <span>Supporting Modern Systems</span>
-          </h2>
+
+          <motion.h2 initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+            style={{ fontSize: 'clamp(28px,4vw,56px)', fontFamily: 'var(--font-display)', fontWeight: 800, color: '#ffffff' }}
+          >
+            Deep Technical Expertise, <span className="gt">Supporting Modern Systems</span>
+          </motion.h2>
+
+
           <p className="srv-sub">
             End-to-end solutions across AI, blockchain, cloud, and security — engineered to scale with your ambitions.
           </p>
