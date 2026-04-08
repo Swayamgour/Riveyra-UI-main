@@ -17,10 +17,10 @@ export const STATS = [
 ]
 
 export const PORTFOLIO = [
-  { title: 'DGFASLI', cat: 'Web Redesign', color: '#60a5fa', desc: 'Full government portal redesign with 24/7 cross-device accessibility, WCAG compliance, and dramatic load-time improvements.' },
-  { title: 'SDRF', cat: 'ERP System', color: '#c084fc', desc: 'State-wide file management platform with one-click retrieval, audit trails, and enterprise-grade security.' },
-  { title: 'NIEDO', cat: 'Web Development', color: '#34d399', desc: 'Seamless UX that set a new benchmark for excellence in public-sector digital experiences.' },
-  { title: 'Martolia Group', cat: 'Real Estate App', color: '#f87171', desc: 'RealEstate platform with property listings, virtual tours, and seamless booking capabilities.' },
+  { link: "https://dgfasli.gov.in/", title: 'DGFASLI', cat: 'Web Redesign', color: '#60a5fa', desc: 'Full government portal redesign with 24/7 cross-device accessibility, WCAG compliance, and dramatic load-time improvements.' },
+  { link: "https://sdrfup.in/", title: 'SDRF', cat: 'ERP System', color: '#c084fc', desc: 'State-wide file management platform with one-click retrieval, audit trails, and enterprise-grade security.' },
+  { link: "https://niedo.in/", title: 'NIEDO', cat: 'Web Development', color: '#34d399', desc: 'Seamless UX that set a new benchmark for excellence in public-sector digital experiences.' },
+  { link: "https://martoliagroup.com/", title: 'Martolia Group', cat: 'Real Estate App', color: '#f87171', desc: 'RealEstate platform with property listings, virtual tours, and seamless booking capabilities.' },
 ]
 
 export const TESTIMONIALS = [

@@ -4,8 +4,9 @@ import { useState, useRef } from 'react'
 import { motion, useInView } from 'framer-motion'
 import SectionTag from '../ui/SectionTag'
 import Icons from '../ui/Icons'
-import { PORTFOLIO } from '../../utils/constants'
+// import { PORTFOLIO } from '../../utils/constants'
 import { useBreakpoint } from '../../hooks/useBreakpoint.jsx'
+import { useGetProjectsQuery } from '../../redux/api.jsx'
 
 // ─── All project data — paths unchanged ───────────────────────────────────────
 const PROJECT_DATA = {
@@ -35,6 +36,8 @@ const PROJECT_DATA = {
 function ProjectCard({ item, i, totalInView, isMobile }) {
   const [flipped, setFlipped] = useState(false)
   const data = PROJECT_DATA[item.title] || {}
+
+  // console.log()
 
   // On mobile: reduce the dramatic fall — y:-180 looks fine on desktop
   // but causes visible top overflow on small screens
@@ -101,7 +104,7 @@ function ProjectCard({ item, i, totalInView, isMobile }) {
           {/* Image — slightly shorter on mobile */}
           <div style={{ flex: `0 0 ${isMobile ? 180 : 220}px`, position: 'relative', overflow: 'hidden' }}>
             <img
-              src={data.workImg} alt={item.title}
+              src={item?.workImg} alt={item.title}
               loading="lazy"
               style={{ width: '100%', height: '100%', objectFit: 'cover', filter: 'brightness(0.78) saturate(1.15)', transition: 'transform 0.5s' }}
               onMouseEnter={e => !isMobile && (e.currentTarget.style.transform = 'scale(1.06)')}
@@ -116,7 +119,7 @@ function ProjectCard({ item, i, totalInView, isMobile }) {
 
             {/* Year badge */}
             <div style={{ position: 'absolute', top: 14, right: 14, fontSize: 10, padding: '4px 10px', borderRadius: 4, background: 'rgba(5,11,24,0.75)', color: 'rgba(255,255,255,0.5)', fontFamily: 'var(--font-mono)', backdropFilter: 'blur(8px)' }}>
-              {data.year}
+              {item.year}
             </div>
 
             {/* Flip hint */}
@@ -132,10 +135,10 @@ function ProjectCard({ item, i, totalInView, isMobile }) {
               {item.title}
             </h3>
             <p style={{ fontSize: 13.5, color: 'rgba(255,255,255,0.68)', lineHeight: 1.75, fontFamily: 'var(--font-body)', flex: 1 }}>
-              {item.desc}
+              {item.description}
             </p>
             <div style={{ display: 'flex', gap: 6, marginTop: 14, flexWrap: 'wrap' }}>
-              {(data.tech || []).map(t => (
+              {(item.tech || []).map(t => (
                 <span key={t} style={{ fontSize: 10, padding: '3px 9px', borderRadius: 4, background: `${item.color}10`, color: item.color, border: `1px solid ${item.color}25`, fontFamily: 'var(--font-mono)', fontWeight: 500 }}>{t}</span>
               ))}
             </div>
@@ -163,7 +166,7 @@ function ProjectCard({ item, i, totalInView, isMobile }) {
 
           {/* 2 detail images */}
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 8, marginBottom: 14 }}>
-            {(data.detailImgs || []).map((src, k) => (
+            {(item.detailImgs || []).map((src, k) => (
               <div key={k} style={{ height: isMobile ? 80 : 100, borderRadius: 8, overflow: 'hidden', border: `1px solid ${item.color}20` }}>
                 <img src={src} alt="" loading="lazy" style={{ width: '100%', height: '100%', objectFit: 'cover', filter: 'brightness(0.8) saturate(1.2)' }} />
               </div>
@@ -173,8 +176,8 @@ function ProjectCard({ item, i, totalInView, isMobile }) {
           {/* Stats row */}
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 8, marginBottom: 16 }}>
             {[
-              { val: data.year, lbl: 'Year' },
-              { val: (data.tech || []).length + '+', lbl: 'Tech Stack' },
+              { val: item.year, lbl: 'Year' },
+              { val: (item.tech || []).length + '+', lbl: 'Tech Stack' },
               { val: '100%', lbl: 'On Time' },
             ].map(s => (
               <div key={s.lbl} style={{ textAlign: 'center', padding: isMobile ? '8px 4px' : '10px 8px', borderRadius: 8, background: `${item.color}0c`, border: `1px solid ${item.color}18` }}>
@@ -186,7 +189,13 @@ function ProjectCard({ item, i, totalInView, isMobile }) {
 
           {/* Buttons */}
           <div style={{ display: 'flex', gap: 10, marginTop: 'auto' }}>
-            <button style={{ flex: 1, padding: '10px', borderRadius: 8, background: `linear-gradient(135deg, ${item.color}, ${item.color}88)`, border: 'none', color: '#050b18', fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: 12, cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6 }}>
+            <button onClick={(e) => {
+              e.stopPropagation()
+              if (!item?.link) return
+              const newTab = window.open(item?.link, '_blank', 'noopener,noreferrer')
+              if (newTab) newTab.opener = null
+            }}
+              style={{ flex: 1, padding: '10px', borderRadius: 8, background: `linear-gradient(135deg, ${item.color}, ${item.color}88)`, border: 'none', color: '#050b18', fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: 12, cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6 }}>
               View Project <Icons.ArrowRight />
             </button>
             <button
@@ -207,6 +216,11 @@ export default function Portfolio() {
   const sectionRef = useRef(null)
   const inView = useInView(sectionRef, { once: true, margin: '-100px' })
   const { isMobile, isTablet } = useBreakpoint()
+
+
+  const { data } = useGetProjectsQuery()
+
+  // console.log()
 
   return (
     <section
@@ -262,7 +276,7 @@ export default function Portfolio() {
           perspective: isMobile ? 'none' : 1400,
           perspectiveOrigin: '50% -20%',
         }}>
-          {PORTFOLIO.map((item, i) => (
+          {data?.data?.map((item, i) => (
             <ProjectCard key={item.title} item={item} i={i} totalInView={inView} isMobile={isMobile} />
           ))}
         </div>

@@ -42,14 +42,7 @@ const ContactPopup = () => {
     setFormData({ ...formData, [name]: value });
   };
 
-  // const handleSubmit = (e) => {
-  //   e.preventDefault();
-  //   setSubmitted(true);
-  //   setTimeout(() => {
-  //     handleClose();
-  //   }, 2500);
-  // };
-
+ 
 
 
 

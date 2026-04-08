@@ -2,16 +2,29 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
+import { useGetDashboardCountsQuery } from '../../redux/api';
 
-const stats = [
-    { label: 'Active Services', value: '8', change: '+2', accent: '#60a5fa' },
-    { label: 'Portfolio Items', value: '24', change: '+5', accent: '#c084fc' },
-    { label: 'Open Positions', value: '6', change: '+1', accent: '#22d3ee' },
-    { label: 'Applications', value: '142', change: '+28', accent: '#4ade80' },
-];
+
 
 export default function Dashboard() {
+
+
+    const { data } = useGetDashboardCountsQuery()
+    console.log(data?.data)
+
+    let value = data?.data
+
+    const stats = [
+        { label: 'Active Services', value: value?.services, change: '+2', accent: '#60a5fa' },
+        { label: 'Portfolio Items', value: value?.projects, change: '+5', accent: '#c084fc' },
+        { label: 'Open Positions', value: value?.careers, change: '+1', accent: '#22d3ee' },
+        { label: 'Applications', value: value?.applications, change: '+28', accent: '#4ade80' },
+    ];
+
+
     const navigate = useNavigate();
+
+
 
     return (
         <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.5 }}>
@@ -39,8 +52,10 @@ export default function Dashboard() {
                 <h3 style={{ fontSize: 18, fontWeight: 600, marginBottom: 16 }}>Quick Actions</h3>
                 <div style={{ display: 'flex', gap: 16, flexWrap: 'wrap' }}>
                     <button onClick={() => navigate('/admin/services')} className="btn-primary">➕ Add New Service</button>
-                    <button onClick={() => navigate('/admin/portfolio')} className="btn-primary" style={{ background: 'linear-gradient(135deg,#c084fc,#a855f7)' }}>🎯 Add Portfolio</button>
-                    <button onClick={() => navigate('/admin/careers')} className="btn-secondary">📢 Post a Job</button>
+                    <button onClick={() => navigate('/admin/portfolio/create')} className="btn-primary" style={{ background: 'linear-gradient(135deg,#c084fc,#a855f7)' }}>🎯 Add Projects</button>
+                    <button onClick={() => navigate('/admin/careers/create')} className="btn-primary" style={{ background: 'linear-gradient(135deg,#c084fc,#a855f7)' }}> Post a Job</button>
+                    <button onClick={() => navigate('/admin/ApplyCandidates')} className="btn-primary" style={{ background: 'linear-gradient(135deg,#c084fc,#a855f7)' }}>🎯 Apply Candidate</button>
+                    {/* <button onClick={() => navigate('/admin/careers')} className="btn-secondary">📢</button> */}
                 </div>
             </div>
         </motion.div>

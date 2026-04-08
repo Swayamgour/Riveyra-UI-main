@@ -8,67 +8,11 @@ import SDRF from '../../public/SDRF.png'
 import NEIDO from '../../public/NEIDO.png'
 import MARTOLIA from '../../public/MARTOLIA.png'
 import { useNavigate } from 'react-router-dom'
+import { useGetProjectsQuery } from '../redux/api.jsx'
 
 
 
-const PROJECTS = [
-  {
-    id: 'dgfasli',
-    title: 'DGFASLI',
-    subtitle: 'Government Portal Redesign',
-    cat: 'Web Redesign',
-    color: '#60a5fa',
-    year: '2023',
-    client: 'Govt. of India',
-    duration: '4 Months',
-    tech: ['React', 'Node.js', 'AWS', 'PostgreSQL'],
-    desc: 'Full government portal redesign with 24/7 cross-device accessibility, WCAG compliance, and dramatic load-time improvements for the Directorate General Factory Advice Service.',
-    impact: ['40% faster load time', 'WCAG 2.1 AA', '99.9% uptime SLA'],
-    img: dgfasli,
-  },
-  {
-    id: 'sdrf',
-    title: 'SDRF',
-    subtitle: 'State Disaster Relief Fund',
-    cat: 'ERP System',
-    color: '#c084fc',
-    year: '2023',
-    client: 'State Government',
-    duration: '6 Months',
-    tech: ['Custom ERP', 'PHP', 'MySQL', 'Redis'],
-    desc: 'State-wide file management platform with one-click retrieval, audit trails, and enterprise-grade security — used daily by hundreds of government officers.',
-    impact: ['70% less paperwork', 'Real-time audit', 'E2E encryption'],
-    img: SDRF,
-  },
-  {
-    id: 'neido',
-    title: 'NEIDO',
-    subtitle: 'North-East Industrial Portal',
-    cat: 'Web Development',
-    color: '#34d399',
-    year: '2022',
-    client: 'NEIDO',
-    duration: '3 Months',
-    tech: ['Next.js', 'TailwindCSS', 'CMS', 'SEO'],
-    desc: 'Seamless UX that set a new benchmark for excellence in public-sector digital experiences, serving thousands of industrial applicants across the north-east.',
-    impact: ['3× more applications', 'Mobile-first', 'Multi-language'],
-    img: NEIDO,
-  },
-  {
-    id: 'martolia',
-    title: 'Martolia Group',
-    subtitle: 'Real Estate Platform',
-    cat: 'Mobile App',
-    color: '#fbbf24',
-    year: '2024',
-    client: 'Martolia Group',
-    duration: '5 Months',
-    tech: ['Flutter', 'Firebase', 'Maps API', 'ML Kit'],
-    desc: 'AI-powered property discovery platform with AR previews, real-time pricing, and seamless booking — transforming how buyers explore and purchase properties.',
-    impact: ['500+ listings live', 'AR property preview', '4.8★ App Store'],
-    img: MARTOLIA,
-  },
-]
+
 
 const CATS = ['All', 'Web Redesign', 'ERP System', 'Web Development', 'Mobile App']
 
@@ -126,6 +70,7 @@ function ProjectCard({ project, i }) {
       transition={{ delay: i * 0.11, duration: 0.78, ease: [0.16, 1, 0.3, 1] }}
       onMouseEnter={() => setHov(true)}
       onMouseLeave={() => setHov(false)}
+      onClick={()=> window.open(project.link, '_blank')}
       data-hover
       style={{
         borderRadius: 20,
@@ -153,7 +98,7 @@ function ProjectCard({ project, i }) {
         }} />
 
         <img
-          src={`${project.img}`}
+          src={`${project?.workImg}`}
           alt={project.title}
           loading="lazy"
           style={{
@@ -188,7 +133,7 @@ function ProjectCard({ project, i }) {
           color: project.color, fontFamily: 'var(--font-mono)', fontWeight: 600,
           letterSpacing: 1.4, backdropFilter: 'blur(10px)',
         }}>
-          {project.cat}
+          {project.category}
         </div>
 
         {/* YEAR badge — top right */}
@@ -244,31 +189,31 @@ function ProjectCard({ project, i }) {
         </div>
 
         {/* subtitle */}
-        <div style={{
+        {/* <div style={{
           fontSize: 12, color: project.color, fontFamily: 'var(--font-body)',
           marginBottom: 12, opacity: 0.82, letterSpacing: 0.2,
         }}>
           {project.subtitle}
-        </div>
+        </div> */}
 
         {/* description */}
         <p style={{
           fontSize: 13.5, color: 'rgba(255,255,255,0.58)', lineHeight: 1.78,
           fontFamily: 'var(--font-body)', flex: 1, marginBottom: 16,
         }}>
-          {project.desc}
+          {project.description}
         </p>
 
         {/* impact bullets — appear on hover */}
-        <div style={{
+        {/* <div style={{
           display: 'flex', flexDirection: 'column', gap: 6,
           marginBottom: 16,
           maxHeight: hov ? 80 : 0,
           overflow: 'hidden',
           transition: 'max-height 0.38s cubic-bezier(0.16,1,0.3,1)',
         }}>
-          {project.impact.map(imp => (
-            <div key={imp} style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+          {project.impact?.map((imp , index) => (
+            <div key={index} style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
               <div style={{
                 width: 5, height: 5, borderRadius: '50%', flexShrink: 0,
                 background: project.color, boxShadow: `0 0 7px ${project.color}`,
@@ -278,12 +223,12 @@ function ProjectCard({ project, i }) {
               </span>
             </div>
           ))}
-        </div>
+        </div> */}
 
         {/* tech tags */}
         <div style={{ display: 'flex', gap: 5, flexWrap: 'wrap' }}>
-          {project.tech.slice(0, 3).map(t => (
-            <span key={t} style={{
+          {project.tech.slice(0, 3)?.map((t , index) => (
+            <span key={index} style={{
               fontSize: 9.5, padding: '3px 9px', borderRadius: 5,
               background: `${project.color}10`, color: project.color,
               border: `1px solid ${project.color}28`,
@@ -294,7 +239,7 @@ function ProjectCard({ project, i }) {
               {t}
             </span>
           ))}
-          {project.tech.length > 3 && (
+          {project?.tech?.length > 3 && (
             <span style={{
               fontSize: 9.5, padding: '3px 8px', borderRadius: 5,
               background: 'rgba(255,255,255,0.04)',
@@ -336,9 +281,9 @@ function StatStrip({ isMobile }) {
         gridTemplateColumns: isMobile ? 'repeat(2,1fr)' : 'repeat(4,1fr)',
         gap: isMobile ? '24px 16px' : 0,
       }}>
-        {PAGE_STATS.map((s, i) => (
+        {PAGE_STATS?.map((s, i) => (
           <motion.div
-            key={s.label}
+            key={i}
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -385,6 +330,10 @@ export default function PortfolioPage() {
   const { scrollYProgress } = useScroll({ target: heroRef, offset: ['start start', 'end start'] })
   const heroY = useSpring(useTransform(scrollYProgress, [0, 1], [0, 90]), { stiffness: 60, damping: 20 })
   const heroOpacity = useTransform(scrollYProgress, [0, 0.65], [1, 0])
+
+  const { data } = useGetProjectsQuery()
+
+  let PROJECTS = data?.data || []
 
   const px = isMobile ? '5%' : isTablet ? '6%' : '7%'
 
@@ -492,8 +441,8 @@ export default function PortfolioPage() {
               width: 'fit-content', maxWidth: '100%',
             }}
           >
-            {CATS.map(cat => (
-              <Pill key={cat} label={cat} active={activeCat === cat} onClick={() => setActiveCat(cat)} />
+            {CATS?.map((cat , index) => (
+              <Pill key={index} label={cat} active={activeCat === cat} onClick={() => setActiveCat(cat)} />
             ))}
           </motion.div>
         </div>
@@ -531,8 +480,8 @@ export default function PortfolioPage() {
                     : 'repeat(3, 1fr)',
                 gap: isMobile ? 16 : isTablet ? 20 : 24,
               }}>
-                {filtered.map((p, i) => (
-                  <ProjectCard key={p.id} project={p} i={i} />
+                {filtered?.map((p, i) => (
+                  <ProjectCard key={i} project={p} i={i} />
                 ))}
               </div>
             )}

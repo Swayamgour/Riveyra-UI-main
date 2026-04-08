@@ -3,10 +3,13 @@ import { useState, useRef } from 'react'
 import { motion, useInView, AnimatePresence, useScroll, useTransform, useSpring } from 'framer-motion'
 import Icons from '../components/ui/Icons'
 import { useBreakpoint } from '../hooks/useBreakpoint.jsx'
+import { useGetCareersQuery } from '../redux/api.jsx'
+import { useNavigate } from 'react-router-dom'
 
 /* ══════════════════════════════════════════════════════
    DATA
 ══════════════════════════════════════════════════════ */
+
 const OPENINGS = [
   {
     id: 'fe-dev',
@@ -88,6 +91,10 @@ const OPENINGS = [
   },
 ]
 
+
+
+
+
 const DEPTS = ['All', 'Engineering', 'Mobile', 'Design', 'Marketing', 'Operations']
 
 const CULTURE_ITEMS = [
@@ -140,6 +147,7 @@ function JobCard({ job, i }) {
   const [hov, setHov] = useState(false)
   const ref = useRef(null)
   const inView = useInView(ref, { once: true, margin: '-50px' })
+  const navigate = useNavigate()
 
   return (
     <motion.div
@@ -153,9 +161,9 @@ function JobCard({ job, i }) {
       style={{
         borderRadius: 20, overflow: 'hidden',
         background: 'rgba(8,14,28,0.9)',
-        border: `1px solid ${hov ? job.color + '55' : 'rgba(255,255,255,0.07)'}`,
+        border: `1px solid ${hov ? job?.accent + '55' : 'rgba(255,255,255,0.07)'}`,
         boxShadow: hov
-          ? `0 32px 80px rgba(0,0,0,0.55), 0 0 60px ${job.color}0e`
+          ? `0 32px 80px rgba(0,0,0,0.55), 0 0 60px ${job?.accent}0e`
           : '0 12px 40px rgba(0,0,0,0.35)',
         transform: hov ? 'translateY(-10px)' : 'translateY(0)',
         transition: 'transform 0.38s cubic-bezier(0.16,1,0.3,1), box-shadow 0.38s, border-color 0.28s',
@@ -168,7 +176,7 @@ function JobCard({ job, i }) {
       {/* top accent bar — grows on hover */}
       <div style={{
         height: 3, flexShrink: 0,
-        background: `linear-gradient(90deg,${job.color},${job.color}44,transparent)`,
+        background: `linear-gradient(90deg,${job?.accent},${job?.accent}44,transparent)`,
         transform: hov ? 'scaleX(1)' : 'scaleX(0.35)',
         transformOrigin: 'left',
         transition: 'transform 0.45s cubic-bezier(0.16,1,0.3,1)',
@@ -177,7 +185,7 @@ function JobCard({ job, i }) {
       {/* radial bg glow */}
       <div style={{
         position: 'absolute', inset: 0, pointerEvents: 'none',
-        background: `radial-gradient(ellipse at 0% 0%,${job.color}0a,transparent 60%)`,
+        background: `radial-gradient(ellipse at 0% 0%,${job?.accent}0a,transparent 60%)`,
         opacity: hov ? 1 : 0, transition: 'opacity 0.4s',
       }} />
 
@@ -185,30 +193,30 @@ function JobCard({ job, i }) {
 
         {/* dept badge + mode badge */}
         <div style={{ display: 'flex', gap: 8, marginBottom: 14, flexWrap: 'wrap' }}>
-          <span style={{
+          {/* <span style={{
             fontSize: 9.5, padding: '4px 11px', borderRadius: 100,
-            background: `${job.color}1a`, border: `1px solid ${job.color}50`,
-            color: job.color, fontFamily: 'var(--font-mono)', fontWeight: 600, letterSpacing: 1.4,
-          }}>{job.dept}</span>
+            background: `${job?.accent}1a`, border: `1px solid ${job?.accent}50`,
+            color: job?.accent, fontFamily: 'var(--font-mono)', fontWeight: 600, letterSpacing: 1.4,
+          }}>{job?.description}</span> */}
+          {/* <span style={{
+            fontSize: 9.5, padding: '4px 11px', borderRadius: 100,
+            background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.1)',
+            color: 'rgba(255,255,255,0.45)', fontFamily: 'var(--font-mono)', letterSpacing: 1.2,
+          }}>{job?.mode}</span> */}
           <span style={{
             fontSize: 9.5, padding: '4px 11px', borderRadius: 100,
             background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.1)',
             color: 'rgba(255,255,255,0.45)', fontFamily: 'var(--font-mono)', letterSpacing: 1.2,
-          }}>{job.mode}</span>
-          <span style={{
-            fontSize: 9.5, padding: '4px 11px', borderRadius: 100,
-            background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.1)',
-            color: 'rgba(255,255,255,0.45)', fontFamily: 'var(--font-mono)', letterSpacing: 1.2,
-          }}>{job.type}</span>
+          }}>{job?.type}</span>
         </div>
 
         {/* title row */}
         <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: 10, marginBottom: 6 }}>
           <h3 style={{ fontSize: 20, fontFamily: 'var(--font-display)', fontWeight: 800, color: '#fff', lineHeight: 1.1 }}>
-            {job.title}
+            {job?.title}
           </h3>
           <div style={{
-            color: job.color, flexShrink: 0, marginTop: 4,
+            color: job?.accent, flexShrink: 0, marginTop: 4,
             opacity: hov ? 1 : 0.2,
             transform: hov ? 'translateX(4px)' : 'translateX(0)',
             transition: 'all 0.3s cubic-bezier(0.16,1,0.3,1)',
@@ -221,16 +229,16 @@ function JobCard({ job, i }) {
         <div style={{ display: 'flex', gap: 14, marginBottom: 14, flexWrap: 'wrap' }}>
           <span style={{ fontSize: 11.5, color: 'rgba(255,255,255,0.42)', fontFamily: 'var(--font-mono)', display: 'flex', alignItems: 'center', gap: 5 }}>
             <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 1 1 18 0z" /><circle cx="12" cy="10" r="3" /></svg>
-            {job.location}
+            {job?.location}
           </span>
           <span style={{ fontSize: 11.5, color: 'rgba(255,255,255,0.42)', fontFamily: 'var(--font-mono)', display: 'flex', alignItems: 'center', gap: 5 }}>
             <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="12" r="10" /><polyline points="12 6 12 12 16 14" /></svg>
-            {job.exp}
+            {job?.experience}
           </span>
         </div>
 
         <p style={{ fontSize: 13.5, color: 'rgba(255,255,255,0.58)', lineHeight: 1.78, fontFamily: 'var(--font-body)', flex: 1, marginBottom: 16 }}>
-          {job.desc}
+          {job?.description}
         </p>
 
         {/* perks — slide in on hover */}
@@ -240,11 +248,11 @@ function JobCard({ job, i }) {
           marginBottom: hov ? 16 : 0,
         }}>
           <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
-            {job.perks.map(p => (
-              <span key={p} style={{
+            {job?.benefits?.map((p, i) => (
+              <span key={i} style={{
                 fontSize: 10.5, padding: '4px 10px', borderRadius: 6,
-                background: `${job.color}12`, color: job.color,
-                border: `1px solid ${job.color}30`,
+                background: `${job?.accent}12`, color: job?.accent,
+                border: `1px solid ${job?.accent}30`,
                 fontFamily: 'var(--font-body)', fontWeight: 600,
               }}>✓ {p}</span>
             ))}
@@ -254,12 +262,12 @@ function JobCard({ job, i }) {
         {/* skills + apply */}
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 10, flexWrap: 'wrap' }}>
           <div style={{ display: 'flex', gap: 5, flexWrap: 'wrap', flex: 1 }}>
-            {job.skills.map(s => (
-              <span key={s} style={{
+            {job?.requirements?.map((s, i) => (
+              <span key={i} style={{
                 fontSize: 9.5, padding: '3px 9px', borderRadius: 5,
-                background: hov ? `${job.color}1e` : `${job.color}10`,
-                color: job.color,
-                border: `1px solid ${hov ? job.color + '45' : job.color + '28'}`,
+                background: hov ? `${job?.accent}1e` : `${job?.accent}10`,
+                color: job?.accent,
+                border: `1px solid ${hov ? job?.accent + '45' : job?.accent + '28'}`,
                 fontFamily: 'var(--font-mono)', fontWeight: 600,
                 transition: 'all 0.25s',
               }}>{s}</span>
@@ -268,10 +276,20 @@ function JobCard({ job, i }) {
           <button
             className="btn-primary"
             data-hover
+            onClick={() => navigate('/Apply', {
+              state: {
+                job: {
+                  id: job?._id,   // ✅ FIX
+                  title: job?.title,
+                  location: job?.location,
+                  dept: job?.dept,
+                }
+              }
+            })}
             // onClick={() => window.location.href = '/contact'}
             style={{
               fontSize: 11.5, padding: '8px 16px', flexShrink: 0,
-              background: `linear-gradient(135deg,${job.color},${job.color}99)`,
+              background: `linear-gradient(135deg,${job?.accent},${job?.accent}99)`,
               color: '#050b18',
               opacity: hov ? 1 : 0.7,
               transform: hov ? 'scale(1.04)' : 'scale(1)',
@@ -379,11 +397,17 @@ export default function CareerPage() {
   const heroY = useSpring(useTransform(scrollYProgress, [0, 1], [0, 90]), { stiffness: 60, damping: 20 })
   const heroOpacity = useTransform(scrollYProgress, [0, 0.65], [1, 0])
 
+  const { data: career } = useGetCareersQuery()
+
+  let OPENINGS = career?.data || []
+
+  // console.log(OPENINGS)
+
   const px = isMobile ? '5%' : isTablet ? '6%' : '7%'
 
   const filtered = activeDept === 'All'
     ? OPENINGS
-    : OPENINGS.filter(j => j.dept === activeDept)
+    : OPENINGS?.filter(j => j.dept === activeDept)
 
   return (
     <div style={{ background: 'var(--bg)', minHeight: '100vh', overflowX: 'hidden' }}>
@@ -510,7 +534,7 @@ export default function CareerPage() {
             gridTemplateColumns: isMobile ? '1fr' : isTablet ? 'repeat(2,1fr)' : 'repeat(4,1fr)',
             gap: isMobile ? 14 : 20,
           }}>
-            {CULTURE_ITEMS.map((item, i) => <CultureCard key={item.title} item={item} i={i} />)}
+            {CULTURE_ITEMS?.map((item, i) => <CultureCard key={i} item={item} i={i} />)}
           </div>
         </div>
       </section>
@@ -551,7 +575,7 @@ export default function CareerPage() {
 
             {/* right — benefits grid */}
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2,1fr)', gap: isMobile ? 10 : 12 }}>
-              {BENEFITS.map((b, i) => <BenefitItem key={b.label} item={b} i={i} />)}
+              {BENEFITS.map((b, i) => <BenefitItem key={i} item={b} i={i} />)}
             </div>
           </div>
         </div>
@@ -617,8 +641,8 @@ export default function CareerPage() {
                 width: 'fit-content', maxWidth: '100%',
               }}
             >
-              {DEPTS.map(d => (
-                <Pill key={d} label={d} active={activeDept === d} onClick={() => setActiveDept(d)} />
+              {DEPTS.map((d, index) => (
+                <Pill key={index} label={d} active={activeDept === d} onClick={() => setActiveDept(d)} />
               ))}
             </motion.div>
           </div>
@@ -642,7 +666,7 @@ export default function CareerPage() {
                   gridTemplateColumns: isMobile ? '1fr' : isTablet ? 'repeat(2,1fr)' : 'repeat(3,1fr)',
                   gap: isMobile ? 16 : isTablet ? 20 : 24,
                 }}>
-                  {filtered.map((job, i) => <JobCard key={job.id} job={job} i={i} />)}
+                  {filtered?.map((job, i) => <JobCard key={i} job={job} i={i} />)}
                 </div>
               )}
             </motion.div>

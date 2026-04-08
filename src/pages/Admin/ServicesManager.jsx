@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import { useBreakpoint } from '../../hooks/useBreakpoint';
+import { useDeleteServiceMutation, useGetServicesQuery } from '../../redux/api';
 // import { useBreakpoint } from '../hooks/useBreakpoint.jsx';
 
 const SERVICES = [
@@ -97,6 +98,16 @@ const categories = ['All', 'Development', 'Marketing', 'Infrastructure', 'Design
 function ServiceCard({ svc, i, isMobile }) {
     const [hov, setHov] = useState(false);
     const navigate = useNavigate();
+
+    const [deleteServices] = useDeleteServiceMutation()
+
+
+    const handleDelete = (id) => {
+        console.log(id)
+        deleteServices(id)
+    }
+
+
 
     return (
         <motion.div
@@ -193,8 +204,8 @@ function ServiceCard({ svc, i, isMobile }) {
 
             {/* Tags */}
             <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6, marginBottom: isMobile ? 16 : 20 }}>
-                {svc.tags.slice(0, 3).map(tag => (
-                    <span key={tag} style={{
+                {svc.tags.slice(0, 3)?.map((tag , index) => (
+                    <span key={index} style={{
                         fontSize: isMobile ? 9 : 10,
                         fontFamily: 'var(--font-mono)',
                         padding: '4px 10px',
@@ -226,6 +237,52 @@ function ServiceCard({ svc, i, isMobile }) {
                     <path d="M3 8h10M9 4l4 4-4 4" />
                 </svg>
             </div>
+            <div style={{
+                position: 'absolute',
+                bottom: 10,
+                right: 10,
+                zIndex: 10,
+                display: 'flex',
+                gap: 6
+            }}>
+                {/* ✏️ EDIT */}
+                <button
+                    onClick={(e) => {
+                        e.stopPropagation();
+                        navigate(`/admin/services/${svc?._id}/edit`);
+                    }}
+                    style={{
+                        padding: '6px 10px',
+                        fontSize: 10,
+                        background: '#3b82f6',
+                        color: '#fff',
+                        border: 'none',
+                        borderRadius: 6,
+                        cursor: 'pointer'
+                    }}
+                >
+                    Edit
+                </button>
+
+                {/* 🗑 DELETE */}
+                <button
+                    onClick={(e) => {
+                        e.stopPropagation();
+                        handleDelete(svc?._id);
+                    }}
+                    style={{
+                        padding: '6px 10px',
+                        fontSize: 10,
+                        background: '#ef4444',
+                        color: '#fff',
+                        border: 'none',
+                        borderRadius: 6,
+                        cursor: 'pointer'
+                    }}
+                >
+                    Delete
+                </button>
+            </div>
         </motion.div>
     );
 }
@@ -237,18 +294,27 @@ export default function ServicesPage() {
     const [filter, setFilter] = useState('All');
     const navigate = useNavigate();
 
+    const { data: serviceData } = useGetServicesQuery()
+
+    let SERVICES = serviceData?.data || []
+
     const filteredServices = filter === 'All'
         ? SERVICES
         : SERVICES.filter(s => s.category === filter);
 
-   
+
 
     return (
         <div style={{ background: 'var(--bg)', minHeight: '100vh' }}>
 
             <section id="services-grid" style={{
-                padding: isMobile ? '48px 5% 64px' : '60px 8% 80px',
+                padding: isMobile ? '48px 5% 64px' : '60px 8% 80px'
             }}>
+
+                <div style={{ display: 'flex', justifyContent: 'end', width: '100%' }}>
+                    <button className='btn-primary' onClick={() => navigate('/admin/services/create')}>Add Services</button>
+                </div>
+
                 <div style={{ maxWidth: 1200, margin: '0 auto' }}>
                     {/* Section header */}
                     <motion.div
@@ -290,9 +356,9 @@ export default function ServicesPage() {
                             marginBottom: 40,
                         }}
                     >
-                        {categories.map(cat => (
+                        {categories.map((cat , index) => (
                             <button
-                                key={cat}
+                                key={index}
                                 onClick={() => setFilter(cat)}
                                 style={{
                                     padding: isMobile ? '8px 16px' : '10px 24px',
@@ -321,14 +387,15 @@ export default function ServicesPage() {
                         alignItems: 'stretch',
                     }}>
                         {filteredServices.map((service, index) => (
-                            <ServiceCard key={service.id} svc={service} i={index} isMobile={isMobile} />
+                            <ServiceCard key={index} svc={service} i={index} isMobile={isMobile} />
                         ))}
                     </div>
                 </div>
+
             </section>
 
-          
-          
+
+
         </div>
     );
 }

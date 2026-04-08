@@ -24,12 +24,7 @@ export default function AdminPanel() {
     const [sidebarOpen, setSidebarOpen] = useState(true);
     const navigate = useNavigate();
 
-    const navItems = [
-        { path: '/admin/dashboard', label: 'Dashboard', icon: <Icons.Dashboard /> },
-        { path: '/admin/services', label: 'Services', icon: <Icons.Services /> },
-        { path: '/admin/portfolio', label: 'Portfolio', icon: <Icons.Portfolio /> },
-        { path: '/admin/careers', label: 'Careers', icon: <Icons.Career /> },
-    ];
+   
 
     return (
         <div style={{ flex: 1,  transition: 'margin 0.3s' }}>

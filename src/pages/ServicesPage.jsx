@@ -5,6 +5,7 @@ import Icons from '../components/ui/Icons'
 import { useBreakpoint } from '../hooks/useBreakpoint.jsx'
 import { SERVICES } from '../components/data.jsx'
 import { useNavigate } from 'react-router-dom'
+import { useGetServicesQuery  , useGetServiceBySlugQuery} from '../redux/api.jsx'
 
 // {SERVICES}
 
@@ -277,6 +278,12 @@ export default function ServicesPage() {
   const [filter, setFilter] = useState('All')
   const [hovered, setHovered] = useState(null)
 
+  const { data } = useGetServicesQuery()
+  const { data:slug } = useGetServiceBySlugQuery('ai-software-development')
+  console.log(
+    data , slug
+  )
+
 
   const categories = ['All', 'AI & Data', 'Development', 'Infrastructure', 'Design']
   const categoryMap = {
@@ -291,7 +298,7 @@ export default function ServicesPage() {
     : SERVICES.filter(s => (categoryMap[filter] || []).includes(s.title))
 
 
-  const  navigate  = useNavigate()
+  const navigate = useNavigate()
 
   return (
     <div style={{ background: 'var(--bg)', minHeight: '100vh' }}>

@@ -23,6 +23,8 @@ export default function AdminLayout() {
         { path: '/admin/services', label: 'Services', icon: <Icons.Services /> },
         { path: '/admin/portfolio', label: 'Portfolio', icon: <Icons.Portfolio /> },
         { path: '/admin/careers', label: 'Careers', icon: <Icons.Career /> },
+        { path: '/admin/ApplyCandidates', label: 'Applications', icon: <Icons.Career /> },
+
     ];
 
     return (

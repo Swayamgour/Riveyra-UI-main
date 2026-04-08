@@ -18,6 +18,11 @@ import PortfolioManager from './pages/Admin/PortfolioManager'
 import CareerManager from './pages/Admin/CareerManager'
 import AdminLayout from './pages/Admin/AdminLayout'
 import ScrollToTop from './components/ScrollToTop'
+import ServiceForm from './pages/Admin/ServiceForm'
+import ProjectForm from './pages/Admin/ProjectForm'
+import CareerFrom from './pages/Admin/CareerFrom'
+import ApplyPage from './components/ApplyPage'
+import AdminApplicationsPage from './pages/Admin/AdminApplicationsPage'
 
 function AppShell() {
   // useScrollReveal()
@@ -38,14 +43,14 @@ function AppShell() {
   const location = useLocation()
   const isAdminRoute = location.pathname.startsWith('/admin');
 
-  console.log(location.pathname)
+  // console.log(location.pathname)
 
   return (
     <>
       <CustomCursor />
       <ScrollToTop />
 
-      {!isAdminRoute && <ContactPopup />}
+      {/* {!isAdminRoute && <ContactPopup />} */}
       {!isAdminRoute && <Navbar />}
 
       <Routes>
@@ -55,15 +60,31 @@ function AppShell() {
         <Route path="/services" element={<ServicesPage />} />
         <Route path="/portfolio" element={<PortfolioPage />} />
         <Route path="/career" element={<CareerPage />} />
+        <Route path="/Apply" element={<ApplyPage />} />
         <Route path="/ServiceDetail/:id" element={<ServiceDetail />} />
 
 
         <Route path="/admin" element={<AdminLayout />}>
           <Route path="/admin" element={<Admin />} />
           <Route path="dashboard" element={<Admin />} />
+
+
           <Route path="services" element={<ServicesManager />} />
+          <Route path="services/create" element={<ServiceForm />} />
+          <Route path="services/:id/edit" element={<ServiceForm />} />
+
+
           <Route path="portfolio" element={<PortfolioManager />} />
+          <Route path="portfolio/create" element={<ProjectForm />} />
+          <Route path="portfolio/:id/edit" element={<ProjectForm />} />
+
+
           <Route path="careers" element={<CareerManager />} />
+          <Route path="careers/create" element={<CareerFrom />} />
+          <Route path="careers/:id/edit" element={<CareerFrom />} />
+
+          
+          <Route path="ApplyCandidates" element={<AdminApplicationsPage />} />
         </Route>
       </Routes>
 
