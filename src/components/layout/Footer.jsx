@@ -38,11 +38,21 @@ const cols = [
   },
 ]
 
+
+
+
+
+
+
+
+
+
+
 const socials = [
-  { Icon: Icons.Twitter, label: 'Twitter' },
-  { Icon: Icons.LinkedIn, label: 'LinkedIn' },
-  { Icon: Icons.Facebook, label: 'Facebook' },
-  { Icon: Icons.Instagram, label: 'Instagram' },
+  { url: "https://x.com/RiveyraInfotech", Icon: Icons.Twitter, label: 'Twitter' },
+  { url: "https://www.linkedin.com/company/riveyrainfotechp/", Icon: Icons.LinkedIn, label: 'LinkedIn' },
+  { url: "https://www.facebook.com/RiveyraInfotech/", Icon: Icons.Facebook, label: 'Facebook' },
+  { url: "https://www.instagram.com/RiveyraInfotech/", Icon: Icons.Instagram, label: 'Instagram' },
 ]
 
 export default function Footer() {
@@ -86,8 +96,10 @@ export default function Footer() {
                 Kanpur's premier IT company delivering innovative digital solutions across India and beyond.
               </p>
               <div style={{ display: 'flex', gap: 10, justifyContent: 'center' }}>
-                {socials.map(({ Icon, label }) => (
+                {socials.map(({ Icon, label, url }) => (
                   <div key={label} data-hover
+                    // onClick={() => window.open(Icon?.path, target)}
+                    onClick={() => window.open(url, "_blank", "noopener,noreferrer")}
                     style={{ width: 38, height: 38, borderRadius: 8, border: '1px solid rgba(96,165,250,0.16)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'rgba(255,255,255,0.5)', cursor: 'pointer', transition: 'all 0.2s' }}
                     onMouseEnter={e => { e.currentTarget.style.borderColor = '#60a5fa'; e.currentTarget.style.color = '#93c5fd'; e.currentTarget.style.background = 'rgba(96,165,250,0.1)' }}
                     onMouseLeave={e => { e.currentTarget.style.borderColor = 'rgba(96,165,250,0.16)'; e.currentTarget.style.color = 'rgba(255,255,255,0.5)'; e.currentTarget.style.background = 'transparent' }}
@@ -117,8 +129,11 @@ export default function Footer() {
                   Kanpur's premier IT company delivering innovative digital solutions across India and beyond.
                 </p>
                 <div style={{ display: 'flex', gap: 10 }}>
-                  {socials.map(({ Icon, label }) => (
+                  {socials.map(({ Icon, label, url }) => (
                     <div key={label} data-hover
+                      // onClick={() => window.open(Icon?.path, target)}
+                      onClick={() => window.open(url, "_blank", "noopener,noreferrer")}
+
                       style={{ width: 40, height: 40, borderRadius: 8, border: '1px solid rgba(96,165,250,0.16)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'rgba(255,255,255,0.5)', cursor: 'pointer', transition: 'all 0.2s' }}
                       onMouseEnter={e => { e.currentTarget.style.borderColor = '#60a5fa'; e.currentTarget.style.color = '#93c5fd'; e.currentTarget.style.background = 'rgba(96,165,250,0.1)' }}
                       onMouseLeave={e => { e.currentTarget.style.borderColor = 'rgba(96,165,250,0.16)'; e.currentTarget.style.color = 'rgba(255,255,255,0.5)'; e.currentTarget.style.background = 'transparent' }}

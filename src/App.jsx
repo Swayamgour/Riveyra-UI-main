@@ -23,6 +23,7 @@ import ProjectForm from './pages/Admin/ProjectForm'
 import CareerFrom from './pages/Admin/CareerFrom'
 import ApplyPage from './components/ApplyPage'
 import AdminApplicationsPage from './pages/Admin/AdminApplicationsPage'
+import ContactPage from './pages/Admin/ContactPage'
 
 function AppShell() {
   // useScrollReveal()
@@ -82,6 +83,9 @@ function AppShell() {
           <Route path="careers" element={<CareerManager />} />
           <Route path="careers/create" element={<CareerFrom />} />
           <Route path="careers/:id/edit" element={<CareerFrom />} />
+
+
+          <Route path="ContactClient" element={<ContactPage />} />
 
           
           <Route path="ApplyCandidates" element={<AdminApplicationsPage />} />

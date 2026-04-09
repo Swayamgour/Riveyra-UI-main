@@ -278,11 +278,9 @@ export default function ServicesPage() {
   const [filter, setFilter] = useState('All')
   const [hovered, setHovered] = useState(null)
 
-  const { data } = useGetServicesQuery()
-  const { data:slug } = useGetServiceBySlugQuery('ai-software-development')
-  console.log(
-    data , slug
-  )
+  // const { data } = useGetServicesQuery()
+  // const { data:slug } = useGetServiceBySlugQuery('')
+
 
 
   const categories = ['All', 'AI & Data', 'Development', 'Infrastructure', 'Design']

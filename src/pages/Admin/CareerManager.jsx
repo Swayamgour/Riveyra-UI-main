@@ -4,6 +4,8 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import { useBreakpoint } from '../../hooks/useBreakpoint';
 import { useDeleteCareerMutation, useGetCareersQuery } from '../../redux/api';
+import { MdDelete } from 'react-icons/md';
+import { FaEdit, FaTrash } from 'react-icons/fa';
 
 
 
@@ -188,17 +190,20 @@ function JobCard({ job, i, isMobile }) {
                             navigate(`/admin/careers/${job?._id}/edit`);
                         }}
                         style={{
-                            padding: '6px 10px',
-                            fontSize: 10,
-                            background: '#3b82f6',
-                            color: '#fff',
-                            border: 'none',
+                            padding: '6px 12px',
+                            background: 'rgba(96,165,250,0.1)',
+                            border: '1px solid rgba(96,165,250,0.3)',
                             borderRadius: 6,
+                            color: '#60a5fa',
+                            fontSize: 11,
                             cursor: 'pointer',
-                            zIndex: 999999
+                            display: 'flex',
+                            alignItems: 'center',
+                            gap: 5,
                         }}
                     >
-                        Edit
+                        <FaEdit
+                        /> Edit
                     </button>
 
                     {/* 🗑 DELETE */}
@@ -208,19 +213,23 @@ function JobCard({ job, i, isMobile }) {
                             handleDelete(job?._id);
                         }}
                         style={{
-                            padding: '6px 10px',
-                            fontSize: 10,
-                            background: '#ef4444',
-                            color: '#fff',
-                            border: 'none',
+                            padding: '6px 12px',
+                            background: 'rgba(248,113,113,0.1)',
+                            border: '1px solid rgba(248,113,113,0.3)',
                             borderRadius: 6,
+                            color: '#f87171',
+                            fontSize: 11,
                             cursor: 'pointer',
-                            zIndex: 999999
-
+                            display: 'flex',
+                            alignItems: 'center',
+                            gap: 5,
                         }}
                     >
-                        Delete
+                        <FaTrash /> Delete
+
                     </button>
+
+
                 </div>
             </div>
         </motion.div>

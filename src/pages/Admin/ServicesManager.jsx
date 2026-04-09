@@ -4,6 +4,8 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import { useBreakpoint } from '../../hooks/useBreakpoint';
 import { useDeleteServiceMutation, useGetServicesQuery } from '../../redux/api';
+import { FaEdit, FaTrash } from 'react-icons/fa';
+import { MdDelete } from "react-icons/md";
 // import { useBreakpoint } from '../hooks/useBreakpoint.jsx';
 
 const SERVICES = [
@@ -117,7 +119,7 @@ function ServiceCard({ svc, i, isMobile }) {
             transition={{ delay: i * 0.08, duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
             onMouseEnter={() => setHov(true)}
             onMouseLeave={() => setHov(false)}
-            onClick={() => navigate(svc.path)}
+            // onClick={() => navigate(svc.path)}
             style={{
                 height: '100%',
                 display: 'flex',
@@ -162,7 +164,7 @@ function ServiceCard({ svc, i, isMobile }) {
                 transform: hov ? 'scale(1.08) rotate(-2deg)' : 'scale(1)',
                 transition: 'all 0.3s cubic-bezier(0.16,1,0.3,1)',
             }}>
-                {svc.icon}
+                <img src={svc.icons} alt={svc.title} />
             </div>
 
             {/* Title */}
@@ -204,7 +206,7 @@ function ServiceCard({ svc, i, isMobile }) {
 
             {/* Tags */}
             <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6, marginBottom: isMobile ? 16 : 20 }}>
-                {svc.tags.slice(0, 3)?.map((tag , index) => (
+                {svc.tags.slice(0, 3)?.map((tag, index) => (
                     <span key={index} style={{
                         fontSize: isMobile ? 9 : 10,
                         fontFamily: 'var(--font-mono)',
@@ -252,16 +254,19 @@ function ServiceCard({ svc, i, isMobile }) {
                         navigate(`/admin/services/${svc?._id}/edit`);
                     }}
                     style={{
-                        padding: '6px 10px',
-                        fontSize: 10,
-                        background: '#3b82f6',
-                        color: '#fff',
-                        border: 'none',
+                        padding: '6px 12px',
+                        background: 'rgba(96,165,250,0.1)',
+                        border: '1px solid rgba(96,165,250,0.3)',
                         borderRadius: 6,
-                        cursor: 'pointer'
+                        color: '#60a5fa',
+                        fontSize: 11,
+                        cursor: 'pointer',
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: 5,
                     }}
                 >
-                    Edit
+                    <FaEdit /> Edit
                 </button>
 
                 {/* 🗑 DELETE */}
@@ -271,16 +276,19 @@ function ServiceCard({ svc, i, isMobile }) {
                         handleDelete(svc?._id);
                     }}
                     style={{
-                        padding: '6px 10px',
-                        fontSize: 10,
-                        background: '#ef4444',
-                        color: '#fff',
-                        border: 'none',
+                        padding: '6px 12px',
+                        background: 'rgba(248,113,113,0.1)',
+                        border: '1px solid rgba(248,113,113,0.3)',
                         borderRadius: 6,
-                        cursor: 'pointer'
+                        color: '#f87171',
+                        fontSize: 11,
+                        cursor: 'pointer',
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: 5,
                     }}
                 >
-                    Delete
+                    <FaTrash /> Delete
                 </button>
             </div>
         </motion.div>
@@ -356,7 +364,7 @@ export default function ServicesPage() {
                             marginBottom: 40,
                         }}
                     >
-                        {categories.map((cat , index) => (
+                        {categories.map((cat, index) => (
                             <button
                                 key={index}
                                 onClick={() => setFilter(cat)}

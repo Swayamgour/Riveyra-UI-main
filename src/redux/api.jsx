@@ -29,7 +29,8 @@ export const api = createApi({
     tagTypes: [
         "Projects",
         "Careers",
-        "Services"
+        "Services",
+        "contact"
     ],
 
     endpoints: (builder) => ({
@@ -197,10 +198,10 @@ export const api = createApi({
         }),
         // ✅ UPDATE SERVICE
         updateService: builder.mutation({
-            query: ({ id, ...data }) => ({
+            query: ({ id, formData }) => ({
                 url: `/services/${id}`,
                 method: "PUT",
-                body: data,
+                body: formData,
             }),
             invalidatesTags: ["Services"],
         }),
@@ -212,6 +213,24 @@ export const api = createApi({
                 method: "DELETE",
             }),
             invalidatesTags: ["Services"],
+        }),
+
+
+
+
+        getContact: builder.query({
+            query: () => "/contact",
+            providesTags: ["contact"],
+        }),
+
+        // ✅ CREATE SERVICE
+        createContact: builder.mutation({
+            query: (body) => ({
+                url: "/contact",
+                method: "POST",
+                body: body, // 👈 FormData hona chahiye
+            }),
+            invalidatesTags: ["contact"],
         }),
 
     }),
@@ -253,7 +272,8 @@ export const {
     useGetServiceByIdQuery,
 
 
-
+    useGetContactQuery,
+    useCreateContactMutation
 
 } = api;
 

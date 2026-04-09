@@ -3,6 +3,7 @@ import { useState, useRef, useEffect } from 'react'
 import { motion, useInView, AnimatePresence } from 'framer-motion'
 import Icons from '../ui/Icons'
 import { useBreakpoint } from '../../hooks/useBreakpoint.jsx'
+import ContactForm from '../ContactForm.jsx'
 
 const INFO = [
   { icon: Icons.Mail, label: 'Email Us', value: 'hello@riveyra.com', sub: 'We reply within 2 hours', color: '#60a5fa' },
@@ -10,12 +11,7 @@ const INFO = [
   { icon: Icons.MapPin, label: 'Visit Us', value: 'Kanpur, Uttar Pradesh', sub: 'Also in Lucknow & Delhi', color: '#c084fc' },
 ]
 
-const SERVICES = [
-  'Web Development', 'Mobile App', 'UI/UX Design',
-  'Digital Marketing', 'ERP Solutions', 'AI & Automation', 'Other',
-]
 
-const BUDGETS = ['< ₹1 Lakh', '₹1–5 Lakh', '₹5–15 Lakh', '₹15–50 Lakh', '₹50 Lakh+']
 
 
 function OrbCanvas() {
@@ -86,87 +82,7 @@ function OrbCanvas() {
 }
 
 
-function Field({ label, type = 'text', name, value, onChange, required }) {
-  const [focused, setFocused] = useState(false)
-  const filled = value && value.length > 0
-  const active = focused || filled
 
-  return (
-    <div style={{ position: 'relative', marginBottom: 24 }}>
-      <label style={{
-        position: 'absolute', left: 16,
-        top: active ? -10 : 17,
-        fontSize: active ? 10.5 : 14,
-        color: active ? '#60a5fa' : 'rgba(255,255,255,0.38)',
-        fontFamily: 'var(--font-mono)',
-        letterSpacing: active ? 1.5 : 0.3,
-        textTransform: active ? 'uppercase' : 'none',
-        transition: 'all 0.22s cubic-bezier(0.16,1,0.3,1)',
-        pointerEvents: 'none', zIndex: 2,
-        background: active ? 'linear-gradient(transparent 50%,rgba(8,15,30,1) 50%)' : 'transparent',
-        padding: active ? '0 6px' : '0',
-      }}>
-        {label}{required && ' *'}
-      </label>
-      {type === 'textarea' ? (
-        <textarea
-          name={name} value={value} onChange={onChange}
-          onFocus={() => setFocused(true)} onBlur={() => setFocused(false)}
-          rows={4}
-          style={{
-            width: '100%', padding: '16px', borderRadius: 10,
-            background: 'rgba(255,255,255,0.04)',
-            border: `1px solid ${focused ? '#60a5fa' : 'rgba(255,255,255,0.1)'}`,
-            color: '#ffffff', fontFamily: 'var(--font-body)', fontSize: 14.5,
-            resize: 'none', outline: 'none', lineHeight: 1.7,
-            boxShadow: focused ? '0 0 0 3px rgba(96,165,250,0.1),inset 0 1px 0 rgba(255,255,255,0.03)' : 'inset 0 1px 0 rgba(255,255,255,0.03)',
-            transition: 'all 0.22s', boxSizing: 'border-box',
-          }}
-        />
-      ) : (
-        <input
-          type={type} name={name} value={value} onChange={onChange}
-          onFocus={() => setFocused(true)} onBlur={() => setFocused(false)}
-          style={{
-            width: '100%', padding: '16px', borderRadius: 10,
-            background: 'rgba(255,255,255,0.04)',
-            border: `1px solid ${focused ? '#60a5fa' : 'rgba(255,255,255,0.1)'}`,
-            color: '#ffffff', fontFamily: 'var(--font-body)', fontSize: 14.5,
-            outline: 'none',
-            boxShadow: focused ? '0 0 0 3px rgba(96,165,250,0.1),inset 0 1px 0 rgba(255,255,255,0.03)' : 'inset 0 1px 0 rgba(255,255,255,0.03)',
-            transition: 'all 0.22s', boxSizing: 'border-box',
-          }}
-        />
-      )}
-    </div>
-  )
-}
-
-
-function TagSelect({ options, selected, onToggle, multi = false, color = '#60a5fa' }) {
-  return (
-    <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8 }}>
-      {options.map(opt => {
-        const active = multi ? selected.includes(opt) : selected === opt
-        return (
-          <button key={opt} type="button" onClick={() => onToggle(opt)}
-            style={{
-              padding: '7px 14px', borderRadius: 8, fontSize: 12,
-              fontFamily: 'var(--font-mono)', fontWeight: 500,
-              letterSpacing: 0.5, cursor: 'pointer', transition: 'all 0.2s',
-              border: `1px solid ${active ? color : 'rgba(255,255,255,0.1)'}`,
-              background: active ? `${color}18` : 'rgba(255,255,255,0.03)',
-              color: active ? color : 'rgba(255,255,255,0.5)',
-              boxShadow: active ? `0 0 12px ${color}22` : 'none',
-            }}
-          >
-            {opt}
-          </button>
-        )
-      })}
-    </div>
-  )
-}
 
 
 export default function Contact() {
@@ -317,93 +233,10 @@ export default function Contact() {
         }}>
 
           {/* ── FORM ── */}
-          <motion.div
-            initial={{ opacity: 0, x: isMobileOrTablet ? 0 : -40, y: isMobileOrTablet ? 30 : 0 }}
-            animate={inView ? { opacity: 1, x: 0, y: 0 } : {}}
-            transition={{ delay: 0.4, duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
-            style={{
-              background: 'rgba(8,15,30,0.82)',
-              border: '1px solid rgba(96,165,250,0.12)',
-              borderRadius: 20,
-              padding: isMobile ? '28px 20px' : isTablet ? '36px 32px' : '44px 40px',
-              backdropFilter: 'blur(24px)',
-              boxShadow: '0 40px 100px rgba(0,0,0,0.4),inset 0 1px 0 rgba(255,255,255,0.05)',
-            }}
-          >
-            <AnimatePresence mode="wait">
-              {sent ? (
-                <motion.div
-                  key="success"
-                  initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0 }}
-                  style={{ textAlign: 'center', padding: '60px 0' }}
-                >
-                  <motion.div
-                    initial={{ scale: 0 }} animate={{ scale: 1 }}
-                    transition={{ delay: 0.1, type: 'spring', stiffness: 200, damping: 14 }}
-                    style={{ width: 80, height: 80, borderRadius: '50%', background: 'rgba(52,211,153,0.12)', border: '2px solid #34d399', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 24px', fontSize: 36, boxShadow: '0 0 40px rgba(52,211,153,0.25)' }}
-                  >✓</motion.div>
-                  <h3 style={{ fontSize: 28, fontFamily: 'var(--font-display)', fontWeight: 800, color: '#ffffff', marginBottom: 12 }}>Message Sent!</h3>
-                  <p style={{ color: 'rgba(255,255,255,0.6)', fontFamily: 'var(--font-body)', lineHeight: 1.8, marginBottom: 32 }}>
-                    Thanks for reaching out. Our team will get back to you within 2 business hours.
-                  </p>
-                  <button className="btn-ghost" data-hover onClick={() => { setSent(false); setForm({ name: '', email: '', phone: '', company: '', message: '' }); setServices([]); setBudget('') }}>
-                    Send Another Message
-                  </button>
-                </motion.div>
-              ) : (
-                <motion.form key="form" onSubmit={handleSubmit}>
-                  <div style={{ marginBottom: 32 }}>
-                    <div style={{ fontSize: 11, color: '#60a5fa', fontFamily: 'var(--font-mono)', letterSpacing: 2, textTransform: 'uppercase', marginBottom: 8 }}>Step 1 of 3</div>
-                    <h3 style={{ fontSize: isMobile ? 18 : 22, fontFamily: 'var(--font-display)', fontWeight: 700, color: '#ffffff', marginBottom: 4 }}>Your Details</h3>
-                    <p style={{ fontSize: 13, color: 'rgba(255,255,255,0.45)', fontFamily: 'var(--font-body)' }}>Tell us who you are so we can personalise our response.</p>
-                  </div>
 
-                  <div style={{
-                    display: 'grid',
-                    gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr',
-                    gap: isMobile ? 0 : '0 18px',
-                  }}>
-                    <Field label="Full Name" name="name" value={form.name} onChange={e => set('name', e.target.value)} required />
-                    <Field label="Email Address" name="email" type="email" value={form.email} onChange={e => set('email', e.target.value)} required />
-                    <Field label="Phone Number" name="phone" type="tel" value={form.phone} onChange={e => set('phone', e.target.value)} />
-                    <Field label="Company Name" name="company" value={form.company} onChange={e => set('company', e.target.value)} />
-                  </div>
 
-                  <div style={{ marginBottom: 28 }}>
-                    <div style={{ fontSize: 11, color: '#60a5fa', fontFamily: 'var(--font-mono)', letterSpacing: 2, textTransform: 'uppercase', marginBottom: 8, marginTop: 8 }}>Step 2 — Services Needed</div>
-                    <TagSelect options={SERVICES} selected={services} onToggle={toggleService} multi color="#60a5fa" />
-                  </div>
-
-                  <div style={{ marginBottom: 28 }}>
-                    <div style={{ fontSize: 11, color: '#c084fc', fontFamily: 'var(--font-mono)', letterSpacing: 2, textTransform: 'uppercase', marginBottom: 8 }}>Step 3 — Estimated Budget</div>
-                    <TagSelect options={BUDGETS} selected={budget} onToggle={b => setBudget(prev => prev === b ? '' : b)} color="#c084fc" />
-                  </div>
-
-                  <Field label="Tell us about your project" type="textarea" name="message" value={form.message} onChange={e => set('message', e.target.value)} required />
-
-                  <button type="submit" className="btn-primary" data-hover
-                    style={{ width: '100%', justifyContent: 'center', padding: '16px', fontSize: 14, letterSpacing: 0.5, position: 'relative', overflow: 'hidden' }}
-                  >
-                    {sending ? (
-                      <span style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-                        <span style={{ width: 16, height: 16, border: '2px solid rgba(0,0,0,0.3)', borderTopColor: '#020b18', borderRadius: '50%', animation: 'spin 0.7s linear infinite', display: 'inline-block' }} />
-                        Sending…
-                      </span>
-                    ) : (
-                      <span style={{ display: 'flex', alignItems: 'center', gap: 8, justifyContent: 'center' }}>
-                        Send Message <Icons.ArrowRight />
-                      </span>
-                    )}
-                  </button>
-
-                  <p style={{ textAlign: 'center', marginTop: 16, fontSize: 11.5, color: 'rgba(255,255,255,0.3)', fontFamily: 'var(--font-body)' }}>
-                    🔒 Your information is 100% confidential. We never share your data.
-                  </p>
-                </motion.form>
-              )}
-            </AnimatePresence>
-          </motion.div>
-
+          <ContactForm />
+          
           {/* ── RIGHT PANEL — hidden on mobile, shown on tablet & desktop ── */}
           {!isMobile && (
             <motion.div

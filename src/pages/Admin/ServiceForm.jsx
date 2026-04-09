@@ -9,6 +9,19 @@ import {
 } from '../../redux/api'
 import { tabs } from '../../components/data'
 
+
+const generateSlug = (text) => {
+    return text
+        .toString()
+        .toLowerCase()
+        .trim()
+        .replace(/\s+/g, '-')           // Spaces ko - se replace kare
+        .replace(/[^\w\-]+/g, '')       // Special characters hata de
+        .replace(/\-\-+/g, '-')         // Multiple - ko single - kare
+        .replace(/^-+/, '')             // Starting se - hata de
+        .replace(/-+$/, '')             // End se - hata de
+}
+
 const ServiceForm = () => {
     const { id } = useParams()
     const isEdit = Boolean(id)
@@ -107,30 +120,33 @@ const ServiceForm = () => {
     const [tempCtaLabel, setTempCtaLabel] = useState('')
     const [tempCtaLink, setTempCtaLink] = useState('')
 
+    const [iconFile, setIconFile] = useState(null)
+    const [iconPreview, setIconPreview] = useState("")
+
     // Load data for edit
     useEffect(() => {
-       if (isEdit && servicesDataById?.data && isSuccess) {
-    const service = servicesDataById.data;
+        if (isEdit && servicesDataById?.data && isSuccess) {
+            const service = servicesDataById.data;
 
-    setFormData({
-        title: service.title || '',
-        desc: service.desc || '',
-        slug: service.slug || '',
-        accent: service.accent || '#60a5fa',
-        path: service.path || '',
-        tags: service.tags || [],
-        hero: service.hero || {
-            badge: '', title: '', subtitle: '', intro: '',
-            desc: [], questionsTitle: '', questions: [], closing: []
-        },
-        blocks: service.blocks || [],
-        comparison: service.comparison || { title: '', data: [] },
-        whoNeeds: service.whoNeeds || { title: '', problems: [], idealFor: [] },
-        approach: service.approach || { title: '', steps: [], whyChoose: [] },
-        faq: service.faq || [],
-        cta: service.cta || { title: '', desc: '', buttons: [] }
-    });
-}
+            setFormData({
+                title: service.title || '',
+                desc: service.desc || '',
+                slug: service.slug || '',
+                accent: service.accent || '#60a5fa',
+                path: service.path || '',
+                tags: service.tags || [],
+                hero: service.hero || {
+                    badge: '', title: '', subtitle: '', intro: '',
+                    desc: [], questionsTitle: '', questions: [], closing: []
+                },
+                blocks: service.blocks || [],
+                comparison: service.comparison || { title: '', data: [] },
+                whoNeeds: service.whoNeeds || { title: '', problems: [], idealFor: [] },
+                approach: service.approach || { title: '', steps: [], whyChoose: [] },
+                faq: service.faq || [],
+                cta: service.cta || { title: '', desc: '', buttons: [] }
+            });
+        }
     }, [id, servicesDataById, isSuccess])
 
     // Auto-generate slug from title
@@ -149,14 +165,14 @@ const ServiceForm = () => {
         const newErrors = {};
 
         // BASIC
-        if (!formData.title.trim()) newErrors.title = "Title is required";
-        if (!formData.desc.trim()) newErrors.desc = "Description is required";
-        if (!formData.slug.trim()) newErrors.slug = "Slug is required";
+        if (!formData.title?.trim()) newErrors.title = "Title is required";
+        if (!formData.desc?.trim()) newErrors.desc = "Description is required";
+        if (!formData.slug?.trim()) newErrors.slug = "Slug is required";
 
         // HERO
-        if (!formData.hero.badge.trim()) newErrors["hero.badge"] = "Hero badge required";
-        if (!formData.hero.title.trim()) newErrors["hero.title"] = "Hero title required";
-        if (!formData.hero.subtitle.trim()) newErrors["hero.subtitle"] = "Hero subtitle required";
+        if (!formData.hero.badge?.trim()) newErrors["hero.badge"] = "Hero badge required";
+        if (!formData.hero.title?.trim()) newErrors["hero.title"] = "Hero title required";
+        if (!formData.hero.subtitle?.trim()) newErrors["hero.subtitle"] = "Hero subtitle required";
 
         if (!formData.hero.desc || formData.hero.desc.length === 0) {
             newErrors["hero.desc"] = "At least one description required";
@@ -164,8 +180,8 @@ const ServiceForm = () => {
 
         // FAQ (optional but recommended)
         formData.faq.forEach((faq, i) => {
-            if (!faq.q.trim()) newErrors[`faq.q.${i}`] = "Question required";
-            if (!faq.a.trim()) newErrors[`faq.a.${i}`] = "Answer required";
+            if (!faq.q?.trim()) newErrors[`faq.q.${i}`] = "Question required";
+            if (!faq.a?.trim()) newErrors[`faq.a.${i}`] = "Answer required";
         });
 
         setErrors(newErrors);
@@ -173,14 +189,26 @@ const ServiceForm = () => {
     };
 
     // Generic handlers
+
     const handleChange = (field, value) => {
-        setFormData(prev => ({ ...prev, [field]: value }))
+        setFormData(prev => {
+            const updated = { ...prev, [field]: value };
+
+            // ✅ auto slug generate
+            if (field === 'title') {
+                updated.slug = generateSlug(value);
+            }
+
+            return updated;
+        });
+
+        // ✅ remove error
         if (errors[field]) {
-            const newErrors = { ...errors }
-            delete newErrors[field]
-            setErrors(newErrors)
+            const newErrors = { ...errors };
+            delete newErrors[field];
+            setErrors(newErrors);
         }
-    }
+    };
 
     const handleHeroChange = (field, value) => {
         setFormData(prev => ({
@@ -546,6 +574,16 @@ const ServiceForm = () => {
         }))
     }
 
+    useEffect(() => {
+        if (isEdit && servicesDataById?.data) {
+            const service = servicesDataById.data
+
+            if (service.icons) {
+                setIconPreview(service.icons)
+            }
+        }
+    }, [isEdit, servicesDataById])
+
     // Submit handler
     const handleSubmit = async (e) => {
         e.preventDefault()
@@ -558,6 +596,7 @@ const ServiceForm = () => {
         const isValid = validateForm()
 
         if (!isValid) {
+            window.scrollTo({top:0 , behavior:'smooth'})
             setMessage({
                 type: 'error',
                 text: 'Please fix all validation errors before submitting. Check all required fields marked with *.'
@@ -592,6 +631,12 @@ const ServiceForm = () => {
             formDataToSend.append('faq', JSON.stringify(formData.faq))
             formDataToSend.append('cta', JSON.stringify(formData.cta))
 
+            // ICON FILE
+            if (iconFile) {
+                console.log(iconFile)
+                formDataToSend.append("icon", iconFile)
+            }
+
             // Handle blocks with images
             const blocksWithImages = formData.blocks.map((block, index) => {
                 const blockCopy = { ...block }
@@ -613,6 +658,9 @@ const ServiceForm = () => {
             let response
             if (isEdit) {
                 formDataToSend.append('id', id)
+                console.log(formDataToSend
+
+                )
                 response = await updateService({ id, formData: formDataToSend }).unwrap()
             } else {
                 response = await createService(formDataToSend).unwrap()
@@ -634,6 +682,18 @@ const ServiceForm = () => {
                 const detailedErrors = Object.values(error.data.errors).flat().join(', ')
                 setMessage({ type: 'error', text: `Validation failed: ${detailedErrors}` })
             }
+        }
+    }
+
+    const handleIconUpload = (file) => {
+        if (file) {
+            const reader = new FileReader()
+            reader.onloadend = () => {
+                setIconPreview(reader.result) // preview
+            }
+            reader.readAsDataURL(file)
+
+            setIconFile(file) // actual file
         }
     }
 
@@ -766,6 +826,42 @@ const ServiceForm = () => {
 
                                 <div>
                                     <label style={{ color: 'rgba(255,255,255,0.8)', marginBottom: 8, display: 'block' }}>
+                                        Service Icon
+                                    </label>
+
+                                    <input
+                                        type="file"
+                                        accept="image/*"
+                                        onChange={(e) => handleIconUpload(e.target.files[0])}
+                                        style={{
+                                            padding: '12px 16px',
+                                            background: 'rgba(0,0,0,0.3)',
+                                            border: '1px solid rgba(255,255,255,0.1)',
+                                            borderRadius: 8,
+                                            color: '#fff',
+                                            cursor: 'pointer'
+                                        }}
+                                    />
+
+                                    {/* Preview */}
+                                    {iconPreview && (
+                                        <div style={{ marginTop: 10 }}>
+                                            <img
+                                                src={iconPreview}
+                                                alt="icon preview"
+                                                style={{
+                                                    width: 80,
+                                                    height: 80,
+                                                    objectFit: 'cover',
+                                                    borderRadius: 8
+                                                }}
+                                            />
+                                        </div>
+                                    )}
+                                </div>
+
+                                <div>
+                                    <label style={{ color: 'rgba(255,255,255,0.8)', marginBottom: 8, display: 'block' }}>
                                         Service Title <span style={{ color: '#ef4444' }}>*</span>
                                     </label>
                                     <input
@@ -832,7 +928,7 @@ const ServiceForm = () => {
                                     {errors.slug && <p style={{ color: '#ef4444', fontSize: 12, marginTop: 4 }}>{errors.slug}</p>}
                                 </div>
 
-                                <div>
+                                {/* <div>
                                     <label style={{ color: 'rgba(255,255,255,0.8)', marginBottom: 8, display: 'block' }}>
                                         Path / Route
                                     </label>
@@ -851,7 +947,7 @@ const ServiceForm = () => {
                                             fontSize: 14
                                         }}
                                     />
-                                </div>
+                                </div> */}
 
                                 <div>
                                     <label style={{ color: 'rgba(255,255,255,0.8)', marginBottom: 8, display: 'block' }}>
