@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 
 import { useParams } from "react-router-dom";
 import { AI_SERVICE_DATA } from "../data";
+import { useGetServiceBySlugQuery } from "../../redux/api";
 
 
 
@@ -825,10 +826,13 @@ export default function AIServiceDetail() {
   const [openFaq, setOpenFaq] = useState(null);
 
   const { id } = useParams();
-
   console.log(id)
 
-  const serviceData = AI_SERVICE_DATA.find(item => item.slug === id);
+  const { data } = useGetServiceBySlugQuery(id)
+
+  // console.log()
+
+  const serviceData = data?.data
 
   const blocks = serviceData?.blocks;
   const steps = serviceData?.approach.steps;
@@ -893,7 +897,7 @@ export default function AIServiceDetail() {
             ))}
           </div>
 
-          
+
 
           {/* Closing Paragraphs */}
           {serviceData.hero.closing?.map((c, i) => (
@@ -1016,11 +1020,11 @@ export default function AIServiceDetail() {
           </h3>
 
           <div className="who-needs-grid">
-            <ul className="who-list">
+            {serviceData.whoNeeds.problems?.length !== 0 && <ul className="who-list">
               {serviceData.whoNeeds.problems.map((item, i) => (
                 <li key={i}>✔ {item}</li>
               ))}
-            </ul>
+            </ul>}
 
             {serviceData.whoNeeds.idealFor && (
               <ul className="who-list">

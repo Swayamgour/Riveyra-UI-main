@@ -34,7 +34,7 @@ function ServiceCard({ svc, i, onSelect, isSelected, isMobile }) {
       onMouseEnter={() => setHov(true)}
       onMouseLeave={() => setHov(false)}
       // onClick={() => onSelect(svc)}
-      onClick={() => navigate(svc.path)}
+      // onClick={() => navigate(svc.path)}
 
       style={{
         // ── KEY: fill the grid cell height so all cards in a row are equal ──
@@ -422,7 +422,7 @@ export default function ServicesPage() {
                     transition={{ delay: i * 0.06, duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
                     onMouseEnter={() => setHovered(i)}
                     onMouseLeave={() => setHovered(null)}
-                    onClick={() => navigate(s.path)}
+                    // onClick={() => navigate(s.path)}
                   >
                     {/* Top accent bar — always visible on mobile via CSS, hover-only on desktop */}
                     <div

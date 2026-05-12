@@ -8,13 +8,18 @@ const cols = [
   {
     title: 'Services',
     links: [
-      { name: 'Web Development', path: '/services' },
-      { name: 'Mobile Apps', path: '/services' },
-      { name: 'UI/UX Design', path: '/services' },
-      { name: 'Digital Marketing', path: '/services' },
-      { name: 'ERP Solutions', path: '/services' },
-      { name: 'AI & Automation', path: '/services' },
-    ],
+      { name: 'AI Software Development', path: '/ServiceDetail/ai-software-development' },
+      { name: 'Machine Learning Solutions', path: '/ServiceDetail/machine-learning-solutions' },
+      { name: 'AI Web Development', path: '/ServiceDetail/ai-software-development' },
+      { name: 'AI Data Analytics & BI', path: '/ServiceDetail/ai-software-development' },
+      { name: 'AI Cybersecurity', path: '/ServiceDetail/ai-software-development' },
+      // { name: 'Automation & RPA', path: '/ServiceDetail/ai-software-development' },/
+      // { name: 'Conversational AI', path: '/ServiceDetail/ai-software-development' },
+      // { name: 'AI SEO, AEO, GEO, LLMO', path: '/ServiceDetail/ai-software-development' },
+      // { name: 'AI E-commerce', path: '/ServiceDetail/ai-software-development' },
+      // { name: 'AI Digital Marketing', path: '/ServiceDetail/ai-software-development' },
+      // { name: 'Enterprise AI Solutions', path: '/ServiceDetail/ai-software-development' }
+    ]
   },
   {
     title: 'Company',

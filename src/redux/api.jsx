@@ -42,6 +42,8 @@ export const api = createApi({
             providesTags: ["Projects"],
         }),
 
+
+
         getProjectBySlug: builder.query({
             query: (slug) => `/projects/${slug}`,
             providesTags: ["Projects"],
@@ -233,6 +235,42 @@ export const api = createApi({
             invalidatesTags: ["contact"],
         }),
 
+
+        // REGISTER
+        register: builder.mutation({
+            query: (data) => ({
+                url: 'auth/register',
+                method: 'POST',
+                body: data
+            })
+        }),
+
+        // LOGIN
+        login: builder.mutation({
+            query: (data) => ({
+                url: 'auth/login',
+                method: 'POST',
+                body: data
+            })
+        }),
+
+        // CHECK TOKEN
+        checkToken: builder.query({
+            query: () => ({
+                url: 'auth/check-token',
+                method: 'GET'
+            })
+        }),
+
+        // PROFILE
+        getProfile: builder.query({
+            query: () => ({
+                url: 'auth/profile',
+                method: 'GET'
+            }),
+            providesTags: ['Profile']
+        })
+
     }),
 });
 
@@ -273,7 +311,14 @@ export const {
 
 
     useGetContactQuery,
-    useCreateContactMutation
+    useCreateContactMutation,
+
+
+    useRegisterMutation,
+    useLoginMutation,
+    useCheckTokenQuery,
+    useGetProfileQuery
+
 
 } = api;
 

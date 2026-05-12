@@ -6,9 +6,9 @@ import { useBreakpoint } from '../../hooks/useBreakpoint.jsx'
 import ContactForm from '../ContactForm.jsx'
 
 const INFO = [
-  { icon: Icons.Mail, label: 'Email Us', value: 'hello@riveyra.com', sub: 'We reply within 2 hours', color: '#60a5fa' },
-  { icon: Icons.Phone, label: 'Call Us', value: '+91 9876 543 210', sub: 'Mon–Fri, 10AM–6:30PM IST', color: '#34d399' },
-  { icon: Icons.MapPin, label: 'Visit Us', value: 'Kanpur, Uttar Pradesh', sub: 'Also in Lucknow & Delhi', color: '#c084fc' },
+  { icon: Icons.Mail, label: 'Email Us', value: 'hr@riveyrainfotech.com  sales@riveyrainfotech.com', sub: 'We reply within 2 hours', color: '#60a5fa' },
+  { icon: Icons.Phone, label: 'Call Us', value: '+91 9919888269   +91 9219934954', sub: 'Mon–Fri, 10AM–6:30PM IST', color: '#34d399' },
+  { icon: Icons.MapPin, label: 'Visit Us', value: 'Kanpur, Uttar Pradesh STPI,8th floor, A-1/4 UPSIDC Complex, Lakhanpur, 208024.', sub: 'Also in Lucknow & Delhi', color: '#c084fc' },
 ]
 
 

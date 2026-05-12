@@ -596,7 +596,7 @@ const ServiceForm = () => {
         const isValid = validateForm()
 
         if (!isValid) {
-            window.scrollTo({top:0 , behavior:'smooth'})
+            window.scrollTo({ top: 0, behavior: 'smooth' })
             setMessage({
                 type: 'error',
                 text: 'Please fix all validation errors before submitting. Check all required fields marked with *.'
@@ -1876,6 +1876,7 @@ const ServiceForm = () => {
                         )}
 
                         {/* APPROACH TAB */}
+                        {/* APPROACH TAB */}
                         {activeTab === 'approach' && (
                             <div>
                                 <h3 style={{ fontSize: 18, fontWeight: 600, color: '#fff', marginBottom: 24 }}>
@@ -1905,6 +1906,7 @@ const ServiceForm = () => {
                                     />
                                 </div>
 
+                                {/* Steps Section */}
                                 <div style={{ marginBottom: 32 }}>
                                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 16 }}>
                                         <label style={{ color: 'rgba(255,255,255,0.8)' }}>Steps</label>
@@ -1918,6 +1920,74 @@ const ServiceForm = () => {
                                         }}>Add Step</button>
                                     </div>
 
+                                    {/* Input fields for adding new step */}
+                                    <div style={{
+                                        background: 'rgba(255,255,255,0.05)',
+                                        borderRadius: 12,
+                                        padding: 16,
+                                        marginBottom: 20
+                                    }}>
+                                        <h4 style={{ color: '#60a5fa', marginBottom: 12, fontSize: 14 }}>Add New Step</h4>
+                                        <div style={{ display: 'grid', gap: 12 }}>
+                                            <input
+                                                type="text"
+                                                placeholder="Step Number (e.g., 01, 02)"
+                                                value={tempStepNumber}
+                                                onChange={(e) => setTempStepNumber(e.target.value)}
+                                                style={{
+                                                    padding: '12px 16px',
+                                                    background: 'rgba(0,0,0,0.3)',
+                                                    border: '1px solid rgba(255,255,255,0.1)',
+                                                    borderRadius: 8,
+                                                    color: '#fff'
+                                                }}
+                                            />
+                                            <input
+                                                type="text"
+                                                placeholder="Step Title"
+                                                value={tempStepTitle}
+                                                onChange={(e) => setTempStepTitle(e.target.value)}
+                                                style={{
+                                                    padding: '12px 16px',
+                                                    background: 'rgba(0,0,0,0.3)',
+                                                    border: '1px solid rgba(255,255,255,0.1)',
+                                                    borderRadius: 8,
+                                                    color: '#fff'
+                                                }}
+                                            />
+                                            <textarea
+                                                placeholder="Step Description"
+                                                value={tempStepDesc}
+                                                onChange={(e) => setTempStepDesc(e.target.value)}
+                                                rows="3"
+                                                style={{
+                                                    padding: '12px 16px',
+                                                    background: 'rgba(0,0,0,0.3)',
+                                                    border: '1px solid rgba(255,255,255,0.1)',
+                                                    borderRadius: 8,
+                                                    color: '#fff',
+                                                    resize: 'vertical'
+                                                }}
+                                            />
+                                            <button
+                                                type="button"
+                                                onClick={addStep}
+                                                style={{
+                                                    padding: '10px',
+                                                    background: 'rgba(96,165,250,0.2)',
+                                                    border: '1px solid #60a5fa',
+                                                    borderRadius: 8,
+                                                    color: '#60a5fa',
+                                                    cursor: 'pointer',
+                                                    fontWeight: 500
+                                                }}
+                                            >
+                                                Add This Step
+                                            </button>
+                                        </div>
+                                    </div>
+
+                                    {/* Display existing steps */}
                                     {formData.approach.steps.map((step, idx) => (
                                         <div key={idx} style={{
                                             background: 'rgba(255,255,255,0.05)',
@@ -1925,6 +1995,18 @@ const ServiceForm = () => {
                                             padding: 16,
                                             marginBottom: 16
                                         }}>
+                                            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'start', marginBottom: 12 }}>
+                                                <h4 style={{ color: '#60a5fa' }}>Step {step.number || idx + 1}</h4>
+                                                <button type="button" onClick={() => removeStep(idx)} style={{
+                                                    padding: '6px 12px',
+                                                    background: 'rgba(239,68,68,0.2)',
+                                                    border: '1px solid #ef4444',
+                                                    borderRadius: 6,
+                                                    color: '#ef4444',
+                                                    cursor: 'pointer',
+                                                    fontSize: 12
+                                                }}>Remove</button>
+                                            </div>
                                             <div style={{ display: 'grid', gap: 12 }}>
                                                 <input
                                                     type="text"
@@ -1956,7 +2038,7 @@ const ServiceForm = () => {
                                                     placeholder="Step Description"
                                                     value={step.desc}
                                                     onChange={(e) => updateStep(idx, 'desc', e.target.value)}
-                                                    rows="2"
+                                                    rows="3"
                                                     style={{
                                                         padding: '12px 16px',
                                                         background: 'rgba(0,0,0,0.3)',
@@ -1965,19 +2047,25 @@ const ServiceForm = () => {
                                                         color: '#fff'
                                                     }}
                                                 />
-                                                <button type="button" onClick={() => removeStep(idx)} style={{
-                                                    padding: '8px',
-                                                    background: 'rgba(239,68,68,0.2)',
-                                                    border: '1px solid #ef4444',
-                                                    borderRadius: 8,
-                                                    color: '#ef4444',
-                                                    cursor: 'pointer'
-                                                }}>Remove Step</button>
                                             </div>
                                         </div>
                                     ))}
+
+                                    {formData.approach.steps.length === 0 && (
+                                        <div style={{
+                                            textAlign: 'center',
+                                            padding: 40,
+                                            background: 'rgba(255,255,255,0.03)',
+                                            borderRadius: 12,
+                                            color: 'rgba(255,255,255,0.4)',
+                                            fontSize: 14
+                                        }}>
+                                            No steps added yet. Fill the form above and click "Add This Step".
+                                        </div>
+                                    )}
                                 </div>
 
+                                {/* Why Choose Us Section */}
                                 <div>
                                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 16 }}>
                                         <label style={{ color: 'rgba(255,255,255,0.8)' }}>Why Choose Us</label>
@@ -1991,6 +2079,61 @@ const ServiceForm = () => {
                                         }}>Add Reason</button>
                                     </div>
 
+                                    {/* Input fields for adding new reason */}
+                                    <div style={{
+                                        background: 'rgba(255,255,255,0.05)',
+                                        borderRadius: 12,
+                                        padding: 16,
+                                        marginBottom: 20
+                                    }}>
+                                        <h4 style={{ color: '#60a5fa', marginBottom: 12, fontSize: 14 }}>Add New Reason</h4>
+                                        <div style={{ display: 'grid', gap: 12 }}>
+                                            <input
+                                                type="text"
+                                                placeholder="Reason Title"
+                                                value={tempWhyTitle}
+                                                onChange={(e) => setTempWhyTitle(e.target.value)}
+                                                style={{
+                                                    padding: '12px 16px',
+                                                    background: 'rgba(0,0,0,0.3)',
+                                                    border: '1px solid rgba(255,255,255,0.1)',
+                                                    borderRadius: 8,
+                                                    color: '#fff'
+                                                }}
+                                            />
+                                            <textarea
+                                                placeholder="Reason Description"
+                                                value={tempWhyDesc}
+                                                onChange={(e) => setTempWhyDesc(e.target.value)}
+                                                rows="3"
+                                                style={{
+                                                    padding: '12px 16px',
+                                                    background: 'rgba(0,0,0,0.3)',
+                                                    border: '1px solid rgba(255,255,255,0.1)',
+                                                    borderRadius: 8,
+                                                    color: '#fff',
+                                                    resize: 'vertical'
+                                                }}
+                                            />
+                                            <button
+                                                type="button"
+                                                onClick={addWhyChoose}
+                                                style={{
+                                                    padding: '10px',
+                                                    background: 'rgba(96,165,250,0.2)',
+                                                    border: '1px solid #60a5fa',
+                                                    borderRadius: 8,
+                                                    color: '#60a5fa',
+                                                    cursor: 'pointer',
+                                                    fontWeight: 500
+                                                }}
+                                            >
+                                                Add This Reason
+                                            </button>
+                                        </div>
+                                    </div>
+
+                                    {/* Display existing reasons */}
                                     {formData.approach.whyChoose.map((item, idx) => (
                                         <div key={idx} style={{
                                             background: 'rgba(255,255,255,0.05)',
@@ -1998,6 +2141,18 @@ const ServiceForm = () => {
                                             padding: 16,
                                             marginBottom: 16
                                         }}>
+                                            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'start', marginBottom: 12 }}>
+                                                <h4 style={{ color: '#60a5fa' }}>Reason {idx + 1}</h4>
+                                                <button type="button" onClick={() => removeWhyChoose(idx)} style={{
+                                                    padding: '6px 12px',
+                                                    background: 'rgba(239,68,68,0.2)',
+                                                    border: '1px solid #ef4444',
+                                                    borderRadius: 6,
+                                                    color: '#ef4444',
+                                                    cursor: 'pointer',
+                                                    fontSize: 12
+                                                }}>Remove</button>
+                                            </div>
                                             <div style={{ display: 'grid', gap: 12 }}>
                                                 <input
                                                     type="text"
@@ -2016,7 +2171,7 @@ const ServiceForm = () => {
                                                     placeholder="Description"
                                                     value={item.desc}
                                                     onChange={(e) => updateWhyChoose(idx, 'desc', e.target.value)}
-                                                    rows="2"
+                                                    rows="3"
                                                     style={{
                                                         padding: '12px 16px',
                                                         background: 'rgba(0,0,0,0.3)',
@@ -2025,17 +2180,22 @@ const ServiceForm = () => {
                                                         color: '#fff'
                                                     }}
                                                 />
-                                                <button type="button" onClick={() => removeWhyChoose(idx)} style={{
-                                                    padding: '8px',
-                                                    background: 'rgba(239,68,68,0.2)',
-                                                    border: '1px solid #ef4444',
-                                                    borderRadius: 8,
-                                                    color: '#ef4444',
-                                                    cursor: 'pointer'
-                                                }}>Remove</button>
                                             </div>
                                         </div>
                                     ))}
+
+                                    {formData.approach.whyChoose.length === 0 && (
+                                        <div style={{
+                                            textAlign: 'center',
+                                            padding: 40,
+                                            background: 'rgba(255,255,255,0.03)',
+                                            borderRadius: 12,
+                                            color: 'rgba(255,255,255,0.4)',
+                                            fontSize: 14
+                                        }}>
+                                            No reasons added yet. Fill the form above and click "Add This Reason".
+                                        </div>
+                                    )}
                                 </div>
                             </div>
                         )}

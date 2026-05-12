@@ -3,6 +3,7 @@ import { motion } from 'framer-motion'
 import { useBreakpoint } from '../../hooks/useBreakpoint.jsx'
 import { SERVICES } from '../data.jsx'
 import { useNavigate } from 'react-router-dom'
+import { useGetServicesQuery } from '../../redux/api.jsx'
 
 // ─── Service data ─────────────────────────────────────────────────────────────
 // {SERVICES}
@@ -211,6 +212,11 @@ if (typeof document !== 'undefined' && !document.getElementById('srv-styles')) {
 export default function Services() {
   const [hovered, setHovered] = useState(null)
   const { isMobile } = useBreakpoint()
+  // use
+
+  const { data } = useGetServicesQuery()
+
+  console.log()
 
   const navigate = useNavigate()
 
@@ -242,7 +248,7 @@ export default function Services() {
 
         {/* Grid */}
         <div className="srv-grid">
-          {SERVICES?.map((s, i) => {
+          {data?.data?.map((s, i) => {
             const isHov = hovered === i
             return (
               <motion.div
@@ -254,7 +260,7 @@ export default function Services() {
                 transition={{ delay: i * 0.06, duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
                 onMouseEnter={() => setHovered(i)}
                 onMouseLeave={() => setHovered(null)}
-                onClick={() => navigate(s.path)}
+                onClick={() => navigate(`ServiceDetail/${s.slug}`)}
               >
                 {/* Top accent bar — always visible on mobile via CSS, hover-only on desktop */}
                 <div
@@ -271,7 +277,12 @@ export default function Services() {
                     boxShadow: isHov ? `0 0 20px ${s.accent}22` : 'none',
                   }}
                 >
-                  {s.icon}
+                  <div>
+
+
+                    <img src={s.icons} />
+                  </div>
+                  {/* {s.icons} */}
                 </div>
 
                 <h3 className="srv-title">{s.title}</h3>

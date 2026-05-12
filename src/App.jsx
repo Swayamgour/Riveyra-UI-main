@@ -24,6 +24,8 @@ import CareerFrom from './pages/Admin/CareerFrom'
 import ApplyPage from './components/ApplyPage'
 import AdminApplicationsPage from './pages/Admin/AdminApplicationsPage'
 import ContactPage from './pages/Admin/ContactPage'
+import Login from './pages/Admin/Login'
+import ProtectedRoute from './components/ProtectedRoute'
 
 function AppShell() {
   // useScrollReveal()
@@ -65,7 +67,20 @@ function AppShell() {
         <Route path="/ServiceDetail/:id" element={<ServiceDetail />} />
 
 
-        <Route path="/admin" element={<AdminLayout />}>
+        <Route path="/admin/login" element={<Login />} />
+
+        <Route
+          path="/admin"
+          element={
+            <ProtectedRoute>
+              <AdminLayout />
+            </ProtectedRoute>
+          }
+        >
+
+
+          {/* <Route path="/admin" element={<AdminLayout />}> */}
+
           <Route path="/admin" element={<Admin />} />
           <Route path="dashboard" element={<Admin />} />
 
@@ -87,7 +102,7 @@ function AppShell() {
 
           <Route path="ContactClient" element={<ContactPage />} />
 
-          
+
           <Route path="ApplyCandidates" element={<AdminApplicationsPage />} />
         </Route>
       </Routes>
