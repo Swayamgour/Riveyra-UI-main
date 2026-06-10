@@ -1,0 +1,26 @@
+# robots.txt for riveyrainfotech.com
+# Generated: 2026-05-19
+
+# ==============================
+# All Search Engine Crawlers
+# ==============================
+
+User-agent: *
+Allow: /
+
+# Admin & system folders
+Disallow: /admin/
+Disallow: /cgi-bin/
+Disallow: /tmp/
+Disallow: /logs/
+Disallow: /includes/
+Disallow: /config/
+
+# URL parameters cleanup
+Disallow: /*sort=
+Disallow: /*filter=
+Disallow: /*ref=
+Disallow: /*session=
+Disallow: /*utm_
+
+Sitemap: https://riveyrainfotech.com/sitemap.xml

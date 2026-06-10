@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { useBreakpoint } from '../../hooks/useBreakpoint.jsx'
-import { SERVICES } from '../data.jsx'
+// import { SERVICES } from '../data.jsx'
 import { useNavigate } from 'react-router-dom'
 import { useGetServicesQuery } from '../../redux/api.jsx'
 

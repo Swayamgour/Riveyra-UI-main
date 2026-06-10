@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 
 
 import { useParams } from "react-router-dom";
-import { AI_SERVICE_DATA } from "../data";
+// import { AI_SERVICE_DATA } from "../data";
 import { useGetServiceBySlugQuery } from "../../redux/api";
 
 

@@ -72,7 +72,7 @@ export default function CTA() {
       {/* ── Background — unchanged ── */}
       <div style={{ position: 'absolute', inset: 0 }}>
         <img
-          src="../../public/DGFASLI.png" alt=""
+          src="/assets/DGFASLI.png" alt=""
           style={{ width: '100%', height: '100%', objectFit: 'cover', filter: 'brightness(0.14) saturate(1.4) blur(3px)' }}
         />
         <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(135deg,rgba(2,8,18,0.97) 0%,rgba(2,8,18,0.82) 50%,rgba(2,8,18,0.96) 100%)' }} />

@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import emailjs from "emailjs-com";
+import { useCreateContactMutation } from "../../redux/api";
 
 const ContactPopup = () => {
   const [isVisible, setIsVisible] = useState(false);
@@ -14,6 +15,9 @@ const ContactPopup = () => {
   const [submitted, setSubmitted] = useState(false);
   const [focused, setFocused] = useState("");
   const [isSelectOpen, setIsSelectOpen] = useState(false)
+
+  const [createContact] = useCreateContactMutation()
+
 
   useEffect(() => {
     const timer = setTimeout(() => setIsVisible(true), 1500);
@@ -42,37 +46,81 @@ const ContactPopup = () => {
     setFormData({ ...formData, [name]: value });
   };
 
- 
 
 
 
 
-  const handleSubmit = (e) => {
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    emailjs.send(
-      "service_ao0ke59",
-      "template_3lasqn6",
-      {
-        from_name: formData.name,
-        from_email: formData.email,
+    try {
+
+      // ✅ BACKEND API DATA
+      const payload = {
+        name: formData.name,
+        email: formData.email,
         phone: formData.phone,
         service: formData.service,
         message: formData.message,
-        to_email: "hr@riveyrainfotech.com",
-      },
-      "rGLRZGrKYrRiGque1"
-    )
-      .then(() => {
+      };
+
+      // ✅ YOUR BACKEND API HIT
+      // change URL with your backend API
+      await createContact(payload).unwrap();
+
+      // ✅ WEB3FORMS DATA
+      const submitData = new FormData();
+
+      submitData.append(
+        "access_key",
+        "a4be4a17-c3f0-42e2-9ef2-3184e17f785a"
+      );
+
+      submitData.append("name", formData.name);
+      submitData.append("email", formData.email);
+      submitData.append("phone", formData.phone);
+      submitData.append("service", formData.service);
+      submitData.append("message", formData.message);
+
+
+
+      // ✅ WEB3FORMS HIT
+      const response = await fetch(
+        "https://api.web3forms.com/submit",
+        {
+          method: "POST",
+          body: submitData,
+        }
+      );
+
+      const data = await response.json();
+
+      if (data.success) {
+
         setSubmitted(true);
+
+        setFormData({
+          name: "",
+          email: "",
+          phone: "",
+          service: "",
+          message: "",
+        });
+
         setTimeout(() => {
           handleClose();
         }, 2500);
-      })
-      .catch((error) => {
-        console.error("Email error:", error);
+
+      } else {
+        console.log("Error", data);
         alert("Failed to send message");
-      });
+      }
+
+    } catch (error) {
+      console.log(error);
+      alert("Something went wrong!");
+    }
   };
 
   if (!isVisible) return null;

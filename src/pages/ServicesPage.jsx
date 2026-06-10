@@ -3,9 +3,9 @@ import { useRef, useState } from 'react'
 import { motion, useInView, AnimatePresence } from 'framer-motion'
 import Icons from '../components/ui/Icons'
 import { useBreakpoint } from '../hooks/useBreakpoint.jsx'
-import { SERVICES } from '../components/data.jsx'
+// import { SERVICES } from '../components/data.jsx'
 import { useNavigate } from 'react-router-dom'
-import { useGetServicesQuery  , useGetServiceBySlugQuery} from '../redux/api.jsx'
+import { useGetServicesQuery, useGetServiceBySlugQuery } from '../redux/api.jsx'
 
 // {SERVICES}
 
@@ -291,6 +291,10 @@ export default function ServicesPage() {
     'Design': ['UI/UX Design'],
   }
 
+  const { data } = useGetServicesQuery()
+
+  let SERVICES = data?.data
+
   const filtered = filter === 'All'
     ? SERVICES
     : SERVICES.filter(s => (categoryMap[filter] || []).includes(s.title))
@@ -423,6 +427,7 @@ export default function ServicesPage() {
                     onMouseEnter={() => setHovered(i)}
                     onMouseLeave={() => setHovered(null)}
                     // onClick={() => navigate(s.path)}
+                    onClick={() => navigate(`/ServiceDetail/${s.slug}`)}
                   >
                     {/* Top accent bar — always visible on mobile via CSS, hover-only on desktop */}
                     <div
@@ -439,7 +444,11 @@ export default function ServicesPage() {
                         boxShadow: isHov ? `0 0 20px ${s.accent}22` : 'none',
                       }}
                     >
-                      {s.icon}
+                      <div>
+
+
+                        <img src={s.icons} />
+                      </div>
                     </div>
 
                     <h3 className="srv-title">{s.title}</h3>

@@ -3,10 +3,7 @@ import { useState, useRef } from 'react'
 import { motion, useInView, AnimatePresence, useScroll, useTransform, useSpring } from 'framer-motion'
 import Icons from '../components/ui/Icons'
 import { useBreakpoint } from '../hooks/useBreakpoint.jsx'
-import dgfasli from '../../public/DGFASLI.png'
-import SDRF from '../../public/SDRF.png'
-import NEIDO from '../../public/NEIDO.png'
-import MARTOLIA from '../../public/MARTOLIA.png'
+
 import { useNavigate } from 'react-router-dom'
 import { useGetProjectsQuery } from '../redux/api.jsx'
 

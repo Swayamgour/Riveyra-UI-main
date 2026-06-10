@@ -168,9 +168,10 @@ function ContactForm() {
             errors.email = "Invalid email format";
         }
 
-        // ✅ Phone (optional but if filled → validate)
+        // ✅ Phone
         if (form.phone) {
-            const cleaned = form.phone.replace(/\D/g, ""); // remove non-numbers
+            const cleaned = form.phone.replace(/\D/g, "");
+
             if (cleaned.length !== 10) {
                 errors.phone = "Phone must be 10 digits";
             }
@@ -191,38 +192,94 @@ function ContactForm() {
             errors.budget = "Select budget";
         }
 
-        // ❌ If any error → stop
+        // ❌ Stop if errors
         if (Object.keys(errors).length > 0) {
             setFormErrors(errors);
-            // Scroll to first error
-            const firstErrorField = document.querySelector('.error-field');
+
+            const firstErrorField = document.querySelector(".error-field");
+
             if (firstErrorField) {
-                firstErrorField.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                firstErrorField.scrollIntoView({
+                    behavior: "smooth",
+                    block: "center",
+                });
             }
+
             return;
         }
 
         try {
             setSending(true);
 
+            // ✅ Backend Payload
             const payload = {
                 ...form,
                 services,
                 budget,
             };
 
-            const res = await createContact(payload).unwrap();
+            // ✅ YOUR BACKEND API
+            await createContact(payload).unwrap();
 
-            // ✅ success
+            // ✅ WEB3FORMS MAIL
+            const formData = new FormData();
+
+            formData.append(
+                "access_key",
+                "a4be4a17-c3f0-42e2-9ef2-3184e17f785a"
+            );
+
+            formData.append("name", form.name);
+            formData.append("email", form.email);
+            formData.append("phone", form.phone || "");
+            formData.append("company", form.company || "");
+            formData.append("message", form.message);
+
+            formData.append(
+                "services",
+                services.join(", ")
+            );
+
+            formData.append("budget", budget);
+
+            const response = await fetch(
+                "https://api.web3forms.com/submit",
+                {
+                    method: "POST",
+                    body: formData,
+                }
+            );
+
+            const data = await response.json();
+
+            if (!data.success) {
+                console.log("Web3Forms Error:", data);
+            }
+
+            // ✅ SUCCESS
             setSent(true);
-            setForm({ name: '', email: '', phone: '', company: '', message: '' });
+
+            setForm({
+                name: "",
+                email: "",
+                phone: "",
+                company: "",
+                message: "",
+            });
+
             setServices([]);
-            setBudget('');
+            setBudget("");
             setFormErrors({});
 
         } catch (err) {
             console.log(err);
-            setFormErrors({ submit: err?.data?.message || "Something went wrong" });
+
+            setFormErrors({
+                submit:
+                    err?.data?.message ||
+                    "Something went wrong",
+            });
+
         } finally {
             setSending(false);
         }
