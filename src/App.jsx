@@ -53,7 +53,7 @@ function AppShell() {
       <CustomCursor />
       <ScrollToTop />
 
-      {!isAdminRoute && <ContactPopup />}
+      {/* {!isAdminRoute && <ContactPopup />} */}
       {!isAdminRoute && <Navbar />}
 
       <Routes>

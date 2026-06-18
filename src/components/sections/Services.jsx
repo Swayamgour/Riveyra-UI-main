@@ -104,14 +104,15 @@ const STYLE = `
   .srv-card:hover .srv-card-top-bar { opacity: 1; }
 
   .srv-icon-wrap {
-    width: 48px; height: 48px;
+    width: 30px; 
+    height: 48px;
     border-radius: 10px;
     display: flex; align-items: center; justify-content: center;
     margin-bottom: 20px;
     transition: transform 0.3s ease;
   }
   @media (max-width: 560px) {
-    .srv-icon-wrap { width: 40px; height: 40px; margin-bottom: 14px; }
+    .srv-icon-wrap { width: 30px; height: 40px; margin-bottom: 14px; }
   }
   .srv-card:hover .srv-icon-wrap { transform: scale(1.08); }
 
@@ -135,7 +136,7 @@ const STYLE = `
 
   .srv-tag {
     font-family: 'JetBrains Mono', monospace;
-    font-size: clamp(9px, 2.4vw, 10.5px);
+    font-size: clamp(9px, 2.4vw, 15px);
     font-weight: 500;
     padding: 3px 8px;
     border-radius: 3px;

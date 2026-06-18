@@ -3,12 +3,16 @@ import TypeWriter from '../ui/TypeWriter'
 import Icons from '../ui/Icons'
 import { useState, useCallback, useRef } from 'react'
 import { useBreakpoint } from '../../hooks/useBreakpoint.jsx'
+import start from '../../assets/1.png'
+import iso27001 from '../../assets/2.png'
+import iso20000 from '../../assets/3.png'
+import cmmi5 from '../../assets/4.png'
 
 const CERTS = [
-  { src: './startupindia.png', alt: 'Startup India' },
-  { src: './iso2700.png', alt: 'ISO 27001' },
-  { src: './iso-c2.png', alt: 'ISO Certified' },
-  { src: './cmmi-5-logo.png', alt: 'CMMI Certified' },
+  { src: start, alt: 'Startup India' },
+  { src: iso27001, alt: 'ISO 27001' },
+  { src: iso20000, alt: 'ISO Certified' },
+  { src: cmmi5, alt: 'CMMI Certified' },
 ]
 
 // ─── 3D Badge ─────────────────────────────────────────────────────────────────
@@ -20,7 +24,7 @@ function Badge3D({ cert, compact = false }) {
   const w = compact ? 108 : 128
   const h = compact ? 58 : 68
   const iw = compact ? 54 : 66
-  const ih = compact ? 38 : 46
+  const ih = compact ? 38 : 56
 
   const onMove = useCallback(e => {
     if (frameRef.current) return
@@ -66,13 +70,13 @@ function Badge3D({ cert, compact = false }) {
         <img
           src={cert.src} alt={cert.alt} loading="lazy"
           style={{
-            width: iw, height: ih, objectFit: 'contain', position: 'relative', zIndex: 1,
-            filter: hov
-              ? 'brightness(0) invert(1) drop-shadow(0 2px 8px rgba(96,165,250,0.9))'
-              : 'brightness(0) invert(1) drop-shadow(0 1px 4px rgba(0,0,0,0.6))',
-            opacity: hov ? 1 : 0.72,
-            transition: 'opacity 0.3s, filter 0.3s',
-            transform: 'translateZ(6px)',
+            height: ih, objectFit: 'contain', position: 'relative', zIndex: 1,
+            // filter: hov
+            //   ? 'brightness(0) invert(1) drop-shadow(0 2px 8px rgba(96,165,250,0.9))'
+            //   : 'brightness(0) invert(1) drop-shadow(0 1px 4px rgba(0,0,0,0.6))',
+            // opacity: hov ? 1 : 0.72,
+            // transition: 'opacity 0.3s, filter 0.3s',
+            // transform: 'translateZ(6px)',
           }}
         />
       </div>
@@ -107,7 +111,7 @@ function MobileCertStrip() {
           {[...CERTS, ...CERTS].map((cert, i) => (
             <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 16, flexShrink: 0, paddingLeft: i === 0 ? 16 : 0 }}>
               <img src={cert.src} alt={cert.alt} loading="lazy"
-                style={{ width: 64, height: 38, objectFit: 'contain', filter: 'brightness(0) invert(1)', opacity: 0.75, flexShrink: 0 }}
+                style={{ width: 64, height: 38, objectFit: 'contain'}}
               />
               <div style={{ width: 1, height: 20, background: 'rgba(255,255,255,0.08)', flexShrink: 0 }} />
             </div>

@@ -125,7 +125,7 @@ function ProjectCard({ project, i }) {
         {/* CAT pill — top left */}
         <div style={{
           position: 'absolute', top: 14, left: 14, zIndex: 4,
-          fontSize: 9.5, padding: '5px 11px', borderRadius: 100,
+          fontSize: 12, padding: '5px 11px', borderRadius: 100,
           background: `${project.color}1a`, border: `1px solid ${project.color}55`,
           color: project.color, fontFamily: 'var(--font-mono)', fontWeight: 600,
           letterSpacing: 1.4, backdropFilter: 'blur(10px)',
@@ -136,7 +136,7 @@ function ProjectCard({ project, i }) {
         {/* YEAR badge — top right */}
         <div style={{
           position: 'absolute', top: 14, right: 14, zIndex: 4,
-          fontSize: 9.5, padding: '5px 10px', borderRadius: 8,
+          fontSize: 12, padding: '5px 10px', borderRadius: 8,
           background: 'rgba(4,9,20,0.8)', color: 'rgba(255,255,255,0.42)',
           fontFamily: 'var(--font-mono)', backdropFilter: 'blur(10px)',
         }}>
@@ -226,7 +226,7 @@ function ProjectCard({ project, i }) {
         <div style={{ display: 'flex', gap: 5, flexWrap: 'wrap' }}>
           {project.tech.slice(0, 3)?.map((t , index) => (
             <span key={index} style={{
-              fontSize: 9.5, padding: '3px 9px', borderRadius: 5,
+              fontSize: 12, padding: '3px 9px', borderRadius: 5,
               background: `${project.color}10`, color: project.color,
               border: `1px solid ${project.color}28`,
               fontFamily: 'var(--font-mono)', fontWeight: 600,
@@ -238,7 +238,7 @@ function ProjectCard({ project, i }) {
           ))}
           {project?.tech?.length > 3 && (
             <span style={{
-              fontSize: 9.5, padding: '3px 8px', borderRadius: 5,
+              fontSize: 12, padding: '3px 8px', borderRadius: 5,
               background: 'rgba(255,255,255,0.04)',
               color: 'rgba(255,255,255,0.28)',
               fontFamily: 'var(--font-mono)',
