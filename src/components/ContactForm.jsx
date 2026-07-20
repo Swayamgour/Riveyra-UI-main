@@ -5,6 +5,8 @@ import { motion, useInView, AnimatePresence } from 'framer-motion'
 import Icons from '../components/ui/Icons'
 import { useBreakpoint } from '../hooks/useBreakpoint'
 import { useCreateContactMutation } from '../redux/api'
+import emailjs from "@emailjs/browser";
+
 // import { useBreakpoint } from '../../hooks/useBreakpoint.jsx'
 // import ContactForm from '../ContactForm.jsx'
 
@@ -151,24 +153,26 @@ function ContactForm() {
     const set = (k, v) => setForm(f => ({ ...f, [k]: v }))
     const toggleService = s => setServices(p => p.includes(s) ? p.filter(x => x !== s) : [...p, s])
 
+
+
     const handleSubmit = async (e) => {
         e.preventDefault();
 
         const errors = {};
 
-        // ✅ Name
+        // Name
         if (!form.name?.trim()) {
             errors.name = "Name is required";
         }
 
-        // ✅ Email
+        // Email
         if (!form.email?.trim()) {
             errors.email = "Email is required";
         } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(form.email)) {
             errors.email = "Invalid email format";
         }
 
-        // ✅ Phone
+        // Phone
         if (form.phone) {
             const cleaned = form.phone.replace(/\D/g, "");
 
@@ -177,22 +181,21 @@ function ContactForm() {
             }
         }
 
-        // ✅ Message
+        // Message
         if (!form.message?.trim()) {
             errors.message = "Message is required";
         }
 
-        // ✅ Services
+        // Services
         if (!services.length) {
             errors.services = "Select at least one service";
         }
 
-        // ✅ Budget
+        // Budget
         if (!budget) {
             errors.budget = "Select budget";
         }
 
-        // ❌ Stop if errors
         if (Object.keys(errors).length > 0) {
             setFormErrors(errors);
 
@@ -211,52 +214,43 @@ function ContactForm() {
         try {
             setSending(true);
 
-            // ✅ Backend Payload
+            // ======================
+            // Save in Backend
+            // ======================
+
             const payload = {
                 ...form,
                 services,
                 budget,
             };
 
-            // ✅ YOUR BACKEND API
             await createContact(payload).unwrap();
 
-            // ✅ WEB3FORMS MAIL
-            const formData = new FormData();
+            // ======================
+            // Send Email using EmailJS
+            // ======================
 
-            formData.append(
-                "access_key",
-                "a4be4a17-c3f0-42e2-9ef2-3184e17f785a"
+            const templateParams = {
+                name: form.name,
+                email: form.email,
+                phone: form.phone || "",
+                company: form.company || "",
+                services: services.join(", "),
+                budget: budget,
+                message: form.message,
+            };
+
+            await emailjs.send(
+                "service_bablg2q",      // e.g. service_abcd123
+                "template_3pzex5z",     // e.g. template_xyz123
+                templateParams,
+                "QdA9R7vW9eW5yIRV2"       // e.g. xxxxxxxxxxxxxxxxx
             );
 
-            formData.append("name", form.name);
-            formData.append("email", form.email);
-            formData.append("phone", form.phone || "");
-            formData.append("company", form.company || "");
-            formData.append("message", form.message);
+            // ======================
+            // Success
+            // ======================
 
-            formData.append(
-                "services",
-                services.join(", ")
-            );
-
-            formData.append("budget", budget);
-
-            const response = await fetch(
-                "https://api.web3forms.com/submit",
-                {
-                    method: "POST",
-                    body: formData,
-                }
-            );
-
-            const data = await response.json();
-
-            if (!data.success) {
-                console.log("Web3Forms Error:", data);
-            }
-
-            // ✅ SUCCESS
             setSent(true);
 
             setForm({
@@ -276,6 +270,7 @@ function ContactForm() {
 
             setFormErrors({
                 submit:
+                    err?.text ||
                     err?.data?.message ||
                     "Something went wrong",
             });

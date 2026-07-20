@@ -13,6 +13,7 @@ const PAGE_ROUTES = {
   services: '/services',
   portfolio: '/portfolio',
   career: '/career',
+  blogs: '/blogs',
   home: '/'
 }
 
@@ -154,7 +155,7 @@ export default function Navbar() {
         }}
       >
         <div onClick={handleLogoClick} style={{ cursor: 'pointer', zIndex: 1001 }} data-hover>
-          <Logo height={34} animate />
+          <Logo height={52} animate />
         </div>
 
         {/* ── Desktop Nav ── */}

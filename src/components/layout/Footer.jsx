@@ -95,7 +95,7 @@ export default function Footer() {
               marginBottom: 40,
             }}>
               <div onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })} style={{ cursor: 'pointer' }} data-hover>
-                <Logo height={30} />
+                <Logo height={50} />
               </div>
               <p style={{ fontSize: 14, lineHeight: 1.8, color: 'rgba(255,255,255,0.55)', fontFamily: 'var(--font-body)', maxWidth: 280 }}>
                 Kanpur's premier IT company delivering innovative digital solutions across India and beyond.
@@ -128,7 +128,7 @@ export default function Footer() {
             {!isMobile && (
               <div>
                 <div onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })} style={{ cursor: 'pointer', marginBottom: 22 }} data-hover>
-                  <Logo height={34} />
+                  <Logo height={50} />
                 </div>
                 <p style={{ fontSize: 14.5, lineHeight: 1.88, color: 'rgba(255,255,255,0.6)', marginBottom: 30, fontFamily: 'var(--font-body)', maxWidth: 310 }}>
                   Kanpur's premier IT company delivering innovative digital solutions across India and beyond.

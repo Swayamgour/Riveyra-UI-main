@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
-import emailjs from "emailjs-com";
+// import emailjs from "emailjs-com";
 import { useCreateContactMutation } from "../../redux/api";
+import emailjs from "@emailjs/browser";
 
 const ContactPopup = () => {
   const [isVisible, setIsVisible] = useState(false);
@@ -56,7 +57,10 @@ const ContactPopup = () => {
 
     try {
 
-      // ✅ BACKEND API DATA
+      // ======================
+      // Backend API Data
+      // ======================
+
       const payload = {
         name: formData.name,
         email: formData.email,
@@ -65,63 +69,70 @@ const ContactPopup = () => {
         message: formData.message,
       };
 
-      // ✅ YOUR BACKEND API HIT
-      // change URL with your backend API
+
+      // ======================
+      // Save in Backend
+      // ======================
+
       await createContact(payload).unwrap();
 
-      // ✅ WEB3FORMS DATA
-      const submitData = new FormData();
 
-      submitData.append(
-        "access_key",
-        "a4be4a17-c3f0-42e2-9ef2-3184e17f785a"
+      // ======================
+      // Send Email using EmailJS
+      // ======================
+
+      const templateParams = {
+        name: formData.name,
+        email: formData.email,
+        phone: formData.phone || "",
+        service: formData.service,
+        message: formData.message,
+      };
+
+
+      await emailjs.send(
+        "service_bablg2q",       // Service ID
+        "template_3pzex5z",      // Template ID
+        templateParams,
+        "QdA9R7vW9eW5yIRV2"      // Public Key
       );
 
-      submitData.append("name", formData.name);
-      submitData.append("email", formData.email);
-      submitData.append("phone", formData.phone);
-      submitData.append("service", formData.service);
-      submitData.append("message", formData.message);
+
+      // ======================
+      // Success
+      // ======================
+
+      setSubmitted(true);
 
 
+      // Reset Form
+      setFormData({
+        name: "",
+        email: "",
+        phone: "",
+        service: "",
+        message: "",
+      });
 
-      // ✅ WEB3FORMS HIT
-      const response = await fetch(
-        "https://api.web3forms.com/submit",
-        {
-          method: "POST",
-          body: submitData,
-        }
-      );
 
-      const data = await response.json();
+      setTimeout(() => {
+        handleClose();
+      }, 2500);
 
-      if (data.success) {
-
-        setSubmitted(true);
-
-        setFormData({
-          name: "",
-          email: "",
-          phone: "",
-          service: "",
-          message: "",
-        });
-
-        setTimeout(() => {
-          handleClose();
-        }, 2500);
-
-      } else {
-        console.log("Error", data);
-        alert("Failed to send message");
-      }
 
     } catch (error) {
+
       console.log(error);
-      alert("Something went wrong!");
+
+      alert(
+        error?.text ||
+        error?.data?.message ||
+        "Something went wrong!"
+      );
+
     }
   };
+
 
   if (!isVisible) return null;
 

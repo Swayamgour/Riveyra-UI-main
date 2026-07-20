@@ -13,6 +13,8 @@ const Icons = {
     Mobile: () => <span>📱</span>,
     Marketing: () => <span>📈</span>,
     Settings: () => <span>⚙️</span>,
+    Categories: () => <span>🗂️</span>,
+    Blogs: () => <span>📝</span>, 
 };
 
 export default function AdminLayout() {
@@ -25,6 +27,8 @@ export default function AdminLayout() {
         { path: '/admin/careers', label: 'Careers', icon: <Icons.Career /> },
         { path: '/admin/ApplyCandidates', label: 'Applications', icon: <Icons.Career /> },
         { path: '/admin/ContactClient', label: 'Clients Queries', icon: <Icons.Career /> },
+        { path: "/admin/categories", label: "Categories", icon: <Icons.Categories /> },
+        { path: "/admin/blogs", label: "Blogs", icon: <Icons.Blogs /> },
 
     ];
 

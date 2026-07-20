@@ -2,6 +2,7 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 // const BASE_URL = "https://lead-crm-backend-1cq8.onrender.com/api";
 const BASE_URL = "https://riveyra.admin.amaxjobs.com/api/v1";
+// const BASE_URL = "http://localhost:5000/api/v1";
 
 const baseQuery = fetchBaseQuery({
     baseUrl: BASE_URL,
@@ -15,7 +16,16 @@ const baseQuery = fetchBaseQuery({
         }
 
         // 🔥 IMPORTANT: JSON header only for non-file APIs
-        if (endpoint !== "createProject") {
+        // if (endpoint !== "createProject") {
+        //     headers.set("Content-Type", "application/json");
+        // }
+        
+        if (
+            endpoint !== "createProject" &&
+            endpoint !== "updateProject" &&
+            endpoint !== "createBlog" &&
+            endpoint !== "updateBlog"
+        ) {
             headers.set("Content-Type", "application/json");
         }
 
@@ -30,6 +40,8 @@ export const api = createApi({
         "Projects",
         "Careers",
         "Services",
+        "Categories",
+        "Blogs",
         "contact"
     ],
 
@@ -216,7 +228,114 @@ export const api = createApi({
             }),
             invalidatesTags: ["Services"],
         }),
+        
+        // ================= CATEGORIES =================
 
+        // GET ALL
+        getCategories: builder.query({
+            query: () => "/categories",
+            providesTags: ["Categories"],
+        }),
+
+        // GET SINGLE
+        getCategoryById: builder.query({
+            query: (id) => `/categories/${id}`,
+            providesTags: ["Categories"],
+        }),
+
+        // CREATE
+        createCategory: builder.mutation({
+            query: (data) => ({
+                url: "/categories",
+                method: "POST",
+                body: data,
+            }),
+            invalidatesTags: ["Categories"],
+        }),
+
+        // UPDATE
+        updateCategory: builder.mutation({
+            query: ({ id, data }) => ({
+                url: `/categories/${id}`,
+                method: "PUT",
+                body: data,
+            }),
+            invalidatesTags: ["Categories"],
+        }),
+
+        // DELETE
+        deleteCategory: builder.mutation({
+            query: (id) => ({
+                url: `/categories/${id}`,
+                method: "DELETE",
+            }),
+            invalidatesTags: ["Categories"],
+        }),
+        
+        
+        // ================= BLOGS =================
+
+        // GET ALL BLOGS (Admin)
+        getBlogs: builder.query({
+            query: () => "/blogs",
+            providesTags: ["Blogs"],
+        }),
+
+        // GET PUBLISHED BLOGS (Website)
+        getPublishedBlogs: builder.query({
+            query: () => "/blogs/published",
+            providesTags: ["Blogs"],
+        }),
+
+        // GET BLOG BY ID (Admin Edit)
+        getBlogById: builder.query({
+            query: (id) => `/blogs/id/${id}`,
+            providesTags: ["Blogs"],
+        }),
+
+        // GET BLOG BY SLUG (Website Detail)
+        getBlogBySlug: builder.query({
+            query: (slug) => `/blogs/${slug}`,
+            providesTags: ["Blogs"],
+        }),
+
+        // CREATE BLOG
+        createBlog: builder.mutation({
+            query: (formData) => ({
+                url: "/blogs",
+                method: "POST",
+                body: formData,
+            }),
+            invalidatesTags: ["Blogs"],
+        }),
+
+        // UPDATE BLOG
+        updateBlog: builder.mutation({
+            query: ({ id, formData }) => ({
+                url: `/blogs/${id}`,
+                method: "PUT",
+                body: formData,
+            }),
+            invalidatesTags: ["Blogs"],
+        }),
+
+        // DELETE BLOG
+        deleteBlog: builder.mutation({
+            query: (id) => ({
+                url: `/blogs/${id}`,
+                method: "DELETE",
+            }),
+            invalidatesTags: ["Blogs"],
+        }),
+
+        // TOGGLE PUBLISH / DRAFT
+        toggleBlogStatus: builder.mutation({
+            query: (id) => ({
+                url: `/blogs/${id}/status`,
+                method: "PATCH",
+            }),
+            invalidatesTags: ["Blogs"],
+        }),
 
 
 
@@ -308,6 +427,23 @@ export const {
     useUpdateServiceMutation,
     useDeleteServiceMutation,
     useGetServiceByIdQuery,
+    
+    // Categories
+    useGetCategoriesQuery,
+    useGetCategoryByIdQuery,
+    useCreateCategoryMutation,
+    useUpdateCategoryMutation,
+    useDeleteCategoryMutation,
+    
+    // Blogs
+    useGetBlogsQuery,
+    useGetPublishedBlogsQuery,
+    useGetBlogByIdQuery,
+    useGetBlogBySlugQuery,
+    useCreateBlogMutation,
+    useUpdateBlogMutation,
+    useDeleteBlogMutation,
+    useToggleBlogStatusMutation,
 
 
     useGetContactQuery,

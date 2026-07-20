@@ -10,6 +10,8 @@ import AboutPage from './pages/AboutPage'
 import ServicesPage from './pages/ServicesPage'
 import PortfolioPage from './pages/PortfolioPage'
 import CareerPage from './pages/CareerPage'
+import BlogsPage from './pages/BlogsPage'
+import BlogDetailPage from './pages/BlogDetailPage'
 import ServiceDetail from './components/sections/ServiceDetail'
 import ContactPopup from './components/ui/Contactpopup'
 import Admin from './pages/Admin/Admin'
@@ -26,6 +28,9 @@ import AdminApplicationsPage from './pages/Admin/AdminApplicationsPage'
 import ContactPage from './pages/Admin/ContactPage'
 import Login from './pages/Admin/Login'
 import ProtectedRoute from './components/ProtectedRoute'
+import CategoryManager from "./pages/Admin/CategoryManager";
+import BlogManager from "./pages/Admin/BlogManager";
+import BlogForm from "./pages/Admin/BlogForm";
 
 function AppShell() {
   // useScrollReveal()
@@ -53,7 +58,7 @@ function AppShell() {
       <CustomCursor />
       <ScrollToTop />
 
-      {/* {!isAdminRoute && <ContactPopup />} */}
+      {!isAdminRoute && <ContactPopup />}
       {!isAdminRoute && <Navbar />}
 
       <Routes>
@@ -63,6 +68,8 @@ function AppShell() {
         <Route path="/services" element={<ServicesPage />} />
         <Route path="/portfolio" element={<PortfolioPage />} />
         <Route path="/career" element={<CareerPage />} />
+        <Route path="/blogs" element={<BlogsPage />} />
+        <Route path="/blogs/:slug" element={<BlogDetailPage />} />
         <Route path="/Apply" element={<ApplyPage />} />
         <Route path="/ServiceDetail/:id" element={<ServiceDetail />} />
 
@@ -89,6 +96,11 @@ function AppShell() {
           <Route path="services/create" element={<ServiceForm />} />
           <Route path="services/:id/edit" element={<ServiceForm />} />
 
+          <Route path="categories" element={<CategoryManager />} />
+          
+          <Route path="blogs" element={<BlogManager />} />
+          <Route path="blogs/create" element={<BlogForm />} />
+          <Route path="blogs/:id/edit" element={<BlogForm />} />
 
           <Route path="portfolio" element={<PortfolioManager />} />
           <Route path="portfolio/create" element={<ProjectForm />} />

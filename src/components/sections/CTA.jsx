@@ -62,7 +62,7 @@ export default function CTA() {
 
   const contacts = [
     { Icon: Icons.Mail, label: 'hr@riveyrainfotech.com sales@riveyrainfotech.com' },
-    { Icon: Icons.Phone, label: '+91 9919888269 +91 9219934954' },
+    { Icon: Icons.Phone, label: '+91 9919888269' },
     { Icon: Icons.MapPin, label: 'Kanpur, Uttar Pradesh STPI,8th floor,A-1/4 UPSIDC Complex, Lakhanpur, 208024.' },
   ]
 

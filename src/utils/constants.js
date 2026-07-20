@@ -1,4 +1,4 @@
-export const NAV_LINKS = ['Home', 'About', 'Services', 'Portfolio', 'Career', 'Contact']
+export const NAV_LINKS = ['Home', 'About', 'Services', 'Portfolio', 'Career', 'Contact','Blogs']
 
 export const SERVICES = [
   { iconKey: 'Web', title: 'Web Development', desc: 'Blazing-fast, SEO-optimised websites and web apps built with cutting-edge stacks that scale with your business.', tags: ['React', 'Next.js', 'Node.js', 'PHP'], accent: '#60a5fa' },
