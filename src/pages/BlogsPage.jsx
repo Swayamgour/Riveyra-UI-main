@@ -2,6 +2,7 @@ import { useState, useRef } from "react";
 import { motion, AnimatePresence, useScroll, useTransform } from "framer-motion";
 import { useBreakpoint } from "../hooks/useBreakpoint";
 import { useGetPublishedBlogsQuery } from "../redux/api";
+import { Helmet } from "react-helmet-async";
 
 import BlogCard from "../components/ui/BlogCard";
 
@@ -170,15 +171,15 @@ export default function BlogsPage() {
 	const { data, isLoading } = useGetPublishedBlogsQuery();
 
 	const blogs = data?.data || [];
-	
+
 	const categories = [
-    "All",
-    ...new Set(
-        blogs
-            .map((b) => b.category?.name)
-            .filter(Boolean)
-    ),
-];
+		"All",
+		...new Set(
+			blogs
+				.map((b) => b.category?.name)
+				.filter(Boolean)
+		),
+	];
 
 	const filtered =
 		activeCategory === "All"
@@ -188,162 +189,170 @@ export default function BlogsPage() {
 	const px = isMobile ? "5%" : isTablet ? "6%" : "7%";
 
 	return (
-		<div
-			style={{
-				background: "var(--bg)",
-				minHeight: "100vh",
-				overflowX: "hidden",
-			}}
-		>
-			{/* HERO */}
-
-			<section
-				ref={heroRef}
+		<>
+			<Helmet>
+				<title>Latest AI Technology SEO and Digital Marketing Insights</title>
+				<meta
+					name="description"
+					content="Read expert blogs on AI, SEO, AEO, GEO, cybersecurity, software development, and digital marketing to stay ahead."
+				/>
+			</Helmet>
+			<div
 				style={{
-					position: "relative",
-					overflow: "hidden",
-					minHeight: isMobile ? "unset" : "72vh",
-					display: "flex",
-					alignItems: "center",
-					padding: isMobile ? "110px 5% 60px" : `130px ${px} 80px`,
+					background: "var(--bg)",
+					minHeight: "100vh",
+					overflowX: "hidden",
 				}}
 			>
-				<motion.div
+				{/* HERO */}
+
+				<section
+					ref={heroRef}
 					style={{
-						opacity: heroOpacity,
 						position: "relative",
-						zIndex: 2,
-						maxWidth: 800,
+						overflow: "hidden",
+						minHeight: isMobile ? "unset" : "72vh",
+						display: "flex",
+						alignItems: "center",
+						padding: isMobile ? "110px 5% 60px" : `130px ${px} 80px`,
+					}}
+				>
+					<motion.div
+						style={{
+							opacity: heroOpacity,
+							position: "relative",
+							zIndex: 2,
+							maxWidth: 800,
+						}}
+					>
+						<div
+							style={{
+								display: "flex",
+								alignItems: "center",
+								gap: 10,
+								marginBottom: 24,
+							}}
+						>
+							<div
+								style={{
+									width: 30,
+									height: 1,
+									background: "var(--accent)",
+								}}
+							/>
+
+							<span
+								style={{
+									fontSize: 10,
+									letterSpacing: 4,
+									color: "var(--accent)",
+									fontFamily: "var(--font-mono)",
+								}}
+							>
+								INSIGHTS
+							</span>
+						</div>
+
+						<h1
+							style={{
+								fontSize: isMobile
+									? "clamp(38px,10vw,58px)"
+									: "clamp(52px,6vw,88px)",
+
+								fontFamily: "var(--font-display)",
+								fontWeight: 800,
+								lineHeight: 0.95,
+								color: "#fff",
+							}}
+						>
+							Ideas That
+							<br />
+							Build <span className="gt">The Future</span>
+						</h1>
+
+						<p
+							style={{
+								marginTop: 24,
+								maxWidth: 520,
+								fontSize: 17,
+								lineHeight: 1.8,
+								color: "var(--muted)",
+							}}
+						>
+							Explore technology insights, development tips, and
+							industry knowledge from our experts.
+						</p>
+					</motion.div>
+				</section>
+
+				{/* <StatStrip isMobile={isMobile} /> */}
+
+				{/* FILTER */}
+
+				<div
+					style={{
+						padding: `25px ${px} 0`,
+						display: "flex",
+						justifyContent: "center",
 					}}
 				>
 					<div
 						style={{
 							display: "flex",
-							alignItems: "center",
-							gap: 10,
-							marginBottom: 24,
+							gap: 8,
+							overflowX: "auto",
+							padding: 10,
+							background: "var(--card)",
+							borderRadius: 100,
+							border: "1px solid var(--border)",
 						}}
 					>
-						<div
-							style={{
-								width: 30,
-								height: 1,
-								background: "var(--accent)",
-							}}
-						/>
-
-						<span
-							style={{
-								fontSize: 10,
-								letterSpacing: 4,
-								color: "var(--accent)",
-								fontFamily: "var(--font-mono)",
-							}}
-						>
-							INSIGHTS
-						</span>
+						{categories.map((cat, index) => (
+							<BlogPill
+								key={index}
+								label={cat}
+								active={activeCategory === cat}
+								onClick={() => setActiveCategory(cat)}
+							/>
+						))}
 					</div>
+				</div>
 
-					<h1
-						style={{
-							fontSize: isMobile
-								? "clamp(38px,10vw,58px)"
-								: "clamp(52px,6vw,88px)",
+				{/* BLOG GRID */}
 
-							fontFamily: "var(--font-display)",
-							fontWeight: 800,
-							lineHeight: 0.95,
-							color: "#fff",
-						}}
-					>
-						Ideas That
-						<br />
-						Build <span className="gt">The Future</span>
-					</h1>
-
-					<p
-						style={{
-							marginTop: 24,
-							maxWidth: 520,
-							fontSize: 17,
-							lineHeight: 1.8,
-							color: "var(--muted)",
-						}}
-					>
-						Explore technology insights, development tips, and
-						industry knowledge from our experts.
-					</p>
-				</motion.div>
-			</section>
-
-			{/* <StatStrip isMobile={isMobile} /> */}
-
-			{/* FILTER */}
-
-			<div
-				style={{
-					padding: `25px ${px} 0`,
-					display: "flex",
-					justifyContent: "center",
-				}}
-			>
 				<div
 					style={{
-						display: "flex",
-						gap: 8,
-						overflowX: "auto",
-						padding: 10,
-						background: "var(--card)",
-						borderRadius: 100,
-						border: "1px solid var(--border)",
+						maxWidth: 1200,
+						margin: "0 auto",
+						padding: isMobile ? "40px 5% 90px" : `50px ${px} 100px`,
 					}}
 				>
-					{categories.map((cat, index) => (
-						<BlogPill
-							key={index}
-							label={cat}
-							active={activeCategory === cat}
-							onClick={() => setActiveCategory(cat)}
-						/>
-					))}
-				</div>
-			</div>
-
-			{/* BLOG GRID */}
-
-			<div
-				style={{
-					maxWidth: 1200,
-					margin: "0 auto",
-					padding: isMobile ? "40px 5% 90px" : `50px ${px} 100px`,
-				}}
-			>
-				{isLoading ? (
-					<div
-						style={{
+					{isLoading ? (
+						<div
+							style={{
 								textAlign: "center",
 								padding: "80px 0",
 								color: "var(--muted)",
 								fontSize: 16,
-						}}
-				>
-						Loading blogs...
-				</div>
-				) : (
-					<AnimatePresence mode="wait">
-						<motion.div
-							key={activeCategory}
-							initial={{ opacity: 0, y: 20 }}
-							animate={{ opacity: 1, y: 0 }}
-							style={{
-								display: "grid",
-								gridTemplateColumns: isMobile
-									? "1fr"
-									: isTablet
-										? "repeat(2,1fr)"
-										: "repeat(3,1fr)",
-								gap: 24,
 							}}
+						>
+							Loading blogs...
+						</div>
+					) : (
+						<AnimatePresence mode="wait">
+							<motion.div
+								key={activeCategory}
+								initial={{ opacity: 0, y: 20 }}
+								animate={{ opacity: 1, y: 0 }}
+								style={{
+									display: "grid",
+									gridTemplateColumns: isMobile
+										? "1fr"
+										: isTablet
+											? "repeat(2,1fr)"
+											: "repeat(3,1fr)",
+									gap: 24,
+								}}
 							>
 								{filtered.length === 0 ? (
 									<div
@@ -363,10 +372,11 @@ export default function BlogsPage() {
 											index={index}
 										/>
 									)))}
-						</motion.div>
-					</AnimatePresence>
-				)}
+							</motion.div>
+						</AnimatePresence>
+					)}
+				</div>
 			</div>
-		</div>
+		</>
 	);
 }

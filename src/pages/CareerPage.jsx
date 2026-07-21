@@ -5,6 +5,7 @@ import Icons from '../components/ui/Icons'
 import { useBreakpoint } from '../hooks/useBreakpoint.jsx'
 import { useGetCareersQuery } from '../redux/api.jsx'
 import { useNavigate } from 'react-router-dom'
+import { Helmet } from "react-helmet-async";
 
 /* ══════════════════════════════════════════════════════
    DATA
@@ -410,397 +411,406 @@ export default function CareerPage() {
     : OPENINGS?.filter(j => j.dept === activeDept)
 
   return (
-    <div style={{ background: 'var(--bg)', minHeight: '100vh', overflowX: 'hidden' }}>
+    <>
+      <Helmet>
+        <title>Build Your Career with AI Software and Digital Innovation Experts</title>
+        <meta
+          name="description"
+          content="Explore exciting career opportunities in AI, software development, cloud, cybersecurity, and digital marketing at Riveyra."
+        />
+      </Helmet>
+      <div style={{ background: 'var(--bg)', minHeight: '100vh', overflowX: 'hidden' }}>
 
-      {/* ══ HERO ════════════════════════════════════════════════ */}
-      <section
-        ref={heroRef}
-        style={{
-          position: 'relative', overflow: 'hidden',
-          minHeight: isMobile ? 'unset' : '72vh',
-          display: 'flex', alignItems: 'center',
-          padding: isMobile ? '110px 5% 64px' : isTablet ? `130px 6% 72px` : `130px ${px} 80px`,
-        }}
-      >
-        {/* parallax BG */}
-        <motion.div style={{ y: heroY, position: 'absolute', inset: -80, zIndex: 0 }}>
-          <img
-            src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=1600&q=50"
-            alt=""
-            style={{ width: '100%', height: '100%', objectFit: 'cover', filter: 'brightness(0.07) saturate(0.5)' }}
-          />
-        </motion.div>
-
-        {/* overlays */}
-        <div style={{ position: 'absolute', inset: 0, zIndex: 1, background: 'linear-gradient(135deg,rgba(2,8,18,0.97) 0%,rgba(2,8,18,0.72) 55%,rgba(2,8,18,0.96) 100%)' }} />
-        <div style={{ position: 'absolute', inset: 0, zIndex: 1, pointerEvents: 'none', backgroundImage: 'linear-gradient(rgba(96,165,250,0.024) 1px,transparent 1px),linear-gradient(90deg,rgba(96,165,250,0.024) 1px,transparent 1px)', backgroundSize: '64px 64px' }} />
-
-        {/* ambient orbs */}
-        <div style={{ position: 'absolute', top: '-20%', right: '-4%', width: isMobile ? 260 : 560, height: isMobile ? 260 : 560, borderRadius: '50%', background: 'radial-gradient(circle,rgba(96,165,250,0.09),transparent 70%)', zIndex: 1, pointerEvents: 'none' }} />
-        <div style={{ position: 'absolute', bottom: '-10%', left: '-4%', width: isMobile ? 200 : 440, height: isMobile ? 200 : 440, borderRadius: '50%', background: 'radial-gradient(circle,rgba(52,211,153,0.07),transparent 70%)', zIndex: 1, pointerEvents: 'none' }} />
-
-        <motion.div style={{ opacity: heroOpacity, position: 'relative', zIndex: 2, maxWidth: 780, width: '100%' }}>
-
-          {/* eyebrow */}
-          <motion.div
-            initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-            style={{ display: 'inline-flex', alignItems: 'center', gap: 10, marginBottom: 24 }}
-          >
-            <div style={{ width: 28, height: 1, background: '#60a5fa' }} />
-            <span style={{ fontSize: 10, letterSpacing: 4, color: 'rgba(96,165,250,0.7)', fontFamily: 'var(--font-mono)', textTransform: 'uppercase' }}>Join Our Team</span>
+        {/* ══ HERO ════════════════════════════════════════════════ */}
+        <section
+          ref={heroRef}
+          style={{
+            position: 'relative', overflow: 'hidden',
+            minHeight: isMobile ? 'unset' : '72vh',
+            display: 'flex', alignItems: 'center',
+            padding: isMobile ? '110px 5% 64px' : isTablet ? `130px 6% 72px` : `130px ${px} 80px`,
+          }}
+        >
+          {/* parallax BG */}
+          <motion.div style={{ y: heroY, position: 'absolute', inset: -80, zIndex: 0 }}>
+            <img
+              src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=1600&q=50"
+              alt=""
+              style={{ width: '100%', height: '100%', objectFit: 'cover', filter: 'brightness(0.07) saturate(0.5)' }}
+            />
           </motion.div>
 
-          <motion.h1
-            initial={{ opacity: 0, y: 48 }} animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.1, duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
-            style={{
-              fontSize: isMobile ? 'clamp(36px,11vw,58px)' : 'clamp(52px,6.5vw,88px)',
-              fontFamily: 'var(--font-display)', fontWeight: 800,
-              lineHeight: 1.1, letterSpacing: '-2.5px',
-              marginBottom: 26,
-              paddingBottom: '0.1em',
-            }}
-          >
-            Build The Future<br />
-            With <span className="gt">Riveyra.</span>
-          </motion.h1>
+          {/* overlays */}
+          <div style={{ position: 'absolute', inset: 0, zIndex: 1, background: 'linear-gradient(135deg,rgba(2,8,18,0.97) 0%,rgba(2,8,18,0.72) 55%,rgba(2,8,18,0.96) 100%)' }} />
+          <div style={{ position: 'absolute', inset: 0, zIndex: 1, pointerEvents: 'none', backgroundImage: 'linear-gradient(rgba(96,165,250,0.024) 1px,transparent 1px),linear-gradient(90deg,rgba(96,165,250,0.024) 1px,transparent 1px)', backgroundSize: '64px 64px' }} />
 
-          <motion.p
-            initial={{ opacity: 0, y: 22 }} animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.28, duration: 0.8 }}
-            style={{ fontSize: isMobile ? 15 : 17, color: 'rgba(255,255,255,0.62)', maxWidth: 500, lineHeight: 1.85, fontFamily: 'var(--font-body)', marginBottom: isMobile ? 28 : 36 }}
-          >
-            We're a fast-growing tech company building real products for real impact. We hire curious, passionate people who want to do the best work of their lives.
-          </motion.p>
+          {/* ambient orbs */}
+          <div style={{ position: 'absolute', top: '-20%', right: '-4%', width: isMobile ? 260 : 560, height: isMobile ? 260 : 560, borderRadius: '50%', background: 'radial-gradient(circle,rgba(96,165,250,0.09),transparent 70%)', zIndex: 1, pointerEvents: 'none' }} />
+          <div style={{ position: 'absolute', bottom: '-10%', left: '-4%', width: isMobile ? 200 : 440, height: isMobile ? 200 : 440, borderRadius: '50%', background: 'radial-gradient(circle,rgba(52,211,153,0.07),transparent 70%)', zIndex: 1, pointerEvents: 'none' }} />
 
-          <motion.div
-            initial={{ opacity: 0, y: 18 }} animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.4, duration: 0.7 }}
-            style={{ display: 'flex', gap: 12, flexDirection: isMobile ? 'column' : 'row' }}
-          >
-            <button
-              className="btn-primary" data-hover
-              style={{ fontSize: 14, padding: '13px 28px', width: isMobile ? '100%' : 'auto' }}
-              onClick={() => document.getElementById('openings')?.scrollIntoView({ behavior: 'smooth' })}
-            >
-              See Open Roles <Icons.ArrowRight />
-            </button>
-            <button
-              className="btn-ghost" data-hover
-              style={{ fontSize: 14, padding: '13px 28px', width: isMobile ? '100%' : 'auto' }}
-              onClick={() => window.location.href = '/about'}
-            >
-              About Riveyra
-            </button>
-          </motion.div>
-        </motion.div>
-      </section>
+          <motion.div style={{ opacity: heroOpacity, position: 'relative', zIndex: 2, maxWidth: 780, width: '100%' }}>
 
-      {/* ══ CULTURE ═════════════════════════════════════════════ */}
-      <section style={{
-        padding: isMobile ? '64px 5%' : isTablet ? '72px 6%' : `80px ${px}`,
-        background: 'rgba(255,255,255,0.016)',
-        borderTop: '1px solid rgba(96,165,250,0.07)',
-        borderBottom: '1px solid rgba(96,165,250,0.07)',
-      }}>
-        <div style={{ maxWidth: 1200, margin: '0 auto' }}>
-
-          {/* section header */}
-          <motion.div
-            initial={{ opacity: 0, x: -20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }}
-            transition={{ duration: 0.7 }}
-            style={{ display: 'inline-flex', alignItems: 'center', gap: 10, marginBottom: 16 }}
-          >
-            <div style={{ width: 28, height: 1, background: '#34d399' }} />
-            <span style={{ fontSize: 10, letterSpacing: 4, color: 'rgba(52,211,153,0.7)', fontFamily: 'var(--font-mono)', textTransform: 'uppercase' }}>Life at Riveyra</span>
-          </motion.div>
-
-          <motion.h2
-            initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
-            transition={{ delay: 0.1, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-            style={{
-              fontSize: isMobile ? 'clamp(26px,8vw,38px)' : 'clamp(30px,3.5vw,50px)',
-              fontFamily: 'var(--font-display)', fontWeight: 800,
-              lineHeight: 1.05, letterSpacing: '-1.5px',
-              maxWidth: 560, marginBottom: 48,
-            }}
-          >
-            A Culture Built for <span className="gt2">Builders.</span>
-          </motion.h2>
-
-          <div style={{
-            display: 'grid',
-            gridTemplateColumns: isMobile ? '1fr' : isTablet ? 'repeat(2,1fr)' : 'repeat(4,1fr)',
-            gap: isMobile ? 14 : 20,
-          }}>
-            {CULTURE_ITEMS?.map((item, i) => <CultureCard key={i} item={item} i={i} />)}
-          </div>
-        </div>
-      </section>
-
-      {/* ══ BENEFITS ════════════════════════════════════════════ */}
-      <section style={{ padding: isMobile ? '64px 5%' : isTablet ? '72px 6%' : `80px ${px}` }}>
-        <div style={{ maxWidth: 1200, margin: '0 auto' }}>
-          <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr', gap: isMobile ? 40 : 72, alignItems: 'center' }}>
-
-            {/* left — copy */}
-            <div>
-              <motion.div
-                initial={{ opacity: 0, x: -20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }}
-                style={{ display: 'inline-flex', alignItems: 'center', gap: 10, marginBottom: 16 }}
-              >
-                <div style={{ width: 28, height: 1, background: '#c084fc' }} />
-                <span style={{ fontSize: 10, letterSpacing: 4, color: 'rgba(192,132,252,0.7)', fontFamily: 'var(--font-mono)', textTransform: 'uppercase' }}>Perks & Benefits</span>
-              </motion.div>
-              <motion.h2
-                initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
-                transition={{ delay: 0.1, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-                style={{
-                  fontSize: isMobile ? 'clamp(26px,8vw,38px)' : 'clamp(28px,3.2vw,46px)',
-                  fontFamily: 'var(--font-display)', fontWeight: 800,
-                  lineHeight: 1.05, letterSpacing: '-1.5px', marginBottom: 20,
-                }}
-              >
-                We Take Care of <span className="gt3">Our People.</span>
-              </motion.h2>
-              <motion.p
-                initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }}
-                transition={{ delay: 0.2 }}
-                style={{ fontSize: isMobile ? 14.5 : 16, color: 'rgba(255,255,255,0.58)', lineHeight: 1.85, fontFamily: 'var(--font-body)', maxWidth: 420 }}
-              >
-                From day one you get everything you need to do your best work — no bureaucracy, no compromise.
-              </motion.p>
-            </div>
-
-            {/* right — benefits grid */}
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2,1fr)', gap: isMobile ? 10 : 12 }}>
-              {BENEFITS.map((b, i) => <BenefitItem key={i} item={b} i={i} />)}
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* ══ OPENINGS ════════════════════════════════════════════ */}
-      <section
-        id="openings"
-        style={{
-          padding: isMobile ? '0 0 80px' : `0 0 100px`,
-          background: 'rgba(5,10,22,0.96)',
-          borderTop: '1px solid rgba(96,165,250,0.07)',
-        }}
-      >
-        <div style={{ maxWidth: 1200, margin: '0 auto', padding: isMobile ? '64px 5% 0' : isTablet ? '72px 6% 0' : `80px ${px} 0` }}>
-
-          {/* header */}
-          <motion.div
-            initial={{ opacity: 0, x: -20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }}
-            style={{ display: 'inline-flex', alignItems: 'center', gap: 10, marginBottom: 16 }}
-          >
-            <div style={{ width: 28, height: 1, background: '#60a5fa' }} />
-            <span style={{ fontSize: 10, letterSpacing: 4, color: 'rgba(96,165,250,0.7)', fontFamily: 'var(--font-mono)', textTransform: 'uppercase' }}>Open Positions</span>
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, y: 28 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
-            transition={{ delay: 0.1, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-            style={{
-              display: 'flex',
-              flexDirection: isMobile ? 'column' : 'row',
-              alignItems: isMobile ? 'flex-start' : 'flex-end',
-              justifyContent: 'space-between', gap: 16, marginBottom: 36,
-            }}
-          >
-            <h2 style={{
-              fontSize: isMobile ? 'clamp(26px,8vw,38px)' : 'clamp(30px,3.5vw,50px)',
-              fontFamily: 'var(--font-display)', fontWeight: 800,
-              lineHeight: 1.05, letterSpacing: '-1.5px',
-            }}>
-              {filtered.length} Role{filtered.length !== 1 ? 's' : ''}{' '}
-              <span className="gt">Available</span>
-            </h2>
-            <p style={{ fontSize: 13.5, color: 'rgba(255,255,255,0.42)', fontFamily: 'var(--font-mono)', letterSpacing: 1, flexShrink: 0 }}>
-              {activeDept === 'All' ? 'All departments' : activeDept}
-            </p>
-          </motion.div>
-
-          {/* filter bar — centered */}
-          <div style={{ display: 'flex', justifyContent: 'center', marginBottom: 40 }}>
+            {/* eyebrow */}
             <motion.div
-              initial={{ opacity: 0, y: 14 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
-              transition={{ delay: 0.2, duration: 0.65 }}
+              initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+              style={{ display: 'inline-flex', alignItems: 'center', gap: 10, marginBottom: 24 }}
+            >
+              <div style={{ width: 28, height: 1, background: '#60a5fa' }} />
+              <span style={{ fontSize: 10, letterSpacing: 4, color: 'rgba(96,165,250,0.7)', fontFamily: 'var(--font-mono)', textTransform: 'uppercase' }}>Join Our Team</span>
+            </motion.div>
+
+            <motion.h1
+              initial={{ opacity: 0, y: 48 }} animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.1, duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
               style={{
-                display: 'flex', gap: isMobile ? 6 : 8,
-                overflowX: 'auto', scrollbarWidth: 'none',
-                WebkitOverflowScrolling: 'touch',
-                padding: isMobile ? '10px 12px' : '11px 18px',
-                borderRadius: 100,
-                background: 'rgba(8,14,28,0.88)',
-                border: '1px solid rgba(96,165,250,0.1)',
-                backdropFilter: 'blur(20px)',
-                width: 'fit-content', maxWidth: '100%',
+                fontSize: isMobile ? 'clamp(36px,11vw,58px)' : 'clamp(52px,6.5vw,88px)',
+                fontFamily: 'var(--font-display)', fontWeight: 800,
+                lineHeight: 1.1, letterSpacing: '-2.5px',
+                marginBottom: 26,
+                paddingBottom: '0.1em',
               }}
             >
-              {DEPTS.map((d, index) => (
-                <Pill key={index} label={d} active={activeDept === d} onClick={() => setActiveDept(d)} />
-              ))}
-            </motion.div>
-          </div>
+              Build The Future<br />
+              With <span className="gt">Riveyra.</span>
+            </motion.h1>
 
-          {/* job cards */}
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={activeDept}
-              initial={{ opacity: 0, y: 18 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -10 }}
-              transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
+            <motion.p
+              initial={{ opacity: 0, y: 22 }} animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.28, duration: 0.8 }}
+              style={{ fontSize: isMobile ? 15 : 17, color: 'rgba(255,255,255,0.62)', maxWidth: 500, lineHeight: 1.85, fontFamily: 'var(--font-body)', marginBottom: isMobile ? 28 : 36 }}
             >
-              {filtered.length === 0 ? (
-                <div style={{ textAlign: 'center', padding: '80px 0', color: 'rgba(255,255,255,0.2)', fontFamily: 'var(--font-mono)', fontSize: 11.5, letterSpacing: 3 }}>
-                  NO OPENINGS IN THIS DEPARTMENT
-                </div>
-              ) : (
-                <div style={{
-                  display: 'grid',
-                  gridTemplateColumns: isMobile ? '1fr' : isTablet ? 'repeat(2,1fr)' : 'repeat(3,1fr)',
-                  gap: isMobile ? 16 : isTablet ? 20 : 24,
-                }}>
-                  {filtered?.map((job, i) => <JobCard key={i} job={job} i={i} />)}
-                </div>
-              )}
-            </motion.div>
-          </AnimatePresence>
-        </div>
-      </section>
+              We're a fast-growing tech company building real products for real impact. We hire curious, passionate people who want to do the best work of their lives.
+            </motion.p>
 
-      {/* ══ PROCESS ═════════════════════════════════════════════ */}
-      <section style={{
-        padding: isMobile ? '64px 5%' : isTablet ? '72px 6%' : `80px ${px}`,
-        borderTop: '1px solid rgba(96,165,250,0.07)',
-      }}>
-        <div style={{ maxWidth: 1200, margin: '0 auto' }}>
-
-          <div style={{ textAlign: 'center', marginBottom: isMobile ? 44 : 56 }}>
             <motion.div
-              initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }}
-              style={{ display: 'inline-flex', alignItems: 'center', gap: 12, marginBottom: 16 }}
+              initial={{ opacity: 0, y: 18 }} animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.4, duration: 0.7 }}
+              style={{ display: 'flex', gap: 12, flexDirection: isMobile ? 'column' : 'row' }}
             >
-              <div style={{ width: 32, height: 1, background: 'linear-gradient(90deg,transparent,rgba(96,165,250,0.6))' }} />
-              <span style={{ fontSize: 10, letterSpacing: 4, color: 'rgba(96,165,250,0.65)', fontFamily: 'var(--font-mono)', textTransform: 'uppercase' }}>Hiring Process</span>
-              <div style={{ width: 32, height: 1, background: 'linear-gradient(90deg,rgba(96,165,250,0.6),transparent)' }} />
+              <button
+                className="btn-primary" data-hover
+                style={{ fontSize: 14, padding: '13px 28px', width: isMobile ? '100%' : 'auto' }}
+                onClick={() => document.getElementById('openings')?.scrollIntoView({ behavior: 'smooth' })}
+              >
+                See Open Roles <Icons.ArrowRight />
+              </button>
+              <button
+                className="btn-ghost" data-hover
+                style={{ fontSize: 14, padding: '13px 28px', width: isMobile ? '100%' : 'auto' }}
+                onClick={() => window.location.href = '/about'}
+              >
+                About Riveyra
+              </button>
             </motion.div>
+          </motion.div>
+        </section>
+
+        {/* ══ CULTURE ═════════════════════════════════════════════ */}
+        <section style={{
+          padding: isMobile ? '64px 5%' : isTablet ? '72px 6%' : `80px ${px}`,
+          background: 'rgba(255,255,255,0.016)',
+          borderTop: '1px solid rgba(96,165,250,0.07)',
+          borderBottom: '1px solid rgba(96,165,250,0.07)',
+        }}>
+          <div style={{ maxWidth: 1200, margin: '0 auto' }}>
+
+            {/* section header */}
+            <motion.div
+              initial={{ opacity: 0, x: -20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }}
+              transition={{ duration: 0.7 }}
+              style={{ display: 'inline-flex', alignItems: 'center', gap: 10, marginBottom: 16 }}
+            >
+              <div style={{ width: 28, height: 1, background: '#34d399' }} />
+              <span style={{ fontSize: 10, letterSpacing: 4, color: 'rgba(52,211,153,0.7)', fontFamily: 'var(--font-mono)', textTransform: 'uppercase' }}>Life at Riveyra</span>
+            </motion.div>
+
             <motion.h2
-              initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
+              initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
               transition={{ delay: 0.1, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
               style={{
-                fontSize: isMobile ? 'clamp(24px,7vw,36px)' : 'clamp(28px,3.2vw,46px)',
+                fontSize: isMobile ? 'clamp(26px,8vw,38px)' : 'clamp(30px,3.5vw,50px)',
                 fontFamily: 'var(--font-display)', fontWeight: 800,
                 lineHeight: 1.05, letterSpacing: '-1.5px',
+                maxWidth: 560, marginBottom: 48,
               }}
             >
-              Simple. Fast. <span className="gt">Transparent.</span>
+              A Culture Built for <span className="gt2">Builders.</span>
             </motion.h2>
-          </div>
 
-          <div style={{
-            display: 'grid',
-            gridTemplateColumns: isMobile ? '1fr' : isTablet ? 'repeat(2,1fr)' : 'repeat(4,1fr)',
-            gap: isMobile ? 16 : 20, position: 'relative',
-          }}>
-            {/* connector line — desktop only */}
-            {!isMobile && !isTablet && (
-              <div style={{ position: 'absolute', top: 32, left: '12.5%', right: '12.5%', height: 1, background: 'linear-gradient(90deg,transparent,rgba(96,165,250,0.2),rgba(96,165,250,0.2),transparent)', zIndex: 0 }} />
-            )}
-            {PROCESS.map((step, i) => (
+            <div style={{
+              display: 'grid',
+              gridTemplateColumns: isMobile ? '1fr' : isTablet ? 'repeat(2,1fr)' : 'repeat(4,1fr)',
+              gap: isMobile ? 14 : 20,
+            }}>
+              {CULTURE_ITEMS?.map((item, i) => <CultureCard key={i} item={item} i={i} />)}
+            </div>
+          </div>
+        </section>
+
+        {/* ══ BENEFITS ════════════════════════════════════════════ */}
+        <section style={{ padding: isMobile ? '64px 5%' : isTablet ? '72px 6%' : `80px ${px}` }}>
+          <div style={{ maxWidth: 1200, margin: '0 auto' }}>
+            <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr', gap: isMobile ? 40 : 72, alignItems: 'center' }}>
+
+              {/* left — copy */}
+              <div>
+                <motion.div
+                  initial={{ opacity: 0, x: -20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }}
+                  style={{ display: 'inline-flex', alignItems: 'center', gap: 10, marginBottom: 16 }}
+                >
+                  <div style={{ width: 28, height: 1, background: '#c084fc' }} />
+                  <span style={{ fontSize: 10, letterSpacing: 4, color: 'rgba(192,132,252,0.7)', fontFamily: 'var(--font-mono)', textTransform: 'uppercase' }}>Perks & Benefits</span>
+                </motion.div>
+                <motion.h2
+                  initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
+                  transition={{ delay: 0.1, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+                  style={{
+                    fontSize: isMobile ? 'clamp(26px,8vw,38px)' : 'clamp(28px,3.2vw,46px)',
+                    fontFamily: 'var(--font-display)', fontWeight: 800,
+                    lineHeight: 1.05, letterSpacing: '-1.5px', marginBottom: 20,
+                  }}
+                >
+                  We Take Care of <span className="gt3">Our People.</span>
+                </motion.h2>
+                <motion.p
+                  initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }}
+                  transition={{ delay: 0.2 }}
+                  style={{ fontSize: isMobile ? 14.5 : 16, color: 'rgba(255,255,255,0.58)', lineHeight: 1.85, fontFamily: 'var(--font-body)', maxWidth: 420 }}
+                >
+                  From day one you get everything you need to do your best work — no bureaucracy, no compromise.
+                </motion.p>
+              </div>
+
+              {/* right — benefits grid */}
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2,1fr)', gap: isMobile ? 10 : 12 }}>
+                {BENEFITS.map((b, i) => <BenefitItem key={i} item={b} i={i} />)}
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* ══ OPENINGS ════════════════════════════════════════════ */}
+        <section
+          id="openings"
+          style={{
+            padding: isMobile ? '0 0 80px' : `0 0 100px`,
+            background: 'rgba(5,10,22,0.96)',
+            borderTop: '1px solid rgba(96,165,250,0.07)',
+          }}
+        >
+          <div style={{ maxWidth: 1200, margin: '0 auto', padding: isMobile ? '64px 5% 0' : isTablet ? '72px 6% 0' : `80px ${px} 0` }}>
+
+            {/* header */}
+            <motion.div
+              initial={{ opacity: 0, x: -20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }}
+              style={{ display: 'inline-flex', alignItems: 'center', gap: 10, marginBottom: 16 }}
+            >
+              <div style={{ width: 28, height: 1, background: '#60a5fa' }} />
+              <span style={{ fontSize: 10, letterSpacing: 4, color: 'rgba(96,165,250,0.7)', fontFamily: 'var(--font-mono)', textTransform: 'uppercase' }}>Open Positions</span>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, y: 28 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
+              transition={{ delay: 0.1, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+              style={{
+                display: 'flex',
+                flexDirection: isMobile ? 'column' : 'row',
+                alignItems: isMobile ? 'flex-start' : 'flex-end',
+                justifyContent: 'space-between', gap: 16, marginBottom: 36,
+              }}
+            >
+              <h2 style={{
+                fontSize: isMobile ? 'clamp(26px,8vw,38px)' : 'clamp(30px,3.5vw,50px)',
+                fontFamily: 'var(--font-display)', fontWeight: 800,
+                lineHeight: 1.05, letterSpacing: '-1.5px',
+              }}>
+                {filtered.length} Role{filtered.length !== 1 ? 's' : ''}{' '}
+                <span className="gt">Available</span>
+              </h2>
+              <p style={{ fontSize: 13.5, color: 'rgba(255,255,255,0.42)', fontFamily: 'var(--font-mono)', letterSpacing: 1, flexShrink: 0 }}>
+                {activeDept === 'All' ? 'All departments' : activeDept}
+              </p>
+            </motion.div>
+
+            {/* filter bar — centered */}
+            <div style={{ display: 'flex', justifyContent: 'center', marginBottom: 40 }}>
               <motion.div
-                key={step.num}
-                initial={{ opacity: 0, y: 32 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: '-40px' }}
-                transition={{ delay: i * 0.12, duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+                initial={{ opacity: 0, y: 14 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
+                transition={{ delay: 0.2, duration: 0.65 }}
                 style={{
-                  padding: isMobile ? '20px 18px' : '24px 20px',
-                  borderRadius: 16,
+                  display: 'flex', gap: isMobile ? 6 : 8,
+                  overflowX: 'auto', scrollbarWidth: 'none',
+                  WebkitOverflowScrolling: 'touch',
+                  padding: isMobile ? '10px 12px' : '11px 18px',
+                  borderRadius: 100,
                   background: 'rgba(8,14,28,0.88)',
                   border: '1px solid rgba(96,165,250,0.1)',
-                  textAlign: 'center', position: 'relative', zIndex: 1,
+                  backdropFilter: 'blur(20px)',
+                  width: 'fit-content', maxWidth: '100%',
                 }}
               >
-                <div style={{
-                  width: 52, height: 52, borderRadius: '50%', margin: '0 auto 16px',
-                  background: 'rgba(96,165,250,0.1)',
-                  border: '1px solid rgba(96,165,250,0.3)',
-                  display: 'flex', alignItems: 'center', justifyContent: 'center',
-                  fontSize: 13, fontFamily: 'var(--font-mono)', fontWeight: 700,
-                  color: '#60a5fa', letterSpacing: 1,
-                }}>
-                  {step.num}
-                </div>
-                <h3 style={{ fontSize: 16, fontFamily: 'var(--font-display)', fontWeight: 800, color: '#fff', marginBottom: 8 }}>{step.title}</h3>
-                <p style={{ fontSize: 13, color: 'rgba(255,255,255,0.52)', lineHeight: 1.7, fontFamily: 'var(--font-body)' }}>{step.desc}</p>
+                {DEPTS.map((d, index) => (
+                  <Pill key={index} label={d} active={activeDept === d} onClick={() => setActiveDept(d)} />
+                ))}
               </motion.div>
-            ))}
+            </div>
+
+            {/* job cards */}
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={activeDept}
+                initial={{ opacity: 0, y: 18 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -10 }}
+                transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
+              >
+                {filtered.length === 0 ? (
+                  <div style={{ textAlign: 'center', padding: '80px 0', color: 'rgba(255,255,255,0.2)', fontFamily: 'var(--font-mono)', fontSize: 11.5, letterSpacing: 3 }}>
+                    NO OPENINGS IN THIS DEPARTMENT
+                  </div>
+                ) : (
+                  <div style={{
+                    display: 'grid',
+                    gridTemplateColumns: isMobile ? '1fr' : isTablet ? 'repeat(2,1fr)' : 'repeat(3,1fr)',
+                    gap: isMobile ? 16 : isTablet ? 20 : 24,
+                  }}>
+                    {filtered?.map((job, i) => <JobCard key={i} job={job} i={i} />)}
+                  </div>
+                )}
+              </motion.div>
+            </AnimatePresence>
           </div>
-        </div>
-      </section>
+        </section>
 
-      {/* ══ BOTTOM CTA ══════════════════════════════════════════ */}
-      <section style={{
-        padding: isMobile ? '64px 5%' : isTablet ? '80px 6%' : `88px ${px}`,
-        borderTop: '1px solid rgba(96,165,250,0.07)',
-        background: 'rgba(5,10,22,0.98)',
-        textAlign: 'center', position: 'relative', overflow: 'hidden',
-      }}>
-        <div style={{ position: 'absolute', inset: 0, background: 'radial-gradient(ellipse at 50% 0%,rgba(96,165,250,0.06),transparent 65%)', pointerEvents: 'none' }} />
-        <div style={{ position: 'absolute', inset: 0, backgroundImage: 'linear-gradient(rgba(96,165,250,0.02) 1px,transparent 1px),linear-gradient(90deg,rgba(96,165,250,0.02) 1px,transparent 1px)', backgroundSize: '64px 64px', pointerEvents: 'none' }} />
+        {/* ══ PROCESS ═════════════════════════════════════════════ */}
+        <section style={{
+          padding: isMobile ? '64px 5%' : isTablet ? '72px 6%' : `80px ${px}`,
+          borderTop: '1px solid rgba(96,165,250,0.07)',
+        }}>
+          <div style={{ maxWidth: 1200, margin: '0 auto' }}>
 
-        <motion.div
-          initial={{ opacity: 0, y: 32 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
-          transition={{ duration: 0.85, ease: [0.16, 1, 0.3, 1] }}
-          style={{ position: 'relative', zIndex: 1 }}
-        >
-          <div style={{ display: 'inline-flex', alignItems: 'center', gap: 12, marginBottom: 20 }}>
-            <div style={{ width: 32, height: 1, background: 'linear-gradient(90deg,transparent,rgba(96,165,250,0.6))' }} />
-            <span style={{ fontSize: 10, letterSpacing: 4, color: 'rgba(96,165,250,0.65)', fontFamily: 'var(--font-mono)', textTransform: 'uppercase' }}>Don't See Your Role?</span>
-            <div style={{ width: 32, height: 1, background: 'linear-gradient(90deg,rgba(96,165,250,0.6),transparent)' }} />
+            <div style={{ textAlign: 'center', marginBottom: isMobile ? 44 : 56 }}>
+              <motion.div
+                initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }}
+                style={{ display: 'inline-flex', alignItems: 'center', gap: 12, marginBottom: 16 }}
+              >
+                <div style={{ width: 32, height: 1, background: 'linear-gradient(90deg,transparent,rgba(96,165,250,0.6))' }} />
+                <span style={{ fontSize: 10, letterSpacing: 4, color: 'rgba(96,165,250,0.65)', fontFamily: 'var(--font-mono)', textTransform: 'uppercase' }}>Hiring Process</span>
+                <div style={{ width: 32, height: 1, background: 'linear-gradient(90deg,rgba(96,165,250,0.6),transparent)' }} />
+              </motion.div>
+              <motion.h2
+                initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
+                transition={{ delay: 0.1, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+                style={{
+                  fontSize: isMobile ? 'clamp(24px,7vw,36px)' : 'clamp(28px,3.2vw,46px)',
+                  fontFamily: 'var(--font-display)', fontWeight: 800,
+                  lineHeight: 1.05, letterSpacing: '-1.5px',
+                }}
+              >
+                Simple. Fast. <span className="gt">Transparent.</span>
+              </motion.h2>
+            </div>
+
+            <div style={{
+              display: 'grid',
+              gridTemplateColumns: isMobile ? '1fr' : isTablet ? 'repeat(2,1fr)' : 'repeat(4,1fr)',
+              gap: isMobile ? 16 : 20, position: 'relative',
+            }}>
+              {/* connector line — desktop only */}
+              {!isMobile && !isTablet && (
+                <div style={{ position: 'absolute', top: 32, left: '12.5%', right: '12.5%', height: 1, background: 'linear-gradient(90deg,transparent,rgba(96,165,250,0.2),rgba(96,165,250,0.2),transparent)', zIndex: 0 }} />
+              )}
+              {PROCESS.map((step, i) => (
+                <motion.div
+                  key={step.num}
+                  initial={{ opacity: 0, y: 32 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, margin: '-40px' }}
+                  transition={{ delay: i * 0.12, duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+                  style={{
+                    padding: isMobile ? '20px 18px' : '24px 20px',
+                    borderRadius: 16,
+                    background: 'rgba(8,14,28,0.88)',
+                    border: '1px solid rgba(96,165,250,0.1)',
+                    textAlign: 'center', position: 'relative', zIndex: 1,
+                  }}
+                >
+                  <div style={{
+                    width: 52, height: 52, borderRadius: '50%', margin: '0 auto 16px',
+                    background: 'rgba(96,165,250,0.1)',
+                    border: '1px solid rgba(96,165,250,0.3)',
+                    display: 'flex', alignItems: 'center', justifyContent: 'center',
+                    fontSize: 13, fontFamily: 'var(--font-mono)', fontWeight: 700,
+                    color: '#60a5fa', letterSpacing: 1,
+                  }}>
+                    {step.num}
+                  </div>
+                  <h3 style={{ fontSize: 16, fontFamily: 'var(--font-display)', fontWeight: 800, color: '#fff', marginBottom: 8 }}>{step.title}</h3>
+                  <p style={{ fontSize: 13, color: 'rgba(255,255,255,0.52)', lineHeight: 1.7, fontFamily: 'var(--font-body)' }}>{step.desc}</p>
+                </motion.div>
+              ))}
+            </div>
           </div>
+        </section>
 
-          <h2 style={{
-            fontSize: isMobile ? 'clamp(26px,8vw,40px)' : 'clamp(34px,4.2vw,60px)',
-            fontFamily: 'var(--font-display)', fontWeight: 800,
-            lineHeight: 1.02, letterSpacing: '-1.5px', marginBottom: 16,
-          }}>
-            We're Always Looking for <span className="gt">Great People.</span>
-          </h2>
+        {/* ══ BOTTOM CTA ══════════════════════════════════════════ */}
+        <section style={{
+          padding: isMobile ? '64px 5%' : isTablet ? '80px 6%' : `88px ${px}`,
+          borderTop: '1px solid rgba(96,165,250,0.07)',
+          background: 'rgba(5,10,22,0.98)',
+          textAlign: 'center', position: 'relative', overflow: 'hidden',
+        }}>
+          <div style={{ position: 'absolute', inset: 0, background: 'radial-gradient(ellipse at 50% 0%,rgba(96,165,250,0.06),transparent 65%)', pointerEvents: 'none' }} />
+          <div style={{ position: 'absolute', inset: 0, backgroundImage: 'linear-gradient(rgba(96,165,250,0.02) 1px,transparent 1px),linear-gradient(90deg,rgba(96,165,250,0.02) 1px,transparent 1px)', backgroundSize: '64px 64px', pointerEvents: 'none' }} />
 
-          <p style={{
-            fontSize: isMobile ? 14.5 : 17, color: 'rgba(255,255,255,0.5)',
-            maxWidth: 480, margin: '0 auto 36px',
-            fontFamily: 'var(--font-body)', lineHeight: 1.8,
-          }}>
-            Send us your resume and what you're great at. If there's a fit, we'll reach out.
-          </p>
+          <motion.div
+            initial={{ opacity: 0, y: 32 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
+            transition={{ duration: 0.85, ease: [0.16, 1, 0.3, 1] }}
+            style={{ position: 'relative', zIndex: 1 }}
+          >
+            <div style={{ display: 'inline-flex', alignItems: 'center', gap: 12, marginBottom: 20 }}>
+              <div style={{ width: 32, height: 1, background: 'linear-gradient(90deg,transparent,rgba(96,165,250,0.6))' }} />
+              <span style={{ fontSize: 10, letterSpacing: 4, color: 'rgba(96,165,250,0.65)', fontFamily: 'var(--font-mono)', textTransform: 'uppercase' }}>Don't See Your Role?</span>
+              <div style={{ width: 32, height: 1, background: 'linear-gradient(90deg,rgba(96,165,250,0.6),transparent)' }} />
+            </div>
 
-          <div style={{ display: 'flex', gap: 14, justifyContent: 'center', flexDirection: isMobile ? 'column' : 'row', alignItems: 'center' }}>
-            <button
-              className="btn-primary" data-hover
-              style={{ fontSize: isMobile ? 14 : 15, padding: isMobile ? '14px 28px' : '15px 36px', width: isMobile ? '100%' : 'auto' }}
-              onClick={() => window.location.href = '/contact'}
-            >
-              Send Your Resume <Icons.ArrowRight />
-            </button>
-            <button
-              className="btn-ghost" data-hover
-              style={{ fontSize: isMobile ? 14 : 15, padding: isMobile ? '14px 28px' : '15px 36px', width: isMobile ? '100%' : 'auto' }}
-              onClick={() => window.location.href = '/about'}
-            >
-              About Riveyra
-            </button>
-          </div>
-        </motion.div>
-      </section>
+            <h2 style={{
+              fontSize: isMobile ? 'clamp(26px,8vw,40px)' : 'clamp(34px,4.2vw,60px)',
+              fontFamily: 'var(--font-display)', fontWeight: 800,
+              lineHeight: 1.02, letterSpacing: '-1.5px', marginBottom: 16,
+            }}>
+              We're Always Looking for <span className="gt">Great People.</span>
+            </h2>
 
-    </div>
+            <p style={{
+              fontSize: isMobile ? 14.5 : 17, color: 'rgba(255,255,255,0.5)',
+              maxWidth: 480, margin: '0 auto 36px',
+              fontFamily: 'var(--font-body)', lineHeight: 1.8,
+            }}>
+              Send us your resume and what you're great at. If there's a fit, we'll reach out.
+            </p>
+
+            <div style={{ display: 'flex', gap: 14, justifyContent: 'center', flexDirection: isMobile ? 'column' : 'row', alignItems: 'center' }}>
+              <button
+                className="btn-primary" data-hover
+                style={{ fontSize: isMobile ? 14 : 15, padding: isMobile ? '14px 28px' : '15px 36px', width: isMobile ? '100%' : 'auto' }}
+                onClick={() => window.location.href = '/contact'}
+              >
+                Send Your Resume <Icons.ArrowRight />
+              </button>
+              <button
+                className="btn-ghost" data-hover
+                style={{ fontSize: isMobile ? 14 : 15, padding: isMobile ? '14px 28px' : '15px 36px', width: isMobile ? '100%' : 'auto' }}
+                onClick={() => window.location.href = '/about'}
+              >
+                About Riveyra
+              </button>
+            </div>
+          </motion.div>
+        </section>
+
+      </div>
+    </>
   )
 }

@@ -5,6 +5,7 @@ import SectionTag from '../ui/SectionTag'
 import Icons from '../ui/Icons'
 import { ABOUT_FEATURES } from '../../utils/constants'
 import { useBreakpoint } from '../../hooks/useBreakpoint.jsx'
+import { Helmet } from "react-helmet-async";
 
 // ─── Image definitions ────────────────────────────────────────────────────────
 const IMAGES = [

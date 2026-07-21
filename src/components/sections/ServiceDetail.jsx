@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { useParams } from "react-router-dom";
 // import { AI_SERVICE_DATA } from "../data";
 import { useGetServiceBySlugQuery } from "../../redux/api";
+import Loader from "../Loader";
 
 
 
@@ -826,9 +827,9 @@ export default function AIServiceDetail() {
   const [openFaq, setOpenFaq] = useState(null);
 
   const { id } = useParams();
-  console.log(id)
+  // console.log(id)
 
-  const { data } = useGetServiceBySlugQuery(id)
+  const { data, isLoading } = useGetServiceBySlugQuery(id)
 
   // console.log()
 
@@ -840,6 +841,13 @@ export default function AIServiceDetail() {
   const faqs = serviceData?.faq;
 
 
+  if (isLoading) {
+    return (
+      <div style={{ padding: "100px" }}>
+        <Loader />
+      </div>
+    );
+  }
   if (!serviceData) {
     return (
       <div style={{ color: "#fff", padding: "100px", textAlign: "center" }}>
