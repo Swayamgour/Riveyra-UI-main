@@ -14,7 +14,7 @@ const Icons = {
     Marketing: () => <span>📈</span>,
     Settings: () => <span>⚙️</span>,
     Categories: () => <span>🗂️</span>,
-    Blogs: () => <span>📝</span>, 
+    Blogs: () => <span>📝</span>,
 };
 
 export default function AdminLayout() {
@@ -29,6 +29,7 @@ export default function AdminLayout() {
         { path: '/admin/ContactClient', label: 'Clients Queries', icon: <Icons.Career /> },
         { path: "/admin/categories", label: "Categories", icon: <Icons.Categories /> },
         { path: "/admin/blogs", label: "Blogs", icon: <Icons.Blogs /> },
+        { path: "/admin/page-seo", label: "pages", icon: <Icons.Blogs /> },
 
     ];
 

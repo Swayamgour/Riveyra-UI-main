@@ -5,6 +5,8 @@ import Icons from '../components/ui/Icons'
 import { ABOUT_FEATURES } from '../utils/constants'
 import { useBreakpoint } from '../hooks/useBreakpoint.jsx'
 import { Helmet } from "react-helmet-async";
+import { useGetPageSeoQuery } from '../redux/api.jsx'
+import SEO from '../components/SEO.jsx'
 
 const IMAGES = [
   { src: 'https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=800&q=85', alt: 'Team collaboration' },
@@ -188,15 +190,25 @@ export default function AboutPage() {
   const px = isMobile ? '5%' : isTablet ? '6%' : '8%'
   const py = isMobile ? '72px' : '96px'
 
+  const { data, isLoading } = useGetPageSeoQuery("about")
+  let seo = data?.data?.seo
+
   return (
     <>
-      <Helmet>
-        <title>Leading Artificial Intelligence Company Driving Digital Innovation</title>
-        <meta
-          name="description"
-          content="Learn how Riveyra Infotech delivers AI, software, automation, and digital transformation solutions for modern businesses."
-        />
-      </Helmet>
+      {!isLoading &&
+        (<SEO
+          title={seo?.metaTitle}
+          description={seo?.metaDescription}
+          keywords={seo?.keywords}
+          canonical={seo?.canonical}
+          robots={seo?.robots}
+
+          openGraph={seo?.openGraph}
+          twitter={seo?.twitter}
+
+          schema={seo?.schema}
+        />)
+        }
 
       <div style={{ background: 'var(--bg)', minHeight: '100vh', overflow: 'hidden' }}>
 

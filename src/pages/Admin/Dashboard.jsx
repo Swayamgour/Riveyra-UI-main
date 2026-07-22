@@ -10,7 +10,7 @@ export default function Dashboard() {
 
 
     const { data } = useGetDashboardCountsQuery()
-    console.log(data?.data)
+    // console.log(data?.data)
 
     let value = data?.data
 

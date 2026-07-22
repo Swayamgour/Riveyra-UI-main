@@ -251,7 +251,7 @@ export default function Navbar() {
                                 initial={{ opacity: 0, y: 8 }}
                                 animate={{ opacity: 1, y: 0 }}
                                 transition={{ delay: idx * 0.03 }}
-                                onClick={() => { setServicesOpen(false); navigate(`/ServiceDetail/${item.slug}`) }}
+                                onClick={() => { setServicesOpen(false); navigate(`/Service/${item.slug}`) }}
                                 onMouseEnter={() => setHoveredItem(idx)}
                                 onMouseLeave={() => setHoveredItem(null)}
                                 className="dropdown-item"
@@ -454,7 +454,7 @@ export default function Navbar() {
                                 initial={{ opacity: 0, y: 10 }}
                                 animate={{ opacity: 1, y: 0 }}
                                 transition={{ delay: idx * 0.04 }}
-                                onClick={() => { setMenuOpen(false); setMobileServicesOpen(false); navigate(`/ServiceDetail/${item.slug}`) }}
+                                onClick={() => { setMenuOpen(false); setMobileServicesOpen(false); navigate(`/Service/${item.slug}`) }}
                                 style={{
                                   display: 'flex',
                                   alignItems: 'center',

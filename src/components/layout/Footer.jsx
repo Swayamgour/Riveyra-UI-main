@@ -35,10 +35,10 @@ const cols = [
   {
     title: 'Legal',
     links: [
-      { name: 'Privacy Policy', path: '#' },
-      { name: 'Terms of Service', path: '#' },
-      { name: 'Cookie Policy', path: '#' },
-      { name: 'Disclaimer', path: '#' },
+      { name: 'Privacy Policy', path: '/privacy-policy' },
+      { name: 'Terms of Service', path: '/terms-of-service' },
+      // { name: 'Cookie Policy', path: '' },
+      // { name: 'Disclaimer', path: '#' },
     ],
   },
 ]

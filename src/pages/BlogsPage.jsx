@@ -1,10 +1,11 @@
 import { useState, useRef } from "react";
 import { motion, AnimatePresence, useScroll, useTransform } from "framer-motion";
 import { useBreakpoint } from "../hooks/useBreakpoint";
-import { useGetPublishedBlogsQuery } from "../redux/api";
+import { useGetPageSeoQuery, useGetPublishedBlogsQuery } from "../redux/api";
 import { Helmet } from "react-helmet-async";
 
 import BlogCard from "../components/ui/BlogCard";
+import SEO from "../components/SEO";
 
 // const STATS = [
 // 	{
@@ -169,6 +170,8 @@ export default function BlogsPage() {
 	const heroOpacity = useTransform(scrollYProgress, [0, 0.65], [1, 0]);
 
 	const { data, isLoading } = useGetPublishedBlogsQuery();
+	const { data: getData, isLoading:loading } = useGetPageSeoQuery("blogs")
+	let seo = getData?.data?.seo
 
 	const blogs = data?.data || [];
 
@@ -190,13 +193,23 @@ export default function BlogsPage() {
 
 	return (
 		<>
-			<Helmet>
-				<title>Latest AI Technology SEO and Digital Marketing Insights</title>
-				<meta
-					name="description"
-					content="Read expert blogs on AI, SEO, AEO, GEO, cybersecurity, software development, and digital marketing to stay ahead."
-				/>
-			</Helmet>
+			{!loading &&
+				(<SEO
+					title={seo?.metaTitle}
+					description={seo?.metaDescription}
+					keywords={seo?.keywords}
+					canonical={seo?.canonical}
+					robots={seo?.robots}
+
+					openGraph={seo?.openGraph}
+					twitter={seo?.twitter}
+
+					schema={seo?.schema}
+				/>)
+			}
+
+
+
 			<div
 				style={{
 					background: "var(--bg)",

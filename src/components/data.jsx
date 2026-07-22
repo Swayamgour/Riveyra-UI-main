@@ -1,8 +1,3 @@
-
-
-
-
-
 export const tabs = [
   { id: 'basic', label: 'Basic Info', icon: '📝' },
   { id: 'hero', label: 'Hero Section', icon: '🎯' },
@@ -11,11 +6,6 @@ export const tabs = [
   { id: 'whoNeeds', label: 'Who Needs', icon: '👥' },
   { id: 'approach', label: 'Approach', icon: '🔄' },
   { id: 'faq', label: 'FAQ', icon: '❓' },
-  { id: 'cta', label: 'CTA', icon: '🎯' }
+  { id: 'cta', label: 'CTA', icon: '🎯' },
+  { id: 'seo', label: 'SEO', icon: '🔍' }   // ✅ NEW
 ]
-
-
-
-
-
-

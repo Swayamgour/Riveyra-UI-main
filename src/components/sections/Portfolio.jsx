@@ -333,7 +333,7 @@ function CurvedSwiperCarousel({ projects, isMobile }) {
           style={{ overflow: 'visible' }}
         >
 
-          {console.log(projects)}
+          {/* {console.log(projects)} */}
           {projects.map((item, idx) => (
             <SwiperSlide key={item.title} style={{ overflow: 'visible' }}>
               <ProjectCard

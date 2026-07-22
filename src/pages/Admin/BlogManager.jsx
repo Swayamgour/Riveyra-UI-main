@@ -44,7 +44,7 @@ export default function BlogManager() {
     try {
       await deleteBlog(id).unwrap();
     } catch (err) {
-      console.log(err);
+      // console.log(err);
       alert(err?.data?.message || "Something went wrong");
     }
   };
@@ -57,12 +57,12 @@ export default function BlogManager() {
     try {
       await toggleStatus(id).unwrap();
     } catch (err) {
-      console.log(err);
+      // console.log(err);
       alert(err?.data?.message || "Something went wrong");
     }
   };
   
-  console.log(blogs[0]);
+  // console.log(blogs[0]);
 
   return (
     <div

@@ -7,6 +7,7 @@ import { useParams } from "react-router-dom";
 // import { AI_SERVICE_DATA } from "../data";
 import { useGetServiceBySlugQuery } from "../../redux/api";
 import Loader from "../Loader";
+import SEO from "../SEO";
 
 
 
@@ -834,6 +835,9 @@ export default function AIServiceDetail() {
   // console.log()
 
   const serviceData = data?.data
+  // console.log(serviceData?.seo)
+
+  let seo = serviceData?.seo
 
   const blocks = serviceData?.blocks;
   const steps = serviceData?.approach.steps;
@@ -856,325 +860,341 @@ export default function AIServiceDetail() {
     );
   }
   return (
-    <section className="ai-detail-section">
-      <div className="ai-container">
+    <>
+      {!isLoading &&
+        (<SEO
+          title={seo?.metaTitle}
+          description={seo?.metaDescription}
+          keywords={seo?.keywords}
+          canonical={seo?.canonical}
+          robots={seo?.robots}
 
-        {/* Back Button */}
-        <motion.div
-          initial={{ opacity: 0, x: -20 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.5 }}
-        >
-          <button className="back-btn" onClick={() => navigate(-1)}>
-            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="2">
-              <path d="M10 12L6 8l4-4" />
-            </svg>
-            Back to Services
-          </button>
-        </motion.div>
+          openGraph={seo?.openGraph}
+          twitter={seo?.twitter}
 
-        {/* Hero Section */}
-        {/* Hero Section */}
-        <motion.div
-          initial={{ opacity: 0, y: 40 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          className="hero-section"
-        >
-          {/* <div className="hero-badge">
+          schema={seo?.schema}
+        />)}
+
+      <section className="ai-detail-section">
+        <div className="ai-container">
+
+          {/* Back Button */}
+          <motion.div
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.5 }}
+          >
+            <button className="back-btn" onClick={() => navigate(-1)}>
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="2">
+                <path d="M10 12L6 8l4-4" />
+              </svg>
+              Back to Services
+            </button>
+          </motion.div>
+
+          {/* Hero Section */}
+          {/* Hero Section */}
+          <motion.div
+            initial={{ opacity: 0, y: 40 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            className="hero-section"
+          >
+            {/* <div className="hero-badge">
             <span>{serviceData.hero.badge}</span>
           </div> */}
 
-          <h1 className="hero-title">
-            {serviceData.hero.title}
-            <br />
-            <span className="hero-subtitle">
-              {serviceData.hero.subtitle}
-            </span>
-          </h1>
+            <h1 className="hero-title">
+              {serviceData.hero.title}
+              <br />
+              <span className="hero-subtitle">
+                {serviceData.hero.subtitle}
+              </span>
+            </h1>
 
-          {/* Intro Line */}
-          {serviceData.hero.intro && (
-            <p className="hero-intro">{serviceData.hero.intro}</p>
-          )}
-
-          {/* Description Paragraphs */}
-          <div className="hero-description-wrapper">
-            {serviceData.hero.desc?.map((item, i) => (
-              <p key={i} className="hero-desc">{item}</p>
-            ))}
-          </div>
-
-
-
-          {/* Closing Paragraphs */}
-          {serviceData.hero.closing?.map((c, i) => (
-            <p key={i} className="hero-closing">{c}</p>
-          ))}
-        </motion.div>
-
-        {/* Dynamic Content Blocks */}
-        {blocks?.map((block, i) => {
-          const isReverse = block.reverse || i % 2 !== 0;
-
-          return (
-            <motion.div
-              key={i}
-              className={`content-block ${isReverse ? "reverse" : ""}`}
-              initial={{ opacity: 0, y: 40 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: i * 0.05 }}
-            >
-              <div className="block-content">
-                <span className="block-label">{block.label}</span>
-                <h2 className="block-title">{block.title}</h2>
-
-                {block.desc && (
-                  <p className="block-desc">{block.desc}</p>
-                )}
-
-                {block.extra && (
-                  <p className="block-desc">{block.extra}</p>
-                )}
-
-                {block.features && (
-                  <ul className="feature-list-sm">
-                    {block.features.map((f, idx) => (
-                      <li key={idx}>
-                        <svg
-                          className="check-icon"
-                          viewBox="0 0 20 20"
-                          fill="none"
-                          stroke="currentColor"
-                          strokeWidth="2"
-                        >
-                          <path d="M16 6L8 14L4 10" />
-                        </svg>
-                        {f}
-                      </li>
-                    ))}
-                  </ul>
-                )}
-
-                {block.example && (
-                  <div className="example-box">
-                    <h4>📌 Example You'll Relate To</h4>
-                    <p style={{ whiteSpace: "pre-line" }}>
-                      {block.example}
-                    </p>
-                  </div>
-                )}
-              </div>
-
-              <div className="block-image">
-                <img src={block.image} alt={block.alt} />
-                <div className="image-overlay"></div>
-              </div>
-            </motion.div>
-          );
-        })}
-
-        {/* Comparison Table */}
-        <motion.div
-          className="comparison-section"
-          initial={{ opacity: 0, y: 40 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-        >
-          <h3 className="comparison-title">
-            {serviceData.comparison.title}
-          </h3>
-
-          <div className="comparison-grid">
-            <div className="comparison-card">
-              <h4>Traditional</h4>
-              <ul>
-                {serviceData.comparison.data.map((item, i) => (
-                  <li key={i}>
-                    <span>{item.feature}</span>
-                    <span>{item.traditional}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-
-            <div className="comparison-card">
-              <h4>AI <span className="badge-ai">Upgrade</span></h4>
-              <ul>
-                {serviceData.comparison.data.map((item, i) => (
-                  <li key={i}>
-                    <span>{item.feature}</span>
-                    <span>{item.ai}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </div>
-          <p style={{ textAlign: 'center', marginTop: '32px', color: '#4F8EF7', fontSize: '14px' }}>👉 This is why businesses are upgrading to AI-powered software solutions.</p>
-        </motion.div>
-
-        {/* Who Needs AI Services */}
-        <motion.div
-          className="who-needs-section"
-          initial={{ opacity: 0, y: 40 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-        >
-          <h3 className="comparison-title">
-            {serviceData.whoNeeds.title}
-          </h3>
-
-          <div className="who-needs-grid">
-            {serviceData.whoNeeds.problems?.length !== 0 && <ul className="who-list">
-              {serviceData.whoNeeds.problems.map((item, i) => (
-                <li key={i}>✔ {item}</li>
-              ))}
-            </ul>}
-
-            {serviceData.whoNeeds.idealFor && (
-              <ul className="who-list">
-                {serviceData.whoNeeds.idealFor.map((item, i) => (
-                  <li key={i}>✔ {item}</li>
-                ))}
-              </ul>
+            {/* Intro Line */}
+            {serviceData.hero.intro && (
+              <p className="hero-intro">{serviceData.hero.intro}</p>
             )}
-          </div>
-        </motion.div>
 
-        {/* Our Approach Section - NEW */}
-        <motion.div
-          className="approach-section"
-          initial={{ opacity: 0, y: 40 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-        >
-          <h3 className="comparison-title">Our Approach</h3>
-          <p className="approach-subtitle">Simple, Practical & Results-Focused — We don't overcomplicate things.</p>
+            {/* Description Paragraphs */}
+            <div className="hero-description-wrapper">
+              {serviceData.hero.desc?.map((item, i) => (
+                <p key={i} className="hero-desc">{item}</p>
+              ))}
+            </div>
 
-          <div className="steps-grid">
-            {steps?.map((step, idx) => (
+
+
+            {/* Closing Paragraphs */}
+            {serviceData.hero.closing?.map((c, i) => (
+              <p key={i} className="hero-closing">{c}</p>
+            ))}
+          </motion.div>
+
+          {/* Dynamic Content Blocks */}
+          {blocks?.map((block, i) => {
+            const isReverse = block.reverse || i % 2 !== 0;
+
+            return (
               <motion.div
-                key={idx}
-                className="step-card"
-                initial={{ opacity: 0, y: 20 }}
+                key={i}
+                className={`content-block ${isReverse ? "reverse" : ""}`}
+                initial={{ opacity: 0, y: 40 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ delay: idx * 0.1 }}
+                transition={{ duration: 0.6, delay: i * 0.05 }}
               >
-                <div className="step-number">{step.number}</div>
-                <h4>{step.title}</h4>
-                <p>{step.desc}</p>
-              </motion.div>
-            ))}
-          </div>
+                <div className="block-content">
+                  <span className="block-label">{block.label}</span>
+                  <h2 className="block-title">{block.title}</h2>
 
+                  {block.desc && (
+                    <p className="block-desc">{block.desc}</p>
+                  )}
 
+                  {block.extra && (
+                    <p className="block-desc">{block.extra}</p>
+                  )}
 
+                  {block.features && (
+                    <ul className="feature-list-sm">
+                      {block.features.map((f, idx) => (
+                        <li key={idx}>
+                          <svg
+                            className="check-icon"
+                            viewBox="0 0 20 20"
+                            fill="none"
+                            stroke="currentColor"
+                            strokeWidth="2"
+                          >
+                            <path d="M16 6L8 14L4 10" />
+                          </svg>
+                          {f}
+                        </li>
+                      ))}
+                    </ul>
+                  )}
 
-          <p style={{ textAlign: 'center', marginTop: '32px', color: '#4F8EF7', fontSize: '14px' }}>
-            And most importantly—we explain everything clearly.
-          </p>
-        </motion.div>
-
-        {/* Why Choose Us Section (Original) - Keeping for consistency */}
-        <motion.div
-          className="why-choose-section"
-          initial={{ opacity: 0, y: 40 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-        >
-          <h3 className="comparison-title">
-            {serviceData.approach.title}
-          </h3>
-
-          <div className="why-grid">
-            {whyChooseApproach?.map((item, i) => (
-              <div key={i} className="why-card">
-                <h4>{item.title}</h4>
-                <p>{item.desc}</p>
-              </div>
-            ))}
-          </div>
-          <p style={{ textAlign: 'center', marginTop: '32px', color: 'rgba(255,255,255,0.8)' }}>And most importantly—we keep everything simple and transparent.</p>
-        </motion.div>
-
-        {/* Final Thoughts */}
-        <motion.div
-          className="final-thoughts"
-          initial={{ opacity: 0, y: 40 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-        >
-          <h3>Do You Really Need AI?</h3>
-          <p>You don't need AI because it's trending. You need it if work feels repetitive, systems don't connect, or growth feels slow. AI doesn't replace your business—it strengthens it.</p>
-        </motion.div>
-
-        {/* FAQ Section */}
-        <motion.div
-          className="faq-section"
-          initial={{ opacity: 0, y: 40 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-        >
-          <h3 className="faq-title">Frequently Asked Questions</h3>
-          <div className="faq-grid">
-            {faqs?.map((faq, idx) => (
-              <div
-                key={idx}
-                className="faq-item"
-                onClick={() => setOpenFaq(openFaq === idx ? null : idx)}
-              >
-                <div className="faq-question">
-                  <span>{faq.q}</span>
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ transform: openFaq === idx ? 'rotate(180deg)' : 'none', transition: 'transform 0.3s' }}>
-                    <path d="M6 9l6 6 6-6" />
-                  </svg>
+                  {block.example && (
+                    <div className="example-box">
+                      <h4>📌 Example You'll Relate To</h4>
+                      <p style={{ whiteSpace: "pre-line" }}>
+                        {block.example}
+                      </p>
+                    </div>
+                  )}
                 </div>
-                {openFaq === idx && (
-                  <div className="faq-answer">
-                    {faq.a}
-                  </div>
-                )}
+
+                <div className="block-image">
+                  <img src={block.image} alt={block.alt} />
+                  <div className="image-overlay"></div>
+                </div>
+              </motion.div>
+            );
+          })}
+
+          {/* Comparison Table */}
+          <motion.div
+            className="comparison-section"
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+          >
+            <h3 className="comparison-title">
+              {serviceData.comparison.title}
+            </h3>
+
+            <div className="comparison-grid">
+              <div className="comparison-card">
+                <h4>Traditional</h4>
+                <ul>
+                  {serviceData.comparison.data.map((item, i) => (
+                    <li key={i}>
+                      <span>{item.feature}</span>
+                      <span>{item.traditional}</span>
+                    </li>
+                  ))}
+                </ul>
               </div>
-            ))}
-          </div>
-        </motion.div>
 
-        {/* CTA Section */}
-        <motion.div
-          className="cta-section"
-          initial={{ opacity: 0, y: 40 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-        >
-          <h3>{serviceData.cta.title}</h3>
-          <p>{serviceData.cta.desc}</p>
+              <div className="comparison-card">
+                <h4>AI <span className="badge-ai">Upgrade</span></h4>
+                <ul>
+                  {serviceData.comparison.data.map((item, i) => (
+                    <li key={i}>
+                      <span>{item.feature}</span>
+                      <span>{item.ai}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+            <p style={{ textAlign: 'center', marginTop: '32px', color: '#4F8EF7', fontSize: '14px' }}>👉 This is why businesses are upgrading to AI-powered software solutions.</p>
+          </motion.div>
 
-          <div className="cta-buttons">
-            {serviceData.cta.buttons.map((btn, i) => (
-              <button
-                key={i}
-                className={i === 0 ? "cta-btn" : "cta-btn-outline"}
-                onClick={() => navigate(btn.link)}
-              >
-                {btn.label}
-              </button>
-            ))}
-          </div>
-          <p style={{ marginTop: '32px', fontSize: '14px', color: '#4F8EF7' }}>
-            👉 Get custom AI software development services for small businesses | 👉 Automate operations and reduce workload | 👉 Improve customer experience with intelligent systems
-          </p>
-        </motion.div>
+          {/* Who Needs AI Services */}
+          <motion.div
+            className="who-needs-section"
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+          >
+            <h3 className="comparison-title">
+              {serviceData.whoNeeds.title}
+            </h3>
 
-      </div>
-    </section>
+            <div className="who-needs-grid">
+              {serviceData.whoNeeds.problems?.length !== 0 && <ul className="who-list">
+                {serviceData.whoNeeds.problems.map((item, i) => (
+                  <li key={i}>✔ {item}</li>
+                ))}
+              </ul>}
+
+              {serviceData.whoNeeds.idealFor && (
+                <ul className="who-list">
+                  {serviceData.whoNeeds.idealFor.map((item, i) => (
+                    <li key={i}>✔ {item}</li>
+                  ))}
+                </ul>
+              )}
+            </div>
+          </motion.div>
+
+          {/* Our Approach Section - NEW */}
+          <motion.div
+            className="approach-section"
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+          >
+            <h3 className="comparison-title">Our Approach</h3>
+            <p className="approach-subtitle">Simple, Practical & Results-Focused — We don't overcomplicate things.</p>
+
+            <div className="steps-grid">
+              {steps?.map((step, idx) => (
+                <motion.div
+                  key={idx}
+                  className="step-card"
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: idx * 0.1 }}
+                >
+                  <div className="step-number">{step.number}</div>
+                  <h4>{step.title}</h4>
+                  <p>{step.desc}</p>
+                </motion.div>
+              ))}
+            </div>
+
+
+
+
+            <p style={{ textAlign: 'center', marginTop: '32px', color: '#4F8EF7', fontSize: '14px' }}>
+              And most importantly—we explain everything clearly.
+            </p>
+          </motion.div>
+
+          {/* Why Choose Us Section (Original) - Keeping for consistency */}
+          <motion.div
+            className="why-choose-section"
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+          >
+            <h3 className="comparison-title">
+              {serviceData.approach.title}
+            </h3>
+
+            <div className="why-grid">
+              {whyChooseApproach?.map((item, i) => (
+                <div key={i} className="why-card">
+                  <h4>{item.title}</h4>
+                  <p>{item.desc}</p>
+                </div>
+              ))}
+            </div>
+            <p style={{ textAlign: 'center', marginTop: '32px', color: 'rgba(255,255,255,0.8)' }}>And most importantly—we keep everything simple and transparent.</p>
+          </motion.div>
+
+          {/* Final Thoughts */}
+          <motion.div
+            className="final-thoughts"
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+          >
+            <h3>Do You Really Need AI?</h3>
+            <p>You don't need AI because it's trending. You need it if work feels repetitive, systems don't connect, or growth feels slow. AI doesn't replace your business—it strengthens it.</p>
+          </motion.div>
+
+          {/* FAQ Section */}
+          <motion.div
+            className="faq-section"
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+          >
+            <h3 className="faq-title">Frequently Asked Questions</h3>
+            <div className="faq-grid">
+              {faqs?.map((faq, idx) => (
+                <div
+                  key={idx}
+                  className="faq-item"
+                  onClick={() => setOpenFaq(openFaq === idx ? null : idx)}
+                >
+                  <div className="faq-question">
+                    <span>{faq.q}</span>
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ transform: openFaq === idx ? 'rotate(180deg)' : 'none', transition: 'transform 0.3s' }}>
+                      <path d="M6 9l6 6 6-6" />
+                    </svg>
+                  </div>
+                  {openFaq === idx && (
+                    <div className="faq-answer">
+                      {faq.a}
+                    </div>
+                  )}
+                </div>
+              ))}
+            </div>
+          </motion.div>
+
+          {/* CTA Section */}
+          <motion.div
+            className="cta-section"
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+          >
+            <h3>{serviceData.cta.title}</h3>
+            <p>{serviceData.cta.desc}</p>
+
+            <div className="cta-buttons">
+              {serviceData.cta.buttons.map((btn, i) => (
+                <button
+                  key={i}
+                  className={i === 0 ? "cta-btn" : "cta-btn-outline"}
+                  onClick={() => navigate(btn.link)}
+                >
+                  {btn.label}
+                </button>
+              ))}
+            </div>
+            <p style={{ marginTop: '32px', fontSize: '14px', color: '#4F8EF7' }}>
+              👉 Get custom AI software development services for small businesses | 👉 Automate operations and reduce workload | 👉 Improve customer experience with intelligent systems
+            </p>
+          </motion.div>
+
+        </div>
+      </section>
+    </>
   );
 }

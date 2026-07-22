@@ -48,7 +48,7 @@ export default function CategoryManager() {
       setEditing(null);
       setShowForm(false);
     } catch (err) {
-      console.log(err);
+      // console.log(err);
       alert(err?.data?.message || "Something went wrong");
     }
   };
@@ -81,7 +81,7 @@ export default function CategoryManager() {
     try {
       await deleteCategory(id).unwrap();
     } catch (err) {
-      console.log(err);
+      // console.log(err);
     }
   };
 

@@ -19,7 +19,7 @@ const baseQuery = fetchBaseQuery({
         // if (endpoint !== "createProject") {
         //     headers.set("Content-Type", "application/json");
         // }
-        
+
         if (
             endpoint !== "createProject" &&
             endpoint !== "updateProject" &&
@@ -42,7 +42,8 @@ export const api = createApi({
         "Services",
         "Categories",
         "Blogs",
-        "contact"
+        "contact",
+        "PageSeo"
     ],
 
     endpoints: (builder) => ({
@@ -228,7 +229,7 @@ export const api = createApi({
             }),
             invalidatesTags: ["Services"],
         }),
-        
+
         // ================= CATEGORIES =================
 
         // GET ALL
@@ -271,8 +272,8 @@ export const api = createApi({
             }),
             invalidatesTags: ["Categories"],
         }),
-        
-        
+
+
         // ================= BLOGS =================
 
         // GET ALL BLOGS (Admin)
@@ -388,7 +389,49 @@ export const api = createApi({
                 method: 'GET'
             }),
             providesTags: ['Profile']
-        })
+        }),
+
+
+        // ================= PAGE SEO (Home / About / Contact / Career / Portfolio / Blogs) =================
+
+        // GET ALL PAGE SEO (Admin listing screen)
+        getAllPageSeo: builder.query({
+            query: () => "/page-seo",
+            providesTags: ["PageSeo"],
+        }),
+
+        // GET SEO FOR ONE PAGE — page = "home" | "about" | "contact" | "career" | "portfolio" | "blogs"
+        // Website ke SEO.jsx component se ye call hoga, e.g. useGetPageSeoQuery("home")
+        getPageSeo: builder.query({
+            query: (page) => `/page-seo/${page}`,
+            providesTags: (result, error, page) => [{ type: "PageSeo", id: page }],
+        }),
+
+        // CREATE / UPDATE SEO FOR ONE PAGE (Admin panel — one form per page)
+        // usage: updatePageSeo({ page: "home", data: { title, description, image, seo: {...} } })
+        updatePageSeo: builder.mutation({
+            query: ({ page, data }) => ({
+                url: `/page-seo/${page}`,
+                method: "PUT",
+                body: data,
+            }),
+            invalidatesTags: (result, error, { page }) => [
+                "PageSeo",
+                { type: "PageSeo", id: page },
+            ],
+        }),
+
+        // RESET A PAGE'S SEO BACK TO AUTO-DEFAULTS
+        deletePageSeo: builder.mutation({
+            query: (page) => ({
+                url: `/page-seo/${page}`,
+                method: "DELETE",
+            }),
+            invalidatesTags: (result, error, page) => [
+                "PageSeo",
+                { type: "PageSeo", id: page },
+            ],
+        }),
 
     }),
 });
@@ -427,14 +470,14 @@ export const {
     useUpdateServiceMutation,
     useDeleteServiceMutation,
     useGetServiceByIdQuery,
-    
+
     // Categories
     useGetCategoriesQuery,
     useGetCategoryByIdQuery,
     useCreateCategoryMutation,
     useUpdateCategoryMutation,
     useDeleteCategoryMutation,
-    
+
     // Blogs
     useGetBlogsQuery,
     useGetPublishedBlogsQuery,
@@ -453,9 +496,14 @@ export const {
     useRegisterMutation,
     useLoginMutation,
     useCheckTokenQuery,
-    useGetProfileQuery
+    useGetProfileQuery,
+
+
+    // Page SEO
+    useGetAllPageSeoQuery,
+    useGetPageSeoQuery,
+    useUpdatePageSeoMutation,
+    useDeletePageSeoMutation,
 
 
 } = api;
-
-

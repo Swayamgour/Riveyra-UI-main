@@ -7,6 +7,7 @@ import start from '../../assets/1.png'
 import iso27001 from '../../assets/2.png'
 import iso20000 from '../../assets/3.png'
 import cmmi5 from '../../assets/4.png'
+import { useNavigate } from 'react-router-dom'
 
 const CERTS = [
   { src: start, alt: 'Startup India' },
@@ -111,7 +112,7 @@ function MobileCertStrip() {
           {[...CERTS, ...CERTS].map((cert, i) => (
             <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 16, flexShrink: 0, paddingLeft: i === 0 ? 16 : 0 }}>
               <img src={cert.src} alt={cert.alt} loading="lazy"
-                style={{ width: 64, height: 38, objectFit: 'contain'}}
+                style={{ width: 64, height: 38, objectFit: 'contain' }}
               />
               <div style={{ width: 1, height: 20, background: 'rgba(255,255,255,0.08)', flexShrink: 0 }} />
             </div>
@@ -179,6 +180,8 @@ function CertPanel({ compact }) {
 // ─── Hero ─────────────────────────────────────────────────────────────────────
 export default function Hero() {
   const { isMobile, isTablet } = useBreakpoint()
+
+  const navigate = useNavigate()
 
   return (
     <section
@@ -279,11 +282,15 @@ export default function Hero() {
           }}>
             <button className="btn-primary" data-hover
               style={{ width: isMobile ? '100%' : 'auto', fontSize: isTablet ? 13 : 14 }}
+              
+               onClick={() => navigate('/contact')}
+
             >
               Consult Our Experts <Icons.ArrowRight />
             </button>
             <button className="btn-ghost" data-hover
               style={{ width: isMobile ? '100%' : 'auto', fontSize: isTablet ? 13 : 14 }}
+              onClick={() => navigate('/portfolio')}
             >
               View Our Work
             </button>

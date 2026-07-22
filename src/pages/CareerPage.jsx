@@ -3,9 +3,10 @@ import { useState, useRef } from 'react'
 import { motion, useInView, AnimatePresence, useScroll, useTransform, useSpring } from 'framer-motion'
 import Icons from '../components/ui/Icons'
 import { useBreakpoint } from '../hooks/useBreakpoint.jsx'
-import { useGetCareersQuery } from '../redux/api.jsx'
+import { useGetCareersQuery, useGetPageSeoQuery } from '../redux/api.jsx'
 import { useNavigate } from 'react-router-dom'
 import { Helmet } from "react-helmet-async";
+import SEO from '../components/SEO.jsx'
 
 /* ══════════════════════════════════════════════════════
    DATA
@@ -400,6 +401,9 @@ export default function CareerPage() {
 
   const { data: career } = useGetCareersQuery()
 
+  const { data, isLoading } = useGetPageSeoQuery("career")
+  let seo = data?.data?.seo
+
   let OPENINGS = career?.data || []
 
   // console.log(OPENINGS)
@@ -412,13 +416,24 @@ export default function CareerPage() {
 
   return (
     <>
-      <Helmet>
-        <title>Build Your Career with AI Software and Digital Innovation Experts</title>
-        <meta
-          name="description"
-          content="Explore exciting career opportunities in AI, software development, cloud, cybersecurity, and digital marketing at Riveyra."
-        />
-      </Helmet>
+      {!isLoading &&
+        (<SEO
+          title={seo?.metaTitle}
+          description={seo?.metaDescription}
+          keywords={seo?.keywords}
+          canonical={seo?.canonical}
+          robots={seo?.robots}
+
+          openGraph={seo?.openGraph}
+          twitter={seo?.twitter}
+
+          schema={seo?.schema}
+        />)
+      }
+
+
+
+
       <div style={{ background: 'var(--bg)', minHeight: '100vh', overflowX: 'hidden' }}>
 
         {/* ══ HERO ════════════════════════════════════════════════ */}

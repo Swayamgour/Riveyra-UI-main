@@ -217,7 +217,7 @@ export default function Services() {
 
   const { data } = useGetServicesQuery()
 
-  console.log()
+  // console.log()
 
   const navigate = useNavigate()
 
@@ -261,7 +261,7 @@ export default function Services() {
                 transition={{ delay: i * 0.06, duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
                 onMouseEnter={() => setHovered(i)}
                 onMouseLeave={() => setHovered(null)}
-                onClick={() => navigate(`ServiceDetail/${s.slug}`)}
+                onClick={() => navigate(`Service/${s.slug}`)}
               >
                 {/* Top accent bar — always visible on mobile via CSS, hover-only on desktop */}
                 <div

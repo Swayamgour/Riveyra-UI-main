@@ -30,7 +30,7 @@ export default function Login() {
       // Example API call - replace with your actual login endpoint
       const response = await login({ email, password }).unwrap();
 
-      console.log()
+      // console.log()
 
       // Mock successful login - remove this and use actual API
       if (response?.success) {

@@ -31,6 +31,12 @@ import ProtectedRoute from './components/ProtectedRoute'
 import CategoryManager from "./pages/Admin/CategoryManager";
 import BlogManager from "./pages/Admin/BlogManager";
 import BlogForm from "./pages/Admin/BlogForm";
+import PageSeoListPage from './pages/Admin/PageSeoListPage'
+import PageSeoForm from './pages/Admin/PageSeoForm'
+import PrivacyPolicy from './pages/PrivacyPolicy'
+import TermsOfService from './pages/TermsOfService'
+// import CookiePolicy from './pages/CookiePolicy'
+// import Disclaimer from './pages/Disclaimer'
 
 function AppShell() {
   // useScrollReveal()
@@ -71,7 +77,12 @@ function AppShell() {
         <Route path="/blogs" element={<BlogsPage />} />
         <Route path="/blogs/:slug" element={<BlogDetailPage />} />
         <Route path="/Apply" element={<ApplyPage />} />
-        <Route path="/ServiceDetail/:id" element={<ServiceDetail />} />
+        <Route path="/Service/:id" element={<ServiceDetail />} />
+
+        <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+        <Route path="/terms-of-service" element={<TermsOfService />} />
+        {/* <Route path="/cookie-policy" element={<CookiePolicy />} />
+        <Route path="/disclaimer" element={<Disclaimer />} /> */}
 
 
         <Route path="/admin/login" element={<Login />} />
@@ -97,10 +108,13 @@ function AppShell() {
           <Route path="services/:id/edit" element={<ServiceForm />} />
 
           <Route path="categories" element={<CategoryManager />} />
-          
+
           <Route path="blogs" element={<BlogManager />} />
           <Route path="blogs/create" element={<BlogForm />} />
           <Route path="blogs/:id/edit" element={<BlogForm />} />
+
+          <Route path="page-seo" element={<PageSeoListPage />} />
+          <Route path="page-seo/:page/edit" element={<PageSeoForm />} />
 
           <Route path="portfolio" element={<PortfolioManager />} />
           <Route path="portfolio/create" element={<ProjectForm />} />

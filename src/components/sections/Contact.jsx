@@ -5,6 +5,8 @@ import Icons from '../ui/Icons'
 import { useBreakpoint } from '../../hooks/useBreakpoint.jsx'
 import ContactForm from '../ContactForm.jsx'
 import { Helmet } from "react-helmet-async";
+import { useGetPageSeoQuery } from '../../redux/api.jsx'
+import SEO from '../SEO.jsx'
 
 const INFO = [
   { icon: Icons.Mail, label: 'Email Us', value: 'hr@riveyrainfotech.com ,   sales@riveyrainfotech.com', sub: 'We reply within 2 hours', color: '#60a5fa' },
@@ -97,6 +99,9 @@ export default function Contact() {
   const [sent, setSent] = useState(false)
   const [sending, setSending] = useState(false)
 
+  const { data, isLoading } = useGetPageSeoQuery("contact")
+  let seo = data?.data?.seo
+
   const set = (k, v) => setForm(f => ({ ...f, [k]: v }))
   const toggleService = s => setServices(p => p.includes(s) ? p.filter(x => x !== s) : [...p, s])
 
@@ -108,13 +113,19 @@ export default function Contact() {
 
   return (
     <>
-      <Helmet>
-        <title>Talk to AI and Software Development Experts Today</title>
-        <meta
-          name="description"
-          content="Contact Riveyra Infotech for AI solutions, software development, automation, cloud, and digital transformation services."
-        />
-      </Helmet>
+      {!isLoading &&
+        (<SEO
+          title={seo?.metaTitle}
+          description={seo?.metaDescription}
+          keywords={seo?.keywords}
+          canonical={seo?.canonical}
+          robots={seo?.robots}
+
+          openGraph={seo?.openGraph}
+          twitter={seo?.twitter}
+
+          schema={seo?.schema}
+        />)}
       <section
         id="contact"
         ref={ref}

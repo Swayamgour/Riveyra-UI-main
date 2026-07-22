@@ -51,7 +51,6 @@ const ServiceForm = () => {
         path: '',
         tags: [],
 
-        // Hero Section
         hero: {
             badge: '',
             title: '',
@@ -62,38 +61,31 @@ const ServiceForm = () => {
             questions: [],
             closing: []
         },
-
-        // Blocks Section
         blocks: [],
-
-        // Comparison Section
-        comparison: {
-            title: '',
-            data: []
-        },
-
-        // Who Needs Section
-        whoNeeds: {
-            title: '',
-            problems: [],
-            idealFor: []
-        },
-
-        // Approach Section
-        approach: {
-            title: '',
-            steps: [],
-            whyChoose: []
-        },
-
-        // FAQ Section
+        comparison: { title: '', data: [] },
+        whoNeeds: { title: '', problems: [], idealFor: [] },
+        approach: { title: '', steps: [], whyChoose: [] },
         faq: [],
+        cta: { title: '', desc: '', buttons: [] },
 
-        // CTA Section
-        cta: {
-            title: '',
-            desc: '',
-            buttons: []
+        // ✅ SEO
+        seo: {
+            metaTitle: '',
+            metaDescription: '',
+            keywords: [],          // array of strings
+            canonical: '',
+            robots: 'index, follow',
+            openGraph: {
+                title: '',
+                description: '',
+                image: ''
+            },
+            twitter: {
+                title: '',
+                description: '',
+                image: ''
+            },
+            schema: ''              // JSON-LD as raw JSON text
         }
     })
 
@@ -123,6 +115,46 @@ const ServiceForm = () => {
     const [iconFile, setIconFile] = useState(null)
     const [iconPreview, setIconPreview] = useState("")
 
+    // SEO temp states
+    const [tempKeyword, setTempKeyword] = useState('')
+
+    // Generic SEO field change (top-level: metaTitle, metaDescription, canonical, robots, schema)
+    const handleSeoChange = (field, value) => {
+        setFormData(prev => ({
+            ...prev,
+            seo: { ...prev.seo, [field]: value }
+        }))
+    }
+
+    // Nested OG / Twitter change
+    const handleSeoNestedChange = (section, field, value) => {
+        setFormData(prev => ({
+            ...prev,
+            seo: {
+                ...prev.seo,
+                [section]: { ...prev.seo[section], [field]: value }
+            }
+        }))
+    }
+
+    // Keywords handlers
+    const addKeyword = () => {
+        if (tempKeyword.trim() && !formData?.seo.keywords.includes(tempKeyword.trim())) {
+            setFormData(prev => ({
+                ...prev,
+                seo: { ...prev.seo, keywords: [...prev.seo.keywords, tempKeyword.trim()] }
+            }))
+            setTempKeyword('')
+        }
+    }
+
+    const removeKeyword = (kw) => {
+        setFormData(prev => ({
+            ...prev,
+            seo: { ...prev.seo, keywords: prev.seo.keywords.filter(k => k !== kw) }
+        }))
+    }
+
     // Load data for edit
     useEffect(() => {
         if (isEdit && servicesDataById?.data && isSuccess) {
@@ -135,51 +167,71 @@ const ServiceForm = () => {
                 accent: service.accent || '#60a5fa',
                 path: service.path || '',
                 tags: service.tags || [],
-                hero: service.hero || {
-                    badge: '', title: '', subtitle: '', intro: '',
-                    desc: [], questionsTitle: '', questions: [], closing: []
-                },
+                hero: service.hero || { /*...*/ },
                 blocks: service.blocks || [],
                 comparison: service.comparison || { title: '', data: [] },
                 whoNeeds: service.whoNeeds || { title: '', problems: [], idealFor: [] },
                 approach: service.approach || { title: '', steps: [], whyChoose: [] },
                 faq: service.faq || [],
-                cta: service.cta || { title: '', desc: '', buttons: [] }
+                cta: service.cta || { title: '', desc: '', buttons: [] },
+                // ✅ SEO
+                seo: {
+                    metaTitle: service.seo?.metaTitle || '',
+                    metaDescription: service.seo?.metaDescription || '',
+                    keywords: service.seo?.keywords || [],
+                    canonical: service.seo?.canonical || '',
+                    robots: service.seo?.robots || 'index, follow',
+                    openGraph: {
+                        title: service.seo?.openGraph?.title || '',
+                        description: service.seo?.openGraph?.description || '',
+                        image: service.seo?.openGraph?.image || ''
+                    },
+                    twitter: {
+                        title: service.seo?.twitter?.title || '',
+                        description: service.seo?.twitter?.description || '',
+                        image: service.seo?.twitter?.image || ''
+                    },
+                    schema: service.seo?.schema
+                        ? (typeof service.seo.schema === 'string'
+                            ? service.seo.schema
+                            : JSON.stringify(service.seo.schema, null, 2))
+                        : ''
+                }
             });
         }
     }, [id, servicesDataById, isSuccess])
 
     // Auto-generate slug from title
     useEffect(() => {
-        if (formData.title && !formData.slug && !isEdit) {
-            const generatedSlug = formData.title
+        if (formData?.title && !formData?.slug && !isEdit) {
+            const generatedSlug = formData?.title
                 .toLowerCase()
                 .replace(/[^a-z0-9]+/g, '-')
                 .replace(/^-+|-+$/g, '')
             setFormData(prev => ({ ...prev, slug: generatedSlug }))
         }
-    }, [formData.title, isEdit])
+    }, [formData?.title, isEdit])
 
     // Validation
     const validateForm = () => {
         const newErrors = {};
 
         // BASIC
-        if (!formData.title?.trim()) newErrors.title = "Title is required";
-        if (!formData.desc?.trim()) newErrors.desc = "Description is required";
-        if (!formData.slug?.trim()) newErrors.slug = "Slug is required";
+        if (!formData?.title?.trim()) newErrors.title = "Title is required";
+        if (!formData?.desc?.trim()) newErrors.desc = "Description is required";
+        if (!formData?.slug?.trim()) newErrors.slug = "Slug is required";
 
         // HERO
-        if (!formData.hero.badge?.trim()) newErrors["hero.badge"] = "Hero badge required";
-        if (!formData.hero.title?.trim()) newErrors["hero.title"] = "Hero title required";
-        if (!formData.hero.subtitle?.trim()) newErrors["hero.subtitle"] = "Hero subtitle required";
+        if (!formData?.hero.badge?.trim()) newErrors["hero.badge"] = "Hero badge required";
+        if (!formData?.hero.title?.trim()) newErrors["hero.title"] = "Hero title required";
+        if (!formData?.hero.subtitle?.trim()) newErrors["hero.subtitle"] = "Hero subtitle required";
 
-        if (!formData.hero.desc || formData.hero.desc.length === 0) {
+        if (!formData?.hero.desc || formData?.hero.desc.length === 0) {
             newErrors["hero.desc"] = "At least one description required";
         }
 
         // FAQ (optional but recommended)
-        formData.faq.forEach((faq, i) => {
+        formData?.faq.forEach((faq, i) => {
             if (!faq.q?.trim()) newErrors[`faq.q.${i}`] = "Question required";
             if (!faq.a?.trim()) newErrors[`faq.a.${i}`] = "Answer required";
         });
@@ -226,7 +278,7 @@ const ServiceForm = () => {
 
     // Tags handlers
     const addTag = () => {
-        if (tempTag.trim() && !formData.tags.includes(tempTag.trim())) {
+        if (tempTag.trim() && !formData?.tags.includes(tempTag.trim())) {
             setFormData(prev => ({
                 ...prev,
                 tags: [...prev.tags, tempTag.trim()]
@@ -312,7 +364,7 @@ const ServiceForm = () => {
     }
 
     const updateBlock = (index, field, value) => {
-        const updatedBlocks = [...formData.blocks]
+        const updatedBlocks = [...formData?.blocks]
         updatedBlocks[index] = { ...updatedBlocks[index], [field]: value }
         setFormData(prev => ({ ...prev, blocks: updatedBlocks }))
     }
@@ -347,7 +399,7 @@ const ServiceForm = () => {
 
     const addFeature = (blockIndex) => {
         if (tempFeature.trim()) {
-            const updatedBlocks = [...formData.blocks]
+            const updatedBlocks = [...formData?.blocks]
             updatedBlocks[blockIndex].features.push(tempFeature.trim())
             setFormData(prev => ({ ...prev, blocks: updatedBlocks }))
             setTempFeature('')
@@ -355,7 +407,7 @@ const ServiceForm = () => {
     }
 
     const removeFeature = (blockIndex, featureIndex) => {
-        const updatedBlocks = [...formData.blocks]
+        const updatedBlocks = [...formData?.blocks]
         updatedBlocks[blockIndex].features = updatedBlocks[blockIndex].features.filter((_, i) => i !== featureIndex)
         setFormData(prev => ({ ...prev, blocks: updatedBlocks }))
     }
@@ -381,7 +433,7 @@ const ServiceForm = () => {
     }
 
     const updateComparisonRow = (index, field, value) => {
-        const updatedData = [...formData.comparison.data]
+        const updatedData = [...formData?.comparison.data]
         updatedData[index] = { ...updatedData[index], [field]: value }
         setFormData(prev => ({
             ...prev,
@@ -461,7 +513,7 @@ const ServiceForm = () => {
     }
 
     const updateStep = (index, field, value) => {
-        const updatedSteps = [...formData.approach.steps]
+        const updatedSteps = [...formData?.approach.steps]
         updatedSteps[index] = { ...updatedSteps[index], [field]: value }
         setFormData(prev => ({
             ...prev,
@@ -497,7 +549,7 @@ const ServiceForm = () => {
     }
 
     const updateWhyChoose = (index, field, value) => {
-        const updatedWhyChoose = [...formData.approach.whyChoose]
+        const updatedWhyChoose = [...formData?.approach.whyChoose]
         updatedWhyChoose[index] = { ...updatedWhyChoose[index], [field]: value }
         setFormData(prev => ({
             ...prev,
@@ -528,7 +580,7 @@ const ServiceForm = () => {
     };
 
     const updateFaq = (index, field, value) => {
-        const updatedFaq = [...formData.faq]
+        const updatedFaq = [...formData?.faq]
         updatedFaq[index] = { ...updatedFaq[index], [field]: value }
         setFormData(prev => ({ ...prev, faq: updatedFaq }))
     }
@@ -556,7 +608,7 @@ const ServiceForm = () => {
     }
 
     const updateCtaButton = (index, field, value) => {
-        const updatedButtons = [...formData.cta.buttons]
+        const updatedButtons = [...formData?.cta.buttons]
         updatedButtons[index] = { ...updatedButtons[index], [field]: value }
         setFormData(prev => ({
             ...prev,
@@ -616,29 +668,30 @@ const ServiceForm = () => {
             const formDataToSend = new FormData()
 
             // Append basic fields as strings
-            formDataToSend.append('title', formData.title)
-            formDataToSend.append('desc', formData.desc)
-            formDataToSend.append('slug', formData.slug)
-            formDataToSend.append('accent', formData.accent)
-            formDataToSend.append('path', formData.path || '')
-            formDataToSend.append('tags', JSON.stringify(formData.tags))
+            formDataToSend.append('title', formData?.title)
+            formDataToSend.append('desc', formData?.desc)
+            formDataToSend.append('slug', formData?.slug)
+            formDataToSend.append('accent', formData?.accent)
+            formDataToSend.append('path', formData?.path || '')
+            formDataToSend.append('tags', JSON.stringify(formData?.tags))
 
             // Append nested objects as JSON strings
-            formDataToSend.append('hero', JSON.stringify(formData.hero))
-            formDataToSend.append('comparison', JSON.stringify(formData.comparison))
-            formDataToSend.append('whoNeeds', JSON.stringify(formData.whoNeeds))
-            formDataToSend.append('approach', JSON.stringify(formData.approach))
-            formDataToSend.append('faq', JSON.stringify(formData.faq))
-            formDataToSend.append('cta', JSON.stringify(formData.cta))
+            formDataToSend.append('hero', JSON.stringify(formData?.hero))
+            formDataToSend.append('comparison', JSON.stringify(formData?.comparison))
+            formDataToSend.append('whoNeeds', JSON.stringify(formData?.whoNeeds))
+            formDataToSend.append('approach', JSON.stringify(formData?.approach))
+            formDataToSend.append('faq', JSON.stringify(formData?.faq))
+            formDataToSend.append('cta', JSON.stringify(formData?.cta))
+            formDataToSend.append("seo", JSON.stringify(formData.seo));
 
             // ICON FILE
             if (iconFile) {
-                console.log(iconFile)
+                // console.log(iconFile)
                 formDataToSend.append("icon", iconFile)
             }
 
             // Handle blocks with images
-            const blocksWithImages = formData.blocks.map((block, index) => {
+            const blocksWithImages = formData?.blocks.map((block, index) => {
                 const blockCopy = { ...block }
                 // If there's an image file for this block, we'll send it separately
                 if (blockImageFiles[index]) {
@@ -658,9 +711,7 @@ const ServiceForm = () => {
             let response
             if (isEdit) {
                 formDataToSend.append('id', id)
-                console.log(formDataToSend
-
-                )
+                
                 response = await updateService({ id, formData: formDataToSend }).unwrap()
             } else {
                 response = await createService(formDataToSend).unwrap()
@@ -867,7 +918,7 @@ const ServiceForm = () => {
                                     <input
                                         name="title"
                                         type="text"
-                                        value={formData.title}
+                                        value={formData?.title}
                                         onChange={(e) => handleChange('title', e.target.value)}
                                         placeholder="e.g., AI Development Services"
                                         style={{
@@ -888,7 +939,7 @@ const ServiceForm = () => {
                                         Short Description <span style={{ color: '#ef4444' }}>*</span>
                                     </label>
                                     <textarea
-                                        value={formData.desc}
+                                        value={formData?.desc}
                                         onChange={(e) => handleChange('desc', e.target.value)}
                                         placeholder="Brief description of the service..."
                                         rows="3"
@@ -912,7 +963,7 @@ const ServiceForm = () => {
                                     </label>
                                     <input
                                         type="text"
-                                        value={formData.slug}
+                                        value={formData?.slug}
                                         onChange={(e) => handleChange('slug', e.target.value)}
                                         placeholder="ai-development-services"
                                         style={{
@@ -934,7 +985,7 @@ const ServiceForm = () => {
                                     </label>
                                     <input
                                         type="text"
-                                        value={formData.path}
+                                        value={formData?.path}
                                         onChange={(e) => handleChange('path', e.target.value)}
                                         placeholder="/services/ai-development"
                                         style={{
@@ -956,13 +1007,13 @@ const ServiceForm = () => {
                                     <div style={{ display: 'flex', gap: 12, alignItems: 'center' }}>
                                         <input
                                             type="color"
-                                            value={formData.accent}
+                                            value={formData?.accent}
                                             onChange={(e) => handleChange('accent', e.target.value)}
                                             style={{ width: 50, height: 40, borderRadius: 8, cursor: 'pointer' }}
                                         />
                                         <input
                                             type="text"
-                                            value={formData.accent}
+                                            value={formData?.accent}
                                             onChange={(e) => handleChange('accent', e.target.value)}
                                             style={{
                                                 flex: 1,
@@ -1014,7 +1065,7 @@ const ServiceForm = () => {
                                         </button>
                                     </div>
                                     <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8, marginTop: 12 }}>
-                                        {formData.tags.map(tag => (
+                                        {formData?.tags.map(tag => (
                                             <span key={tag} style={{
                                                 padding: '6px 12px',
                                                 background: 'rgba(96,165,250,0.15)',
@@ -1054,7 +1105,7 @@ const ServiceForm = () => {
                                     </label>
                                     <input
                                         type="text"
-                                        value={formData.hero.badge}
+                                        value={formData?.hero.badge}
                                         onChange={(e) => handleHeroChange('badge', e.target.value)}
                                         placeholder="e.g., AI Solutions"
                                         style={{
@@ -1075,7 +1126,7 @@ const ServiceForm = () => {
                                     </label>
                                     <input
                                         type="text"
-                                        value={formData.hero.title}
+                                        value={formData?.hero.title}
                                         onChange={(e) => handleHeroChange('title', e.target.value)}
                                         placeholder="Main hero title"
                                         style={{
@@ -1096,7 +1147,7 @@ const ServiceForm = () => {
                                     </label>
                                     <input
                                         type="text"
-                                        value={formData.hero.subtitle}
+                                        value={formData?.hero.subtitle}
                                         onChange={(e) => handleHeroChange('subtitle', e.target.value)}
                                         placeholder="Hero subtitle"
                                         style={{
@@ -1116,7 +1167,7 @@ const ServiceForm = () => {
                                         Intro Text
                                     </label>
                                     <textarea
-                                        value={formData.hero.intro}
+                                        value={formData?.hero.intro}
                                         onChange={(e) => handleHeroChange('intro', e.target.value)}
                                         rows="3"
                                         style={{
@@ -1134,13 +1185,13 @@ const ServiceForm = () => {
                                     <label style={{ color: 'rgba(255,255,255,0.8)', marginBottom: 8, display: 'block' }}>
                                         Description Paragraphs <span style={{ color: '#ef4444' }}>*</span>
                                     </label>
-                                    {formData.hero.desc.map((desc, idx) => (
+                                    {formData?.hero?.desc?.map((desc, idx) => (
                                         <div key={idx} style={{ display: 'flex', gap: 8, marginBottom: 8 }}>
                                             <input
                                                 type="text"
                                                 value={desc}
                                                 onChange={(e) => {
-                                                    const newDesc = [...formData.hero.desc]
+                                                    const newDesc = [...formData?.hero.desc]
                                                     newDesc[idx] = e.target.value
                                                     handleHeroChange('desc', newDesc)
                                                 }}
@@ -1196,7 +1247,7 @@ const ServiceForm = () => {
                                     </label>
                                     <input
                                         type="text"
-                                        value={formData.hero.questionsTitle}
+                                        value={formData?.hero.questionsTitle}
                                         onChange={(e) => handleHeroChange('questionsTitle', e.target.value)}
                                         placeholder="Common Questions"
                                         style={{
@@ -1214,13 +1265,13 @@ const ServiceForm = () => {
                                     <label style={{ color: 'rgba(255,255,255,0.8)', marginBottom: 8, display: 'block' }}>
                                         Questions
                                     </label>
-                                    {formData.hero.questions.map((q, idx) => (
+                                    {formData?.hero?.questions?.map((q, idx) => (
                                         <div key={idx} style={{ display: 'flex', gap: 8, marginBottom: 8 }}>
                                             <input
                                                 type="text"
                                                 value={q}
                                                 onChange={(e) => {
-                                                    const newQuestions = [...formData.hero.questions]
+                                                    const newQuestions = [...formData?.hero.questions]
                                                     newQuestions[idx] = e.target.value
                                                     handleHeroChange('questions', newQuestions)
                                                 }}
@@ -1273,13 +1324,13 @@ const ServiceForm = () => {
                                     <label style={{ color: 'rgba(255,255,255,0.8)', marginBottom: 8, display: 'block' }}>
                                         Closing Statements
                                     </label>
-                                    {formData.hero.closing.map((c, idx) => (
+                                    {formData?.hero.closing.map((c, idx) => (
                                         <div key={idx} style={{ display: 'flex', gap: 8, marginBottom: 8 }}>
                                             <input
                                                 type="text"
                                                 value={c}
                                                 onChange={(e) => {
-                                                    const newClosing = [...formData.hero.closing]
+                                                    const newClosing = [...formData?.hero.closing]
                                                     newClosing[idx] = e.target.value
                                                     handleHeroChange('closing', newClosing)
                                                 }}
@@ -1349,7 +1400,7 @@ const ServiceForm = () => {
                                     </button>
                                 </div>
 
-                                {formData.blocks.map((block, idx) => (
+                                {formData?.blocks.map((block, idx) => (
                                     <div key={idx} style={{
                                         background: 'rgba(255,255,255,0.05)',
                                         borderRadius: 16,
@@ -1558,7 +1609,7 @@ const ServiceForm = () => {
                                     </div>
                                 ))}
 
-                                {formData.blocks.length === 0 && (
+                                {formData?.blocks.length === 0 && (
                                     <div style={{
                                         textAlign: 'center',
                                         padding: 60,
@@ -1585,7 +1636,7 @@ const ServiceForm = () => {
                                     </label>
                                     <input
                                         type="text"
-                                        value={formData.comparison.title}
+                                        value={formData?.comparison.title}
                                         onChange={(e) => setFormData(prev => ({
                                             ...prev,
                                             comparison: { ...prev.comparison, title: e.target.value }
@@ -1615,7 +1666,7 @@ const ServiceForm = () => {
                                         }}>Add Row</button>
                                     </div>
 
-                                    {formData.comparison.data.map((row, idx) => (
+                                    {formData?.comparison.data.map((row, idx) => (
                                         <div key={idx} style={{
                                             background: 'rgba(255,255,255,0.05)',
                                             borderRadius: 12,
@@ -1732,7 +1783,7 @@ const ServiceForm = () => {
                                     </label>
                                     <input
                                         type="text"
-                                        value={formData.whoNeeds.title}
+                                        value={formData?.whoNeeds.title}
                                         onChange={(e) => setFormData(prev => ({
                                             ...prev,
                                             whoNeeds: { ...prev.whoNeeds, title: e.target.value }
@@ -1753,13 +1804,13 @@ const ServiceForm = () => {
                                     <label style={{ color: 'rgba(255,255,255,0.8)', marginBottom: 8, display: 'block' }}>
                                         Problems Solved
                                     </label>
-                                    {formData.whoNeeds.problems.map((problem, idx) => (
+                                    {formData?.whoNeeds.problems.map((problem, idx) => (
                                         <div key={idx} style={{ display: 'flex', gap: 8, marginBottom: 8 }}>
                                             <input
                                                 type="text"
                                                 value={problem}
                                                 onChange={(e) => {
-                                                    const newProblems = [...formData.whoNeeds.problems]
+                                                    const newProblems = [...formData?.whoNeeds.problems]
                                                     newProblems[idx] = e.target.value
                                                     setFormData(prev => ({
                                                         ...prev,
@@ -1815,13 +1866,13 @@ const ServiceForm = () => {
                                     <label style={{ color: 'rgba(255,255,255,0.8)', marginBottom: 8, display: 'block' }}>
                                         Ideal For
                                     </label>
-                                    {formData.whoNeeds.idealFor.map((ideal, idx) => (
+                                    {formData?.whoNeeds.idealFor.map((ideal, idx) => (
                                         <div key={idx} style={{ display: 'flex', gap: 8, marginBottom: 8 }}>
                                             <input
                                                 type="text"
                                                 value={ideal}
                                                 onChange={(e) => {
-                                                    const newIdeal = [...formData.whoNeeds.idealFor]
+                                                    const newIdeal = [...formData?.whoNeeds.idealFor]
                                                     newIdeal[idx] = e.target.value
                                                     setFormData(prev => ({
                                                         ...prev,
@@ -1889,7 +1940,7 @@ const ServiceForm = () => {
                                     </label>
                                     <input
                                         type="text"
-                                        value={formData.approach.title}
+                                        value={formData?.approach.title}
                                         onChange={(e) => setFormData(prev => ({
                                             ...prev,
                                             approach: { ...prev.approach, title: e.target.value }
@@ -1988,7 +2039,7 @@ const ServiceForm = () => {
                                     </div>
 
                                     {/* Display existing steps */}
-                                    {formData.approach.steps.map((step, idx) => (
+                                    {formData?.approach.steps.map((step, idx) => (
                                         <div key={idx} style={{
                                             background: 'rgba(255,255,255,0.05)',
                                             borderRadius: 12,
@@ -2051,7 +2102,7 @@ const ServiceForm = () => {
                                         </div>
                                     ))}
 
-                                    {formData.approach.steps.length === 0 && (
+                                    {formData?.approach.steps.length === 0 && (
                                         <div style={{
                                             textAlign: 'center',
                                             padding: 40,
@@ -2134,7 +2185,7 @@ const ServiceForm = () => {
                                     </div>
 
                                     {/* Display existing reasons */}
-                                    {formData.approach.whyChoose.map((item, idx) => (
+                                    {formData?.approach.whyChoose.map((item, idx) => (
                                         <div key={idx} style={{
                                             background: 'rgba(255,255,255,0.05)',
                                             borderRadius: 12,
@@ -2184,7 +2235,7 @@ const ServiceForm = () => {
                                         </div>
                                     ))}
 
-                                    {formData.approach.whyChoose.length === 0 && (
+                                    {formData?.approach.whyChoose.length === 0 && (
                                         <div style={{
                                             textAlign: 'center',
                                             padding: 40,
@@ -2264,7 +2315,7 @@ const ServiceForm = () => {
                                     </button>
                                 </div>
 
-                                {formData.faq.map((faq, idx) => (
+                                {formData?.faq.map((faq, idx) => (
                                     <div key={idx} style={{
                                         background: 'rgba(255,255,255,0.05)',
                                         borderRadius: 12,
@@ -2310,7 +2361,7 @@ const ServiceForm = () => {
                                     </div>
                                 ))}
 
-                                {formData.faq.length === 0 && (
+                                {formData?.faq.length === 0 && (
                                     <div style={{
                                         textAlign: 'center',
                                         padding: 60,
@@ -2338,7 +2389,7 @@ const ServiceForm = () => {
                                         </label>
                                         <input
                                             type="text"
-                                            value={formData.cta.title}
+                                            value={formData?.cta.title}
                                             onChange={(e) => setFormData(prev => ({
                                                 ...prev,
                                                 cta: { ...prev.cta, title: e.target.value }
@@ -2360,7 +2411,7 @@ const ServiceForm = () => {
                                             CTA Description
                                         </label>
                                         <textarea
-                                            value={formData.cta.desc}
+                                            value={formData?.cta.desc}
                                             onChange={(e) => setFormData(prev => ({
                                                 ...prev,
                                                 cta: { ...prev.cta, desc: e.target.value }
@@ -2391,7 +2442,7 @@ const ServiceForm = () => {
                                             }}>Add Button</button>
                                         </div>
 
-                                        {formData.cta.buttons.map((btn, idx) => (
+                                        {formData?.cta.buttons.map((btn, idx) => (
                                             <div key={idx} style={{
                                                 background: 'rgba(255,255,255,0.05)',
                                                 borderRadius: 12,
@@ -2437,6 +2488,231 @@ const ServiceForm = () => {
                                             </div>
                                         ))}
                                     </div>
+                                </div>
+                            </div>
+                        )}
+
+                        {/* SEO TAB */}
+                        {activeTab === 'seo' && (
+                            <div style={{ display: 'flex', flexDirection: 'column', gap: 24 }}>
+                                <h3 style={{ fontSize: 18, fontWeight: 600, color: '#fff', marginBottom: 8 }}>
+                                    SEO Settings
+                                </h3>
+                                <p style={{ color: 'rgba(255,255,255,0.5)', fontSize: 13, marginTop: -12 }}>
+                                    Sab fields optional hain — khali chodne par title/description se auto-fill ho jayega.
+                                </p>
+
+                                {/* Meta Title */}
+                                <div>
+                                    <label style={{ color: 'rgba(255,255,255,0.8)', marginBottom: 8, display: 'block' }}>
+                                        Meta Title
+                                    </label>
+                                    <input
+                                        type="text"
+                                        value={formData?.seo.metaTitle}
+                                        onChange={(e) => handleSeoChange('metaTitle', e.target.value)}
+                                        placeholder="e.g., AI Development Services | YourBrand"
+                                        style={{
+                                            width: '100%', padding: '12px 16px', background: 'rgba(0,0,0,0.3)',
+                                            border: '1px solid rgba(255,255,255,0.1)', borderRadius: 8, color: '#fff', fontSize: 14
+                                        }}
+                                    />
+                                </div>
+
+                                {/* Meta Description */}
+                                <div>
+                                    <label style={{ color: 'rgba(255,255,255,0.8)', marginBottom: 8, display: 'block' }}>
+                                        Meta Description
+                                    </label>
+                                    <textarea
+                                        value={formData?.seo.metaDescription}
+                                        onChange={(e) => handleSeoChange('metaDescription', e.target.value)}
+                                        rows="3"
+                                        placeholder="Short SEO description (150-160 chars recommended)"
+                                        style={{
+                                            width: '100%', padding: '12px 16px', background: 'rgba(0,0,0,0.3)',
+                                            border: '1px solid rgba(255,255,255,0.1)', borderRadius: 8, color: '#fff', fontSize: 14, resize: 'vertical'
+                                        }}
+                                    />
+                                </div>
+
+                                {/* Keywords */}
+                                <div>
+                                    <label style={{ color: 'rgba(255,255,255,0.8)', marginBottom: 8, display: 'block' }}>
+                                        Keywords
+                                    </label>
+                                    <div style={{ display: 'flex', gap: 8 }}>
+                                        <input
+                                            type="text"
+                                            value={tempKeyword}
+                                            onChange={(e) => setTempKeyword(e.target.value)}
+                                            onKeyPress={(e) => e.key === 'Enter' && (e.preventDefault(), addKeyword())}
+                                            placeholder="e.g., AI development, machine learning"
+                                            style={{
+                                                flex: 1, padding: '12px 16px', background: 'rgba(0,0,0,0.3)',
+                                                border: '1px solid rgba(255,255,255,0.1)', borderRadius: 8, color: '#fff', fontSize: 14
+                                            }}
+                                        />
+                                        <button type="button" onClick={addKeyword} style={{
+                                            padding: '12px 20px', background: 'rgba(96,165,250,0.2)',
+                                            border: '1px solid #60a5fa', borderRadius: 8, color: '#60a5fa', cursor: 'pointer'
+                                        }}>Add</button>
+                                    </div>
+                                    <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8, marginTop: 12 }}>
+                                        {formData?.seo.keywords.map(kw => (
+                                            <span key={kw} style={{
+                                                padding: '6px 12px', background: 'rgba(96,165,250,0.15)',
+                                                border: '1px solid rgba(96,165,250,0.3)', borderRadius: 6,
+                                                color: '#60a5fa', fontSize: 13, display: 'flex', alignItems: 'center', gap: 8
+                                            }}>
+                                                {kw}
+                                                <button type="button" onClick={() => removeKeyword(kw)} style={{
+                                                    background: 'none', border: 'none', color: '#ef4444', cursor: 'pointer', fontSize: 16
+                                                }}>×</button>
+                                            </span>
+                                        ))}
+                                    </div>
+                                </div>
+
+                                {/* Canonical URL */}
+                                <div>
+                                    <label style={{ color: 'rgba(255,255,255,0.8)', marginBottom: 8, display: 'block' }}>
+                                        Canonical URL
+                                    </label>
+                                    <input
+                                        type="text"
+                                        value={formData?.seo.canonical}
+                                        onChange={(e) => handleSeoChange('canonical', e.target.value)}
+                                        placeholder="https://yoursite.com/ServiceDetail/your-slug (auto-generated if empty)"
+                                        style={{
+                                            width: '100%', padding: '12px 16px', background: 'rgba(0,0,0,0.3)',
+                                            border: '1px solid rgba(255,255,255,0.1)', borderRadius: 8, color: '#fff', fontSize: 14
+                                        }}
+                                    />
+                                </div>
+
+                                {/* Robots */}
+                                <div>
+                                    <label style={{ color: 'rgba(255,255,255,0.8)', marginBottom: 8, display: 'block' }}>
+                                        Robots
+                                    </label>
+                                    <select
+                                        value={formData?.seo.robots}
+                                        onChange={(e) => handleSeoChange('robots', e.target.value)}
+                                        style={{
+                                            width: '100%', padding: '12px 16px', background: 'rgba(0,0,0,0.3)',
+                                            border: '1px solid rgba(255,255,255,0.1)', borderRadius: 8, color: '#fff', fontSize: 14
+                                        }}
+                                    >
+                                        <option value="index, follow">index, follow</option>
+                                        <option value="noindex, follow">noindex, follow</option>
+                                        <option value="index, nofollow">index, nofollow</option>
+                                        <option value="noindex, nofollow">noindex, nofollow</option>
+                                    </select>
+                                </div>
+
+                                <hr style={{ border: 'none', borderTop: '1px solid rgba(255,255,255,0.1)', margin: '8px 0' }} />
+
+                                {/* Open Graph */}
+                                <h4 style={{ color: '#60a5fa', fontSize: 15, fontWeight: 600 }}>Open Graph (Facebook/LinkedIn)</h4>
+                                <div>
+                                    <label style={{ color: 'rgba(255,255,255,0.8)', marginBottom: 8, display: 'block' }}>OG Title</label>
+                                    <input
+                                        type="text"
+                                        value={formData?.seo.openGraph.title}
+                                        onChange={(e) => handleSeoNestedChange('openGraph', 'title', e.target.value)}
+                                        style={{
+                                            width: '100%', padding: '12px 16px', background: 'rgba(0,0,0,0.3)',
+                                            border: '1px solid rgba(255,255,255,0.1)', borderRadius: 8, color: '#fff', fontSize: 14
+                                        }}
+                                    />
+                                </div>
+                                <div>
+                                    <label style={{ color: 'rgba(255,255,255,0.8)', marginBottom: 8, display: 'block' }}>OG Description</label>
+                                    <textarea
+                                        value={formData?.seo.openGraph.description}
+                                        onChange={(e) => handleSeoNestedChange('openGraph', 'description', e.target.value)}
+                                        rows="2"
+                                        style={{
+                                            width: '100%', padding: '12px 16px', background: 'rgba(0,0,0,0.3)',
+                                            border: '1px solid rgba(255,255,255,0.1)', borderRadius: 8, color: '#fff', fontSize: 14, resize: 'vertical'
+                                        }}
+                                    />
+                                </div>
+                                <div>
+                                    <label style={{ color: 'rgba(255,255,255,0.8)', marginBottom: 8, display: 'block' }}>OG Image URL</label>
+                                    <input
+                                        type="text"
+                                        value={formData?.seo.openGraph.image}
+                                        onChange={(e) => handleSeoNestedChange('openGraph', 'image', e.target.value)}
+                                        placeholder="Leave empty to use hero image"
+                                        style={{
+                                            width: '100%', padding: '12px 16px', background: 'rgba(0,0,0,0.3)',
+                                            border: '1px solid rgba(255,255,255,0.1)', borderRadius: 8, color: '#fff', fontSize: 14
+                                        }}
+                                    />
+                                </div>
+
+                                <hr style={{ border: 'none', borderTop: '1px solid rgba(255,255,255,0.1)', margin: '8px 0' }} />
+
+                                {/* Twitter */}
+                                <h4 style={{ color: '#60a5fa', fontSize: 15, fontWeight: 600 }}>Twitter Card</h4>
+                                <div>
+                                    <label style={{ color: 'rgba(255,255,255,0.8)', marginBottom: 8, display: 'block' }}>Twitter Title</label>
+                                    <input
+                                        type="text"
+                                        value={formData?.seo.twitter.title}
+                                        onChange={(e) => handleSeoNestedChange('twitter', 'title', e.target.value)}
+                                        style={{
+                                            width: '100%', padding: '12px 16px', background: 'rgba(0,0,0,0.3)',
+                                            border: '1px solid rgba(255,255,255,0.1)', borderRadius: 8, color: '#fff', fontSize: 14
+                                        }}
+                                    />
+                                </div>
+                                <div>
+                                    <label style={{ color: 'rgba(255,255,255,0.8)', marginBottom: 8, display: 'block' }}>Twitter Description</label>
+                                    <textarea
+                                        value={formData?.seo.twitter.description}
+                                        onChange={(e) => handleSeoNestedChange('twitter', 'description', e.target.value)}
+                                        rows="2"
+                                        style={{
+                                            width: '100%', padding: '12px 16px', background: 'rgba(0,0,0,0.3)',
+                                            border: '1px solid rgba(255,255,255,0.1)', borderRadius: 8, color: '#fff', fontSize: 14, resize: 'vertical'
+                                        }}
+                                    />
+                                </div>
+                                <div>
+                                    <label style={{ color: 'rgba(255,255,255,0.8)', marginBottom: 8, display: 'block' }}>Twitter Image URL</label>
+                                    <input
+                                        type="text"
+                                        value={formData?.seo.twitter.image}
+                                        onChange={(e) => handleSeoNestedChange('twitter', 'image', e.target.value)}
+                                        placeholder="Leave empty to use hero image"
+                                        style={{
+                                            width: '100%', padding: '12px 16px', background: 'rgba(0,0,0,0.3)',
+                                            border: '1px solid rgba(255,255,255,0.1)', borderRadius: 8, color: '#fff', fontSize: 14
+                                        }}
+                                    />
+                                </div>
+
+                                <hr style={{ border: 'none', borderTop: '1px solid rgba(255,255,255,0.1)', margin: '8px 0' }} />
+
+                                {/* Schema JSON-LD */}
+                                <div>
+                                    <label style={{ color: 'rgba(255,255,255,0.8)', marginBottom: 8, display: 'block' }}>
+                                        Schema (JSON-LD) — optional, advanced
+                                    </label>
+                                    <textarea
+                                        value={formData?.seo.schema}
+                                        onChange={(e) => handleSeoChange('schema', e.target.value)}
+                                        rows="6"
+                                        placeholder='{ "@context": "https://schema.org", "@type": "Service", ... }'
+                                        style={{
+                                            width: '100%', padding: '12px 16px', background: 'rgba(0,0,0,0.3)',
+                                            border: '1px solid rgba(255,255,255,0.1)', borderRadius: 8, color: '#fff',
+                                            fontSize: 13, fontFamily: 'monospace', resize: 'vertical'
+                                        }}
+                                    />
                                 </div>
                             </div>
                         )}

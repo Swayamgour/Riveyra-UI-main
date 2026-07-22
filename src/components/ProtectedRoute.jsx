@@ -12,7 +12,7 @@ const ProtectedRoute = ({ children }) => {
 
   const { data, isLoading, isError, isSuccess } = useCheckTokenQuery();
 
-  console.log(isSuccess)
+  // console.log(isSuccess)
 
   // Loader
   if (isLoading) {

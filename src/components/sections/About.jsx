@@ -6,6 +6,7 @@ import Icons from '../ui/Icons'
 import { ABOUT_FEATURES } from '../../utils/constants'
 import { useBreakpoint } from '../../hooks/useBreakpoint.jsx'
 import { Helmet } from "react-helmet-async";
+import { useGetPageSeoQuery } from '../../redux/api.jsx'
 
 // ─── Image definitions ────────────────────────────────────────────────────────
 const IMAGES = [
@@ -24,19 +25,19 @@ const IMAGES = [
 ]
 
 const STATS = [
-  { val: '50+',  lbl: 'Projects' },
-  { val: '30+',  lbl: 'Clients'  },
-  { val: '100%', lbl: 'On Time'  },
+  { val: '50+', lbl: 'Projects' },
+  { val: '30+', lbl: 'Clients' },
+  { val: '100%', lbl: 'On Time' },
 ]
 
 // ─── Per-breakpoint collage layout ───────────────────────────────────────────
 function getImageStyle(i, bp) {
-  const r   = bp === 'desktop' ? 16 : 12
-  const gap = bp === 'desktop' ? 6  : 5
+  const r = bp === 'desktop' ? 16 : 12
+  const gap = bp === 'desktop' ? 6 : 5
   return [
-    { top: 0,    left:  0, width: `calc(52% - ${gap}px)`, height: '100%',                  borderRadius: r },
-    { top: 0,    right: 0, width: `calc(48% - ${gap}px)`, height: `calc(55% - ${gap}px)`,  borderRadius: r },
-    { bottom: 0, right: 0, width: `calc(48% - ${gap}px)`, height: `calc(45% - ${gap}px)`,  borderRadius: r },
+    { top: 0, left: 0, width: `calc(52% - ${gap}px)`, height: '100%', borderRadius: r },
+    { top: 0, right: 0, width: `calc(48% - ${gap}px)`, height: `calc(55% - ${gap}px)`, borderRadius: r },
+    { bottom: 0, right: 0, width: `calc(48% - ${gap}px)`, height: `calc(45% - ${gap}px)`, borderRadius: r },
   ][i]
 }
 
@@ -50,9 +51,9 @@ function HoverImage({ img, i, imgStyle }) {
     if (frameRef.current) return
     const t = e.currentTarget
     frameRef.current = requestAnimationFrame(() => {
-      const r  = t.getBoundingClientRect()
-      const dx = (e.clientX - (r.left + r.width  / 2)) / (r.width  / 2)
-      const dy = (e.clientY - (r.top  + r.height / 2)) / (r.height / 2)
+      const r = t.getBoundingClientRect()
+      const dx = (e.clientX - (r.left + r.width / 2)) / (r.width / 2)
+      const dy = (e.clientY - (r.top + r.height / 2)) / (r.height / 2)
       setTilt({ x: dy * -5, y: dx * 5 })
       frameRef.current = null
     })
@@ -92,13 +93,13 @@ function HoverImage({ img, i, imgStyle }) {
         transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
         style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
       />
-      <div style={{ position:'absolute',inset:0, background:'linear-gradient(135deg,rgba(96,165,250,0.14),rgba(192,132,252,0.09))', mixBlendMode:'overlay', opacity: hov ? 1 : 0.55, transition:'opacity 0.3s' }} />
-      <div style={{ position:'absolute',inset:0, background:'linear-gradient(to top,rgba(5,11,24,0.88) 0%,rgba(5,11,24,0.3) 50%,transparent 100%)', opacity: hov ? 1 : 0, transition:'opacity 0.35s ease' }} />
-      <div style={{ position:'absolute',bottom:0,left:0,right:0, padding:'10px 12px', transform: hov ? 'translateY(0)' : 'translateY(100%)', transition:'transform 0.35s cubic-bezier(0.16,1,0.3,1)' }}>
-        <span style={{ fontSize:10, fontFamily:'var(--font-mono)', letterSpacing:1.5, textTransform:'uppercase', color:'rgba(255,255,255,0.85)', fontWeight:600 }}>{img.alt}</span>
+      <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(135deg,rgba(96,165,250,0.14),rgba(192,132,252,0.09))', mixBlendMode: 'overlay', opacity: hov ? 1 : 0.55, transition: 'opacity 0.3s' }} />
+      <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to top,rgba(5,11,24,0.88) 0%,rgba(5,11,24,0.3) 50%,transparent 100%)', opacity: hov ? 1 : 0, transition: 'opacity 0.35s ease' }} />
+      <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, padding: '10px 12px', transform: hov ? 'translateY(0)' : 'translateY(100%)', transition: 'transform 0.35s cubic-bezier(0.16,1,0.3,1)' }}>
+        <span style={{ fontSize: 10, fontFamily: 'var(--font-mono)', letterSpacing: 1.5, textTransform: 'uppercase', color: 'rgba(255,255,255,0.85)', fontWeight: 600 }}>{img.alt}</span>
       </div>
-      <div style={{ position:'absolute',top:0,left:0,right:0,height:2, background:'linear-gradient(90deg,rgba(96,165,250,0.8),transparent)', opacity: hov ? 1 : 0, transition:'opacity 0.3s' }} />
-      <div style={{ position:'absolute',inset:0, background:`radial-gradient(circle at ${50+tilt.y*8}% ${50+tilt.x*8}%,rgba(255,255,255,0.07) 0%,transparent 60%)`, opacity: hov ? 1 : 0, transition:'opacity 0.2s', pointerEvents:'none' }} />
+      <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: 2, background: 'linear-gradient(90deg,rgba(96,165,250,0.8),transparent)', opacity: hov ? 1 : 0, transition: 'opacity 0.3s' }} />
+      <div style={{ position: 'absolute', inset: 0, background: `radial-gradient(circle at ${50 + tilt.y * 8}% ${50 + tilt.x * 8}%,rgba(255,255,255,0.07) 0%,transparent 60%)`, opacity: hov ? 1 : 0, transition: 'opacity 0.2s', pointerEvents: 'none' }} />
     </motion.div>
   )
 }
@@ -106,7 +107,7 @@ function HoverImage({ img, i, imgStyle }) {
 // ─── Mobile image slider ──────────────────────────────────────────────────────
 function MobileSlider() {
   const [active, setActive] = useState(0)
-  const [dir,    setDir]    = useState(1)       // 1 = forward, -1 = backward
+  const [dir, setDir] = useState(1)       // 1 = forward, -1 = backward
   const dragStart = useRef(null)
 
   const goTo = useCallback((idx) => {
@@ -119,7 +120,7 @@ function MobileSlider() {
 
   // Touch swipe
   const onTouchStart = e => { dragStart.current = e.touches[0].clientX }
-  const onTouchEnd   = e => {
+  const onTouchEnd = e => {
     if (dragStart.current === null) return
     const diff = dragStart.current - e.changedTouches[0].clientX
     if (Math.abs(diff) > 40) diff > 0 ? next() : prev()
@@ -129,7 +130,7 @@ function MobileSlider() {
   const variants = {
     enter: d => ({ x: d > 0 ? '100%' : '-100%', opacity: 0 }),
     center: { x: 0, opacity: 1 },
-    exit:  d => ({ x: d > 0 ? '-100%' : '100%', opacity: 0 }),
+    exit: d => ({ x: d > 0 ? '-100%' : '100%', opacity: 0 }),
   }
 
   return (
@@ -169,15 +170,15 @@ function MobileSlider() {
               style={{ width: '100%', height: '100%', objectFit: 'cover', filter: 'brightness(0.85) saturate(1.1)', display: 'block' }}
             />
             {/* Tint overlay */}
-            <div style={{ position:'absolute',inset:0, background:'linear-gradient(135deg,rgba(96,165,250,0.14),rgba(192,132,252,0.09))', mixBlendMode:'overlay' }} />
+            <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(135deg,rgba(96,165,250,0.14),rgba(192,132,252,0.09))', mixBlendMode: 'overlay' }} />
             {/* Bottom gradient + label */}
-            <div style={{ position:'absolute',bottom:0,left:0,right:0, padding:'20px 16px 14px', background:'linear-gradient(to top,rgba(5,11,24,0.82),transparent)' }}>
-              <span style={{ fontSize:10, fontFamily:'var(--font-mono)', letterSpacing:1.5, textTransform:'uppercase', color:'rgba(255,255,255,0.8)', fontWeight:600 }}>
+            <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, padding: '20px 16px 14px', background: 'linear-gradient(to top,rgba(5,11,24,0.82),transparent)' }}>
+              <span style={{ fontSize: 10, fontFamily: 'var(--font-mono)', letterSpacing: 1.5, textTransform: 'uppercase', color: 'rgba(255,255,255,0.8)', fontWeight: 600 }}>
                 {IMAGES[active].alt}
               </span>
             </div>
             {/* Top accent */}
-            <div style={{ position:'absolute',top:0,left:0,right:0,height:2, background:'linear-gradient(90deg,rgba(96,165,250,0.7),transparent)' }} />
+            <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: 2, background: 'linear-gradient(90deg,rgba(96,165,250,0.7),transparent)' }} />
           </motion.div>
         </AnimatePresence>
 
@@ -185,29 +186,29 @@ function MobileSlider() {
         <button
           onClick={prev}
           style={{
-            position:'absolute', left:10, top:'50%', transform:'translateY(-50%)',
-            width:34, height:34, borderRadius:'50%', border:'1px solid rgba(255,255,255,0.18)',
-            background:'rgba(5,11,24,0.72)', backdropFilter:'blur(8px)',
-            color:'rgba(255,255,255,0.9)', fontSize:16, cursor:'pointer',
-            display:'flex', alignItems:'center', justifyContent:'center',
-            zIndex:5, WebkitTapHighlightColor:'transparent',
+            position: 'absolute', left: 10, top: '50%', transform: 'translateY(-50%)',
+            width: 34, height: 34, borderRadius: '50%', border: '1px solid rgba(255,255,255,0.18)',
+            background: 'rgba(5,11,24,0.72)', backdropFilter: 'blur(8px)',
+            color: 'rgba(255,255,255,0.9)', fontSize: 16, cursor: 'pointer',
+            display: 'flex', alignItems: 'center', justifyContent: 'center',
+            zIndex: 5, WebkitTapHighlightColor: 'transparent',
           }}
         >‹</button>
         <button
           onClick={next}
           style={{
-            position:'absolute', right:10, top:'50%', transform:'translateY(-50%)',
-            width:34, height:34, borderRadius:'50%', border:'1px solid rgba(255,255,255,0.18)',
-            background:'rgba(5,11,24,0.72)', backdropFilter:'blur(8px)',
-            color:'rgba(255,255,255,0.9)', fontSize:16, cursor:'pointer',
-            display:'flex', alignItems:'center', justifyContent:'center',
-            zIndex:5, WebkitTapHighlightColor:'transparent',
+            position: 'absolute', right: 10, top: '50%', transform: 'translateY(-50%)',
+            width: 34, height: 34, borderRadius: '50%', border: '1px solid rgba(255,255,255,0.18)',
+            background: 'rgba(5,11,24,0.72)', backdropFilter: 'blur(8px)',
+            color: 'rgba(255,255,255,0.9)', fontSize: 16, cursor: 'pointer',
+            display: 'flex', alignItems: 'center', justifyContent: 'center',
+            zIndex: 5, WebkitTapHighlightColor: 'transparent',
           }}
         >›</button>
       </div>
 
       {/* Dot indicators */}
-      <div style={{ display:'flex', justifyContent:'center', gap:7, marginTop:12 }}>
+      <div style={{ display: 'flex', justifyContent: 'center', gap: 7, marginTop: 12 }}>
         {IMAGES.map((_, i) => (
           <button
             key={i}
@@ -316,15 +317,18 @@ export default function About() {
   const y2 = useSpring(useTransform(scrollYProgress, [0, 1], [60, -60]), { stiffness: 80, damping: 20 })
 
   const sectionPadding = isMobile ? '52px 5%' : isTablet ? '60px 6%' : '48px 8% 72px'
-  const collageHeight  = isTablet ? 370 : 500
+  const collageHeight = isTablet ? 370 : 500
+
+  const { data, isLoading } = useGetPageSeoQuery("about")
+  let seo = data?.data
 
   return (
     <section id="about" ref={ref} style={{
       padding: sectionPadding,
       background: 'var(--bg)', position: 'relative', overflow: 'hidden',
     }}>
-      <motion.div style={{ y:y1, position:'absolute',top:-200,right:-100,width:500,height:500,borderRadius:'50%',background:'radial-gradient(circle,rgba(96,165,250,0.08),transparent 70%)',pointerEvents:'none' }} />
-      <motion.div style={{ y:y2, position:'absolute',bottom:-150,left:-80,width:420,height:420,borderRadius:'50%',background:'radial-gradient(circle,rgba(192,132,252,0.07),transparent 70%)',pointerEvents:'none' }} />
+      <motion.div style={{ y: y1, position: 'absolute', top: -200, right: -100, width: 500, height: 500, borderRadius: '50%', background: 'radial-gradient(circle,rgba(96,165,250,0.08),transparent 70%)', pointerEvents: 'none' }} />
+      <motion.div style={{ y: y2, position: 'absolute', bottom: -150, left: -80, width: 420, height: 420, borderRadius: '50%', background: 'radial-gradient(circle,rgba(192,132,252,0.07),transparent 70%)', pointerEvents: 'none' }} />
 
       <div className="scroll-reveal" style={{
         maxWidth: 1200, margin: '0 auto',
@@ -339,20 +343,20 @@ export default function About() {
           <SectionTag>About Riveyra</SectionTag>
 
           <motion.h2
-            initial={{ opacity:0, y:40 }} whileInView={{ opacity:1, y:0 }} viewport={{ once:true }}
-            transition={{ delay:0.1, duration:0.85, ease:[0.16,1,0.3,1] }}
+            initial={{ opacity: 0, y: 40 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
+            transition={{ delay: 0.1, duration: 0.85, ease: [0.16, 1, 0.3, 1] }}
             style={{
               fontSize: isMobile ? 'clamp(26px,7vw,34px)' : isTablet ? 'clamp(28px,4vw,42px)' : 'clamp(32px,3.8vw,54px)',
-              fontFamily:'var(--font-display)', fontWeight:800,
-              lineHeight:1.08, marginBottom: isMobile ? 16 : 24, color:'#ffffff',
+              fontFamily: 'var(--font-display)', fontWeight: 800,
+              lineHeight: 1.08, marginBottom: isMobile ? 16 : 24, color: '#ffffff',
             }}
           >
             We Build <span className="gt">Remarkable</span> Digital Experiences
           </motion.h2>
 
           <motion.p
-            initial={{ opacity:0, y:20 }} whileInView={{ opacity:1, y:0 }} viewport={{ once:true }} transition={{ delay:0.2 }}
-            style={{ fontSize: isMobile ? 14.5 : 16, lineHeight:1.85, color:'rgba(255,255,255,0.82)', marginBottom:14, fontFamily:'var(--font-body)' }}
+            initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.2 }}
+            style={{ fontSize: isMobile ? 14.5 : 16, lineHeight: 1.85, color: 'rgba(255,255,255,0.82)', marginBottom: 14, fontFamily: 'var(--font-body)' }}
           >
             Riveyra Infotech is Kanpur's premier software development company with over 7 years of proven excellence, delivering reliable and innovative digital solutions across India and beyond.
           </motion.p>
@@ -368,7 +372,7 @@ export default function About() {
           {isMobile && <MobileSlider />}
 
           {/* Feature boxes */}
-          <div style={{ display:'flex', flexDirection:'column', gap: isMobile ? 9 : 12, marginBottom: isMobile ? 24 : 42 }}>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: isMobile ? 9 : 12, marginBottom: isMobile ? 24 : 42 }}>
             {ABOUT_FEATURES.map((item, i) => (
               <FeatureBox key={i} item={item} i={i} isMobile={isMobile} />
             ))}
@@ -377,29 +381,29 @@ export default function About() {
           {/* Mobile: stats grid */}
           {isMobile && (
             <motion.div
-              initial={{ opacity:0, y:16 }}
-              whileInView={{ opacity:1, y:0 }}
-              viewport={{ once:true }}
-              transition={{ delay:0.35 }}
-              style={{ display:'grid', gridTemplateColumns:'repeat(3,1fr)', gap:10, marginBottom:28 }}
+              initial={{ opacity: 0, y: 16 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.35 }}
+              style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: 10, marginBottom: 28 }}
             >
               {STATS.map(s => (
                 <motion.div
                   key={s.lbl}
-                  whileTap={{ scale:0.95 }}
-                  style={{ padding:'16px 6px', borderRadius:12, textAlign:'center', background:'rgba(255,255,255,0.04)', border:'1px solid rgba(96,165,250,0.15)' }}
+                  whileTap={{ scale: 0.95 }}
+                  style={{ padding: '16px 6px', borderRadius: 12, textAlign: 'center', background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(96,165,250,0.15)' }}
                 >
-                  <div style={{ fontSize:24, fontFamily:'var(--font-display)', fontWeight:800, color:'#60a5fa', lineHeight:1 }}>{s.val}</div>
-                  <div style={{ fontSize:9, color:'rgba(255,255,255,0.55)', fontFamily:'var(--font-mono)', letterSpacing:1.5, textTransform:'uppercase', marginTop:5 }}>{s.lbl}</div>
+                  <div style={{ fontSize: 24, fontFamily: 'var(--font-display)', fontWeight: 800, color: '#60a5fa', lineHeight: 1 }}>{s.val}</div>
+                  <div style={{ fontSize: 9, color: 'rgba(255,255,255,0.55)', fontFamily: 'var(--font-mono)', letterSpacing: 1.5, textTransform: 'uppercase', marginTop: 5 }}>{s.lbl}</div>
                 </motion.div>
               ))}
             </motion.div>
           )}
 
           {/* CTA buttons */}
-          <motion.div
-            initial={{ opacity:0 }} whileInView={{ opacity:1 }} viewport={{ once:true }} transition={{ delay:0.5 }}
-            style={{ display:'flex', gap:12, flexDirection: isMobile ? 'column' : 'row' }}
+          {/* <motion.div
+            initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} transition={{ delay: 0.5 }}
+            style={{ display: 'flex', gap: 12, flexDirection: isMobile ? 'column' : 'row' }}
           >
             <button className="btn-primary" data-hover style={{ width: isMobile ? '100%' : 'auto' }}>
               Our Story <Icons.ArrowRight />
@@ -407,18 +411,18 @@ export default function About() {
             <button className="btn-ghost" data-hover style={{ width: isMobile ? '100%' : 'auto' }}>
               Watch Intro
             </button>
-          </motion.div>
+          </motion.div> */}
         </div>
 
         {/* ── RIGHT — image collage (tablet + desktop) ── */}
         {!isMobile && (
           <motion.div
-            initial={{ opacity:0, scale:0.92 }}
-            whileInView={{ opacity:1, scale:1 }}
-            viewport={{ once:true }}
-            transition={{ duration:1, ease:[0.16,1,0.3,1] }}
+            initial={{ opacity: 0, scale: 0.92 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
             style={{
-              position:'relative',
+              position: 'relative',
               height: collageHeight,
               marginBottom: isTablet ? 64 : 0,
               perspective: 900,
@@ -430,37 +434,37 @@ export default function About() {
 
             {/* Pan-India tag */}
             <motion.div
-              initial={{ opacity:0, x:20 }}
-              whileInView={{ opacity:1, x:0 }}
-              viewport={{ once:true }}
-              transition={{ delay:0.85, duration:0.6 }}
+              initial={{ opacity: 0, x: 20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.85, duration: 0.6 }}
               style={{
-                position:'absolute', top:'4%', right:'2%',
-                padding:'7px 13px', borderRadius:8,
-                background:'rgba(192,132,252,0.1)',
-                border:'1px solid rgba(192,132,252,0.25)',
-                backdropFilter:'blur(12px)',
-                zIndex:10,
-                display:'flex', alignItems:'center', gap:6,
+                position: 'absolute', top: '4%', right: '2%',
+                padding: '7px 13px', borderRadius: 8,
+                background: 'rgba(192,132,252,0.1)',
+                border: '1px solid rgba(192,132,252,0.25)',
+                backdropFilter: 'blur(12px)',
+                zIndex: 10,
+                display: 'flex', alignItems: 'center', gap: 6,
               }}
             >
-              <div style={{ width:6,height:6,borderRadius:'50%',background:'#c084fc',boxShadow:'0 0 8px rgba(192,132,252,0.8)',animation:'pulse 2s infinite' }} />
-              <span style={{ fontSize:10,color:'rgba(192,132,252,0.9)',fontFamily:'var(--font-mono)',letterSpacing:1.5,textTransform:'uppercase' }}>Pan-India</span>
+              <div style={{ width: 6, height: 6, borderRadius: '50%', background: '#c084fc', boxShadow: '0 0 8px rgba(192,132,252,0.8)', animation: 'pulse 2s infinite' }} />
+              <span style={{ fontSize: 10, color: 'rgba(192,132,252,0.9)', fontFamily: 'var(--font-mono)', letterSpacing: 1.5, textTransform: 'uppercase' }}>Pan-India</span>
             </motion.div>
 
             {/* Tablet stats strip */}
             {isTablet && (
               <motion.div
-                initial={{ opacity:0, y:14 }}
-                whileInView={{ opacity:1, y:0 }}
-                viewport={{ once:true }}
-                transition={{ delay:0.7 }}
-                style={{ position:'absolute', bottom:-56, left:0, right:0, display:'flex', gap:10 }}
+                initial={{ opacity: 0, y: 14 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.7 }}
+                style={{ position: 'absolute', bottom: -56, left: 0, right: 0, display: 'flex', gap: 10 }}
               >
                 {STATS.map(s => (
-                  <div key={s.lbl} style={{ flex:1, padding:'12px 8px', borderRadius:10, textAlign:'center', background:'rgba(255,255,255,0.04)', border:'1px solid rgba(96,165,250,0.14)', backdropFilter:'blur(8px)' }}>
-                    <div style={{ fontSize:22,fontFamily:'var(--font-display)',fontWeight:800,color:'#60a5fa',lineHeight:1 }}>{s.val}</div>
-                    <div style={{ fontSize:9,color:'rgba(255,255,255,0.55)',fontFamily:'var(--font-mono)',letterSpacing:1.5,textTransform:'uppercase',marginTop:4 }}>{s.lbl}</div>
+                  <div key={s.lbl} style={{ flex: 1, padding: '12px 8px', borderRadius: 10, textAlign: 'center', background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(96,165,250,0.14)', backdropFilter: 'blur(8px)' }}>
+                    <div style={{ fontSize: 22, fontFamily: 'var(--font-display)', fontWeight: 800, color: '#60a5fa', lineHeight: 1 }}>{s.val}</div>
+                    <div style={{ fontSize: 9, color: 'rgba(255,255,255,0.55)', fontFamily: 'var(--font-mono)', letterSpacing: 1.5, textTransform: 'uppercase', marginTop: 4 }}>{s.lbl}</div>
                   </div>
                 ))}
               </motion.div>

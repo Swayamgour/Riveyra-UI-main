@@ -20,7 +20,7 @@ function ServiceCard({ svc, i, isMobile }) {
 
 
     const handleDelete = (id) => {
-        console.log(id)
+        // console.log(id)
         deleteServices(id)
     }
 

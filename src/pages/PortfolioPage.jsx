@@ -5,8 +5,9 @@ import Icons from '../components/ui/Icons'
 import { useBreakpoint } from '../hooks/useBreakpoint.jsx'
 
 import { useNavigate } from 'react-router-dom'
-import { useGetProjectsQuery } from '../redux/api.jsx'
+import { useGetPageSeoQuery, useGetProjectsQuery } from '../redux/api.jsx'
 import { Helmet } from "react-helmet-async";
+import SEO from '../components/SEO.jsx'
 
 
 
@@ -330,6 +331,8 @@ export default function PortfolioPage() {
   const heroOpacity = useTransform(scrollYProgress, [0, 0.65], [1, 0])
 
   const { data } = useGetProjectsQuery()
+  const { data: getData, isLoading } = useGetPageSeoQuery("portfolio")
+  let seo = getData?.data?.seo
 
   let PROJECTS = data?.data || []
 
@@ -343,13 +346,24 @@ export default function PortfolioPage() {
 
   return (
     <>
-      <Helmet>
-        <title>Explore AI Software Development and Digital Transformation Projects</title>
-        <meta
-          name="description"
-          content="Discover AI, software, automation, and web development projects that showcase innovation and successful business outcomes."
-        />
-      </Helmet>
+
+      {!isLoading &&
+        (<SEO
+          title={seo?.metaTitle}
+          description={seo?.metaDescription}
+          keywords={seo?.keywords}
+          canonical={seo?.canonical}
+          robots={seo?.robots}
+
+          openGraph={seo?.openGraph}
+          twitter={seo?.twitter}
+
+          schema={seo?.schema}
+        />)
+      }
+
+
+
       <div style={{ background: 'var(--bg)', minHeight: '100vh', overflowX: 'hidden' }}>
 
         {/* ══ HERO ════════════════════════════════════════════════ */}

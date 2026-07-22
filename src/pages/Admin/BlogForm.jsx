@@ -31,10 +31,28 @@ const BlogForm = () => {
 		image: null,
 		imageAlt: "",
 
-		metaTitle: "",
-		metaDescription: "",
-		metaKeywords: "",
+		// ✅ Structured SEO object (matches backend seoSchema, same as Service)
+		seo: {
+			metaTitle: "",
+			metaDescription: "",
+			keywords: [], // array of strings
+			canonical: "",
+			robots: "index, follow",
+			openGraph: {
+				title: "",
+				description: "",
+				image: "",
+			},
+			twitter: {
+				title: "",
+				description: "",
+				image: "",
+			},
+			schema: "", // JSON-LD as raw text
+		},
 	});
+
+	const [tempKeyword, setTempKeyword] = useState("");
 
 	const [preview, setPreview] = useState("");
 	const [message, setMessage] = useState({ type: "", text: "" });
@@ -74,9 +92,29 @@ const BlogForm = () => {
 				image: null,
 				imageAlt: blog.imageAlt || "",
 
-				metaTitle: blog.metaTitle || "",
-				metaDescription: blog.metaDescription || "",
-				metaKeywords: blog.metaKeywords || "",
+				// ✅ SEO
+				seo: {
+					metaTitle: blog.seo?.metaTitle || "",
+					metaDescription: blog.seo?.metaDescription || "",
+					keywords: blog.seo?.keywords || [],
+					canonical: blog.seo?.canonical || "",
+					robots: blog.seo?.robots || "index, follow",
+					openGraph: {
+						title: blog.seo?.openGraph?.title || "",
+						description: blog.seo?.openGraph?.description || "",
+						image: blog.seo?.openGraph?.image || "",
+					},
+					twitter: {
+						title: blog.seo?.twitter?.title || "",
+						description: blog.seo?.twitter?.description || "",
+						image: blog.seo?.twitter?.image || "",
+					},
+					schema: blog.seo?.schema
+						? typeof blog.seo.schema === "string"
+							? blog.seo.schema
+							: JSON.stringify(blog.seo.schema, null, 2)
+						: "",
+				},
 			});
 
 			if (blog.image) {
@@ -111,6 +149,8 @@ const BlogForm = () => {
 		}
 
 		if (!form.blogDate) err.blogDate = "Select blog date";
+
+		if (!form.slug.trim()) err.slug = "Slug is required";
 
 		if (!isEdit && !form.image) err.image = "Image required";
 
@@ -184,6 +224,52 @@ const BlogForm = () => {
 		}
 	};
 
+	// ✅ Generic SEO top-level field change (metaTitle, metaDescription, canonical, robots, schema)
+	const handleSeoChange = (field, value) => {
+		setForm((prev) => ({
+			...prev,
+			seo: { ...prev.seo, [field]: value },
+		}));
+	};
+
+	// ✅ Nested OG / Twitter change
+	const handleSeoNestedChange = (section, field, value) => {
+		setForm((prev) => ({
+			...prev,
+			seo: {
+				...prev.seo,
+				[section]: { ...prev.seo[section], [field]: value },
+			},
+		}));
+	};
+
+	// ✅ Keywords handlers
+	const addKeyword = () => {
+		if (
+			tempKeyword.trim() &&
+			!form.seo.keywords.includes(tempKeyword.trim())
+		) {
+			setForm((prev) => ({
+				...prev,
+				seo: {
+					...prev.seo,
+					keywords: [...prev.seo.keywords, tempKeyword.trim()],
+				},
+			}));
+			setTempKeyword("");
+		}
+	};
+
+	const removeKeyword = (kw) => {
+		setForm((prev) => ({
+			...prev,
+			seo: {
+				...prev.seo,
+				keywords: prev.seo.keywords.filter((k) => k !== kw),
+			},
+		}));
+	};
+
 	const handleSubmit = async (e) => {
 		e.preventDefault();
 
@@ -200,9 +286,9 @@ const BlogForm = () => {
 			formData.append("status", form.status);
 
 			formData.append("imageAlt", form.imageAlt);
-			formData.append("metaTitle", form.metaTitle);
-			formData.append("metaDescription", form.metaDescription);
-			formData.append("metaKeywords", form.metaKeywords);
+
+			// ✅ Structured SEO object as JSON string (backend parses via parseJSON + buildSeoDefaults)
+			formData.append("seo", JSON.stringify(form.seo));
 
 			if (form.image) {
 				formData.append("image", form.image);
@@ -261,10 +347,19 @@ const BlogForm = () => {
 			image: null,
 			imageAlt: "",
 
-			metaTitle: "",
-			metaDescription: "",
-			metaKeywords: "",
+			seo: {
+				metaTitle: "",
+				metaDescription: "",
+				keywords: [],
+				canonical: "",
+				robots: "index, follow",
+				openGraph: { title: "", description: "", image: "" },
+				twitter: { title: "", description: "", image: "" },
+				schema: "",
+			},
 		});
+
+		setTempKeyword("");
 
 		// Remove image preview
 		setPreview("");
@@ -609,14 +704,14 @@ const BlogForm = () => {
 									>
 										<option
 											value="draft"
-											style={{background: "#0f1422",color: "#fff"}}
+											style={{ background: "#0f1422", color: "#fff" }}
 										>
 											Draft
 										</option>
 
 										<option
-                      value="published"
-                      style={{background: "#0f1422",color: "#fff"}}
+											value="published"
+											style={{ background: "#0f1422", color: "#fff" }}
 										>
 											Published
 										</option>
@@ -648,7 +743,7 @@ const BlogForm = () => {
 										modules={modules}
 										formats={formats}
 										placeholder="Write your blog content..."
-                    style={{ height: 320, marginBottom: 45 }}
+										style={{ height: 320, marginBottom: 45 }}
 									/>
 								</div>
 
@@ -672,11 +767,10 @@ const BlogForm = () => {
 
 							<div
 								style={{
-									border: `2px dashed ${
-										errors.image
+									border: `2px dashed ${errors.image
 											? "#ef4444"
 											: "rgba(255,255,255,.15)"
-									}`,
+										}`,
 									borderRadius: 12,
 									padding: 36,
 									textAlign: "center",
@@ -769,17 +863,28 @@ const BlogForm = () => {
 						</div>
 
 						{/* ================= SEO Information ================= */}
-						<div style={{ marginTop: 32 }}>
+						<div
+							style={{
+								marginTop: 32,
+								paddingTop: 32,
+								borderTop: "1px solid rgba(255,255,255,.1)",
+							}}
+						>
 							<h2 style={sectionTitle}>SEO Information</h2>
-
-							<div
+							<p
 								style={{
-									display: "grid",
-									gap: 24,
-									marginTop: 24,
+									color: "rgba(255,255,255,.45)",
+									fontSize: 13,
+									marginTop: -16,
+									marginBottom: 24,
 								}}
 							>
-								{/* Image Alt & Meta Title */}
+								Sab fields optional hain — khali chodne par
+								title/description se auto-fill ho jayega.
+							</p>
+
+							<div style={{ display: "grid", gap: 24 }}>
+								{/* Slug & Image Alt */}
 								<div style={grid2}>
 									<div>
 										<label style={labelStyle}>Slug *</label>
@@ -804,8 +909,11 @@ const BlogForm = () => {
 											</p>
 										)}
 									</div>
+
 									<div>
-										<label style={labelStyle}>Image Alt Text</label>
+										<label style={labelStyle}>
+											Image Alt Text
+										</label>
 
 										<input
 											type="text"
@@ -816,31 +924,42 @@ const BlogForm = () => {
 											style={inputStyle}
 										/>
 									</div>
+								</div>
 
-									<div style={fullWidth}>
-										<label style={labelStyle}>Meta Title</label>
+								{/* Meta Title */}
+								<div>
+									<label style={labelStyle}>Meta Title</label>
 
-										<input
-											type="text"
-											name="metaTitle"
-											value={form.metaTitle}
-											onChange={handleChange}
-											placeholder="SEO title"
-											maxLength={60}
-											style={inputStyle}
-										/>
-									</div>
+									<input
+										type="text"
+										value={form.seo.metaTitle}
+										onChange={(e) =>
+											handleSeoChange(
+												"metaTitle",
+												e.target.value,
+											)
+										}
+										placeholder="SEO title"
+										maxLength={60}
+										style={inputStyle}
+									/>
 								</div>
 
 								{/* Meta Description */}
 								<div>
-									<label style={labelStyle}>Meta Description</label>
+									<label style={labelStyle}>
+										Meta Description
+									</label>
 
 									<textarea
 										rows={4}
-										name="metaDescription"
-										value={form.metaDescription}
-										onChange={handleChange}
+										value={form.seo.metaDescription}
+										onChange={(e) =>
+											handleSeoChange(
+												"metaDescription",
+												e.target.value,
+											)
+										}
 										placeholder="SEO description"
 										maxLength={160}
 										style={{
@@ -852,28 +971,366 @@ const BlogForm = () => {
 									/>
 								</div>
 
-								{/* Meta Keywords */}
+								{/* Keywords */}
 								<div>
-									<label style={labelStyle}>Meta Keywords</label>
+									<label style={labelStyle}>Keywords</label>
 
-									<input
-										type="text"
-										name="metaKeywords"
-										value={form.metaKeywords}
-										onChange={handleChange}
-										placeholder="travel, goa, beaches, tourism"
-										style={inputStyle}
-									/>
+									<div style={{ display: "flex", gap: 8 }}>
+										<input
+											type="text"
+											value={tempKeyword}
+											onChange={(e) =>
+												setTempKeyword(e.target.value)
+											}
+											onKeyPress={(e) =>
+												e.key === "Enter" &&
+												(e.preventDefault(), addKeyword())
+											}
+											placeholder="e.g., travel, goa, beaches"
+											style={inputStyle}
+										/>
+
+										<button
+											type="button"
+											onClick={addKeyword}
+											style={{
+												padding: "0 20px",
+												background:
+													"rgba(96,165,250,0.2)",
+												border: "1px solid #60a5fa",
+												borderRadius: 8,
+												color: "#60a5fa",
+												cursor: "pointer",
+												whiteSpace: "nowrap",
+											}}
+										>
+											Add
+										</button>
+									</div>
+
+									<div
+										style={{
+											display: "flex",
+											flexWrap: "wrap",
+											gap: 8,
+											marginTop: 12,
+										}}
+									>
+										{form.seo.keywords.map((kw) => (
+											<span
+												key={kw}
+												style={{
+													padding: "6px 12px",
+													background:
+														"rgba(96,165,250,0.15)",
+													border:
+														"1px solid rgba(96,165,250,0.3)",
+													borderRadius: 6,
+													color: "#60a5fa",
+													fontSize: 13,
+													display: "flex",
+													alignItems: "center",
+													gap: 8,
+												}}
+											>
+												{kw}
+												<button
+													type="button"
+													onClick={() =>
+														removeKeyword(kw)
+													}
+													style={{
+														background: "none",
+														border: "none",
+														color: "#ef4444",
+														cursor: "pointer",
+														fontSize: 16,
+														lineHeight: 1,
+													}}
+												>
+													×
+												</button>
+											</span>
+										))}
+									</div>
 
 									<p
 										style={{
 											color: "rgba(255,255,255,.45)",
 											fontSize: 12,
-											marginTop: 6,
+											marginTop: 8,
 										}}
 									>
-										Separate keywords using commas.
+										Press Enter or click Add to add a
+										keyword.
 									</p>
+								</div>
+
+								{/* Canonical URL */}
+								<div>
+									<label style={labelStyle}>
+										Canonical URL
+									</label>
+
+									<input
+										type="text"
+										value={form.seo.canonical}
+										onChange={(e) =>
+											handleSeoChange(
+												"canonical",
+												e.target.value,
+											)
+										}
+										placeholder="https://yoursite.com/blog/your-slug (auto-generated if empty)"
+										style={inputStyle}
+									/>
+								</div>
+
+								{/* Robots */}
+								<div>
+									<label style={labelStyle}>Robots</label>
+
+									<select
+										value={form.seo.robots}
+										onChange={(e) =>
+											handleSeoChange(
+												"robots",
+												e.target.value,
+											)
+										}
+										style={{
+											...inputStyle,
+											cursor: "pointer",
+										}}
+									>
+										<option
+											value="index, follow"
+											style={{
+												background: "#0f1422",
+												color: "#fff",
+											}}
+										>
+											index, follow
+										</option>
+										<option
+											value="noindex, follow"
+											style={{
+												background: "#0f1422",
+												color: "#fff",
+											}}
+										>
+											noindex, follow
+										</option>
+										<option
+											value="index, nofollow"
+											style={{
+												background: "#0f1422",
+												color: "#fff",
+											}}
+										>
+											index, nofollow
+										</option>
+										<option
+											value="noindex, nofollow"
+											style={{
+												background: "#0f1422",
+												color: "#fff",
+											}}
+										>
+											noindex, nofollow
+										</option>
+									</select>
+								</div>
+
+								<hr
+									style={{
+										border: "none",
+										borderTop:
+											"1px solid rgba(255,255,255,0.1)",
+										margin: "8px 0",
+									}}
+								/>
+
+								{/* Open Graph */}
+								<h3
+									style={{
+										color: "#60a5fa",
+										fontSize: 15,
+										fontWeight: 600,
+										margin: 0,
+									}}
+								>
+									Open Graph (Facebook/LinkedIn)
+								</h3>
+
+								<div>
+									<label style={labelStyle}>OG Title</label>
+									<input
+										type="text"
+										value={form.seo.openGraph.title}
+										onChange={(e) =>
+											handleSeoNestedChange(
+												"openGraph",
+												"title",
+												e.target.value,
+											)
+										}
+										style={inputStyle}
+									/>
+								</div>
+
+								<div>
+									<label style={labelStyle}>
+										OG Description
+									</label>
+									<textarea
+										rows={2}
+										value={form.seo.openGraph.description}
+										onChange={(e) =>
+											handleSeoNestedChange(
+												"openGraph",
+												"description",
+												e.target.value,
+											)
+										}
+										style={{
+											...inputStyle,
+											resize: "vertical",
+											fontFamily: "inherit",
+										}}
+									/>
+								</div>
+
+								<div>
+									<label style={labelStyle}>
+										OG Image URL
+									</label>
+									<input
+										type="text"
+										value={form.seo.openGraph.image}
+										onChange={(e) =>
+											handleSeoNestedChange(
+												"openGraph",
+												"image",
+												e.target.value,
+											)
+										}
+										placeholder="Leave empty to use featured image"
+										style={inputStyle}
+									/>
+								</div>
+
+								<hr
+									style={{
+										border: "none",
+										borderTop:
+											"1px solid rgba(255,255,255,0.1)",
+										margin: "8px 0",
+									}}
+								/>
+
+								{/* Twitter */}
+								<h3
+									style={{
+										color: "#60a5fa",
+										fontSize: 15,
+										fontWeight: 600,
+										margin: 0,
+									}}
+								>
+									Twitter Card
+								</h3>
+
+								<div>
+									<label style={labelStyle}>
+										Twitter Title
+									</label>
+									<input
+										type="text"
+										value={form.seo.twitter.title}
+										onChange={(e) =>
+											handleSeoNestedChange(
+												"twitter",
+												"title",
+												e.target.value,
+											)
+										}
+										style={inputStyle}
+									/>
+								</div>
+
+								<div>
+									<label style={labelStyle}>
+										Twitter Description
+									</label>
+									<textarea
+										rows={2}
+										value={form.seo.twitter.description}
+										onChange={(e) =>
+											handleSeoNestedChange(
+												"twitter",
+												"description",
+												e.target.value,
+											)
+										}
+										style={{
+											...inputStyle,
+											resize: "vertical",
+											fontFamily: "inherit",
+										}}
+									/>
+								</div>
+
+								<div>
+									<label style={labelStyle}>
+										Twitter Image URL
+									</label>
+									<input
+										type="text"
+										value={form.seo.twitter.image}
+										onChange={(e) =>
+											handleSeoNestedChange(
+												"twitter",
+												"image",
+												e.target.value,
+											)
+										}
+										placeholder="Leave empty to use featured image"
+										style={inputStyle}
+									/>
+								</div>
+
+								<hr
+									style={{
+										border: "none",
+										borderTop:
+											"1px solid rgba(255,255,255,0.1)",
+										margin: "8px 0",
+									}}
+								/>
+
+								{/* Schema JSON-LD */}
+								<div>
+									<label style={labelStyle}>
+										Schema (JSON-LD) — optional, advanced
+									</label>
+									<textarea
+										rows={6}
+										value={form.seo.schema}
+										onChange={(e) =>
+											handleSeoChange(
+												"schema",
+												e.target.value,
+											)
+										}
+										placeholder='{ "@context": "https://schema.org", "@type": "BlogPosting", ... }'
+										style={{
+											...inputStyle,
+											fontSize: 13,
+											fontFamily: "monospace",
+											resize: "vertical",
+										}}
+									/>
 								</div>
 							</div>
 						</div>
@@ -902,7 +1359,9 @@ const BlogForm = () => {
 										color: "rgba(255,255,255,0.7)",
 										fontSize: 14,
 										fontWeight: 500,
-                    cursor: isSubmitting ? "not-allowed" : "pointer",                    
+										cursor: isSubmitting
+											? "not-allowed"
+											: "pointer",
 										opacity: isSubmitting ? 0.5 : 1,
 										transition: "all 0.2s",
 									}}
@@ -922,7 +1381,9 @@ const BlogForm = () => {
 										color: "rgba(255,255,255,0.7)",
 										fontSize: 14,
 										fontWeight: 500,
-                    cursor: isSubmitting ? "not-allowed" : "pointer",                    
+										cursor: isSubmitting
+											? "not-allowed"
+											: "pointer",
 										opacity: isSubmitting ? 0.5 : 1,
 										transition: "all 0.2s",
 									}}
@@ -935,13 +1396,16 @@ const BlogForm = () => {
 								disabled={isSubmitting}
 								style={{
 									padding: "12px 32px",
-                  background: "linear-gradient(135deg, #60a5fa, #a78bfa)",                  
+									background:
+										"linear-gradient(135deg, #60a5fa, #a78bfa)",
 									border: "none",
 									borderRadius: 10,
 									color: "#fff",
 									fontSize: 14,
 									fontWeight: 600,
-                  cursor: isSubmitting ? "not-allowed" : "pointer",                  
+									cursor: isSubmitting
+										? "not-allowed"
+										: "pointer",
 									opacity: isSubmitting ? 0.7 : 1,
 									transition: "all 0.2s",
 									position: "relative",
@@ -950,14 +1414,17 @@ const BlogForm = () => {
 								{isSubmitting ? (
 									<>
 										<span style={{ opacity: 0.7 }}>
-                      {isEdit ? "Updating..." : "Creating..."}                      
+											{isEdit
+												? "Updating..."
+												: "Creating..."}
 										</span>
 										<span
 											style={{
 												position: "absolute",
 												left: "50%",
 												top: "50%",
-												transform:"translate(-50%, -50%)",
+												transform:
+													"translate(-50%, -50%)",
 											}}
 										>
 											⏳
