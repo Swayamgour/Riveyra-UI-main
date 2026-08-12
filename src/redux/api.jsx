@@ -1,8 +1,8 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 // const BASE_URL = "https://lead-crm-backend-1cq8.onrender.com/api";
-const BASE_URL = "https://riveyra.admin.amaxjobs.com/api/v1";
-// const BASE_URL = "http://localhost:5000/api/v1";
+// const BASE_URL = "https://riveyra.admin.amaxjobs.com/api/v1";
+const BASE_URL = "http://localhost:5007/api/v1";
 
 const baseQuery = fetchBaseQuery({
     baseUrl: BASE_URL,
@@ -43,7 +43,8 @@ export const api = createApi({
         "Categories",
         "Blogs",
         "contact",
-        "PageSeo"
+        "PageSeo",
+        "ServicesDetailTwo"
     ],
 
     endpoints: (builder) => ({
@@ -128,6 +129,20 @@ export const api = createApi({
         }),
 
 
+
+        /* ================= SERVICES DETAIL TWO ================= */
+        getServicesDetailTwo: builder.query({
+            query: () => "/services-detail-two",
+            providesTags: ["ServicesDetailTwo"],
+        }),
+        updateServicesDetailTwo: builder.mutation({
+            query: (data) => ({
+                url: "/services-detail-two",
+                method: "PUT",
+                body: data,
+            }),
+            invalidatesTags: ["ServicesDetailTwo"],
+        }),
 
         /* ================= APPLY JOB ================= */
         applyJob: builder.mutation({
@@ -470,6 +485,9 @@ export const {
     useUpdateServiceMutation,
     useDeleteServiceMutation,
     useGetServiceByIdQuery,
+    
+    useGetServicesDetailTwoQuery,
+    useUpdateServicesDetailTwoMutation,
 
     // Categories
     useGetCategoriesQuery,

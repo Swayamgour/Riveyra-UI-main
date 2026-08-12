@@ -35,6 +35,8 @@ import PageSeoListPage from './pages/Admin/PageSeoListPage'
 import PageSeoForm from './pages/Admin/PageSeoForm'
 import PrivacyPolicy from './pages/PrivacyPolicy'
 import TermsOfService from './pages/TermsOfService'
+import ServicesDetailTwo from './components/sections/ServicesDetailTwo'
+import ServicesDetailTwoForm from './pages/Admin/ServicesDetailTwoForm'
 // import CookiePolicy from './pages/CookiePolicy'
 // import Disclaimer from './pages/Disclaimer'
 
@@ -64,20 +66,21 @@ function AppShell() {
       <CustomCursor />
       <ScrollToTop />
 
-      {!isAdminRoute && <ContactPopup />}
+      {/* {!isAdminRoute && <ContactPopup />} */}
       {!isAdminRoute && <Navbar />}
 
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/about" element={<AboutPage />} />
-        <Route path="/services" element={<ServicesPage />} />
+        {/* <Route path="/services" element={<ServicesPage />} /> */}
         <Route path="/portfolio" element={<PortfolioPage />} />
         <Route path="/career" element={<CareerPage />} />
         <Route path="/blogs" element={<BlogsPage />} />
         <Route path="/blogs/:slug" element={<BlogDetailPage />} />
         <Route path="/Apply" element={<ApplyPage />} />
-        <Route path="/Service/:id" element={<ServiceDetail />} />
+        <Route path="/Service/:slug" element={<ServiceDetail />} />
+        <Route path="/ServicesDetailTwo" element={<ServicesDetailTwo />} />
 
         <Route path="/privacy-policy" element={<PrivacyPolicy />} />
         <Route path="/terms-of-service" element={<TermsOfService />} />
@@ -106,6 +109,9 @@ function AppShell() {
           <Route path="services" element={<ServicesManager />} />
           <Route path="services/create" element={<ServiceForm />} />
           <Route path="services/:id/edit" element={<ServiceForm />} />
+
+          <Route path="servicesDetailTwo" element={<ServicesDetailTwoForm />} />
+
 
           <Route path="categories" element={<CategoryManager />} />
 

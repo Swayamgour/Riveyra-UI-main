@@ -15,7 +15,7 @@ const AVATARS = [
   'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=120&q=85&fit=crop&crop=face',
 ]
 
-export default function Testimonials() {
+export default function Testimonials({ testimonials }) {
   const { isMobile, isTablet } = useBreakpoint()
 
   return (
@@ -60,7 +60,7 @@ export default function Testimonials() {
           gridTemplateColumns: isMobile ? '1fr' : 'repeat(auto-fit, minmax(280px, 1fr))',
           gap: isMobile ? 20 : 24,
         }}>
-          {TESTIMONIALS.map((t, i) => (
+          {(testimonials || TESTIMONIALS).map((t, i) => (
             <motion.div
               key={t.name}
               initial={{ opacity: 0, y: 40 }}
@@ -82,23 +82,23 @@ export default function Testimonials() {
               data-hover
             >
               {/* Big quote bg mark */}
-              <div style={{ position: 'absolute', top: -10, right: 20, fontSize: 120, fontFamily: 'serif', color: `${t.accent}08`, lineHeight: 1, pointerEvents: 'none', userSelect: 'none' }}>"</div>
+              {/* <div style={{ position: 'absolute', top: -10, right: 20, fontSize: 120, fontFamily: 'serif', color: `${t.accent}08`, lineHeight: 1, pointerEvents: 'none', userSelect: 'none' }}>"</div> */}
 
               {/* Stars */}
-              <div style={{ display: 'flex', gap: 3, marginBottom: 18 }}>
+             {/*  <div style={{ display: 'flex', gap: 3, marginBottom: 18 }}>
                 {[...Array(5)].map((_, k) => (
                   <svg key={k} width="14" height="14" viewBox="0 0 24 24" fill={t.accent}>
                     <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
                   </svg>
                 ))}
-              </div>
+              </div> */}
 
               <div style={{ color: t.accent, marginBottom: 14, opacity: 0.85 }}>
                 <Icons.Quote />
               </div>
 
               <p style={{ fontSize: 15, lineHeight: 1.88, color: 'rgba(255,255,255,0.88)', fontFamily: 'var(--font-body)', marginBottom: 28, fontStyle: 'italic' }}>
-                {t.quote}
+                {t.content}
               </p>
 
               <div style={{ display: 'flex', alignItems: 'center', gap: 14 }}>

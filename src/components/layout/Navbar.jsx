@@ -23,6 +23,7 @@ export default function Navbar() {
   const [servicesOpen, setServicesOpen] = useState(false)
   const [mobileServicesOpen, setMobileServicesOpen] = useState(false)
   const [hoveredItem, setHoveredItem] = useState(null)
+  const [expandedItem, setExpandedItem] = useState(null)
   const dropdownRef = useRef(null)
   const hoverTimeout = useRef(null)
 
@@ -172,7 +173,6 @@ export default function Navbar() {
                     ref={dropdownRef}
                     onMouseEnter={openDropdown}
                     onMouseLeave={closeDropdown}
-                    style={{ position: 'relative' }}
                   >
                     <motion.a
                       href="#"
@@ -212,90 +212,101 @@ export default function Navbar() {
                           onMouseLeave={closeDropdown}
                           style={{
                             position: 'absolute',
-                            top: 'calc(100% + 18px)',
-                            left: '50%',
-                            transform: 'translateX(-50%)',
-                            width: 560,
+                            top: '100%',
+                            left: 0,
+                            right: 0,
+                            margin: '0 auto',
+                            width: 900,
                             background: 'linear-gradient(135deg, rgba(8,18,38,0.98) 0%, rgba(5,11,24,0.98) 100%)',
                             backdropFilter: 'blur(32px) saturate(1.8)',
                             border: '1px solid rgba(96,165,250,0.15)',
                             borderRadius: 20,
-                            padding: '8px',
+                            padding: '24px 32px',
                             boxShadow: '0 30px 60px rgba(0,0,0,0.6), 0 0 0.5px rgba(96,165,250,0.1), 0 20px 40px -12px rgba(0,0,0,0.5)',
                             overflow: 'hidden',
                           }}
                         >
                           <div style={{
-                            padding: '12px 16px 8px 16px',
-                            borderBottom: '1px solid rgba(96,165,250,0.08)',
-                            marginBottom: 8,
+                            paddingBottom: 16,
+                            borderBottom: '1px solid rgba(96,165,250,0.15)',
+                            marginBottom: 20,
                           }}>
                             <span style={{
-                              fontSize: 10,
+                              fontSize: 11,
                               letterSpacing: 2,
-                              color: 'rgba(96,165,250,0.7)',
+                              color: 'rgba(96,165,250,0.8)',
                               textTransform: 'uppercase',
                               fontFamily: 'monospace',
+                              fontWeight: 600
                             }}>✦ Our Expertise</span>
                           </div>
 
                           <div style={{
                             display: 'grid',
-                            gridTemplateColumns: '1fr 1fr',
-                            gap: 6,
-                            padding: '4px 8px 12px 8px',
+                            gridTemplateColumns: 'repeat(4, 1fr)',
+                            gap: '30px 24px',
                           }}>
                             {services.map((item, idx) => (
                               <motion.div
                                 key={item._id || idx}
                                 initial={{ opacity: 0, y: 8 }}
                                 animate={{ opacity: 1, y: 0 }}
-                                transition={{ delay: idx * 0.03 }}
-                                onClick={() => { setServicesOpen(false); navigate(`/Service/${item.slug}`) }}
-                                onMouseEnter={() => setHoveredItem(idx)}
-                                onMouseLeave={() => setHoveredItem(null)}
-                                className="dropdown-item"
-                                style={{
-                                  display: 'flex',
-                                  alignItems: 'center',
-                                  gap: 14,
-                                  padding: '12px 16px',
-                                  borderRadius: 14,
-                                  cursor: 'pointer',
-                                  transition: 'all 0.25s cubic-bezier(0.16, 1, 0.3, 1)',
-                                  background: hoveredItem === idx ? 'rgba(96,165,250,0.08)' : 'transparent',
-                                  transform: hoveredItem === idx ? 'translateX(4px)' : 'translateX(0)',
-                                }}
+                                transition={{ delay: idx * 0.02 }}
+                                style={{ display: 'flex', flexDirection: 'column' }}
                               >
-                                <div className="dropdown-icon" style={{
-                                  width: 35, height: 35, borderRadius: 12,
-                                  background: hoveredItem === idx
-                                    ? `linear-gradient(135deg, ${item.accent || '#4facfe'}20, ${item.accent || '#00f2fe'}10)`
-                                    : `rgba(96,165,250,0.05)`,
-                                  display: 'flex', alignItems: 'center', justifyContent: 'center',
-                                  transition: 'all 0.3s ease',
-                                  border: hoveredItem === idx
-                                    ? `1px solid ${item.accent || '#4facfe'}40`
-                                    : '1px solid rgba(96,165,250,0.1)',
-                                }}>
-                                  <img
-                                    src={item.icons}
-                                    alt={item.title}
-                                    style={{ width: 20, height: 20, objectFit: 'contain' }}
-                                  />
+                                <div
+                                  onClick={() => { setServicesOpen(false); navigate(`/Service/${item.slug}`) }}
+                                  onMouseEnter={(e) => e.currentTarget.style.color = 'var(--accent)'}
+                                  onMouseLeave={(e) => e.currentTarget.style.color = '#ffffff'}
+                                  style={{
+                                    fontSize: 15,
+                                    fontWeight: 700,
+                                    fontFamily: 'var(--font-body)',
+                                    color: '#ffffff',
+                                    marginBottom: 12,
+                                    cursor: 'pointer',
+                                    transition: 'color 0.2s ease',
+                                    lineHeight: 1.3
+                                  }}
+                                >
+                                  {item.title}
                                 </div>
-
-                                <div style={{ flex: 1 }}>
-                                  <div style={{
-                                    fontSize: 13.5, fontWeight: 700,
-                                    fontFamily: 'var(--font-body)', color: hoveredItem === idx ? '#ffffff' : 'rgba(255,255,255,0.9)',
-                                    marginBottom: 4, transition: 'color 0.2s',
-                                  }}>
-                                    {item.title}
-                                  </div>
-                                  <div style={{ fontSize: 11, color: 'rgba(148,163,184,0.7)', lineHeight: 1.3 }}>
-                                    {item.desc?.substring(0, 60)}...
-                                  </div>
+                                <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+                                  {item?.subcategories?.length > 0 ? (
+                                    item.subcategories.map((sub, i) => (
+                                      <span
+                                        key={i}
+                                        onClick={(e) => { 
+                                          e.stopPropagation(); 
+                                          setServicesOpen(false); 
+                                          navigate(`/Service/${item.slug}`);
+                                        }}
+                                        onMouseEnter={(e) => { 
+                                          e.currentTarget.style.color = 'var(--accent)'; 
+                                          e.currentTarget.style.transform = 'translateX(4px)';
+                                        }}
+                                        onMouseLeave={(e) => { 
+                                          e.currentTarget.style.color = 'rgba(148,163,184,0.8)'; 
+                                          e.currentTarget.style.transform = 'translateX(0)';
+                                        }}
+                                        style={{
+                                          fontSize: 12.5,
+                                          color: 'rgba(148,163,184,0.8)',
+                                          cursor: 'pointer',
+                                          transition: 'all 0.2s ease',
+                                          display: 'flex',
+                                          alignItems: 'center',
+                                          gap: 6
+                                        }}
+                                      >
+                                        <span style={{ fontSize: 8, opacity: 0.5 }}>▹</span> {sub}
+                                      </span>
+                                    ))
+                                  ) : (
+                                    <span style={{ color: 'rgba(148,163,184,0.4)', fontSize: 12, fontStyle: 'italic' }}>
+                                      No categories available
+                                    </span>
+                                  )}
                                 </div>
                               </motion.div>
                             ))}

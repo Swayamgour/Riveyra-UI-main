@@ -1,4 +1,4 @@
-import logoSrc from '../../assets/logo.png'
+import logoSrc from '../../assets/riv-logo.png'
 
 /**
  * Logo — renders the original logo with NO color filter.

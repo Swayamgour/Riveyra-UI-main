@@ -11,7 +11,7 @@ import ParallaxSection from "./components/animations/ParallaxSection";
 import Clients from "./components/sections/Clients";
 import SEO from "./components/SEO";
 import { useGetPageSeoQuery } from "./redux/api";
-// import ContactPopup from "./components/ui/Contactpopup";
+ import ContactPopup from "./components/ui/Contactpopup";
 
 export default function Home() {
   const { data, isLoading } = useGetPageSeoQuery("home")
@@ -34,7 +34,7 @@ export default function Home() {
           schema={seo?.schema}
         />)}
       <Hero />
-      {/* <ContactPopup /> */}
+      <ContactPopup /> 
       <ParallaxSection />
       <About />
       <Services />
