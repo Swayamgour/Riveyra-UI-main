@@ -19,10 +19,16 @@
 --text-sub:    #e2eeff;      /* ← change from #8fafd4 to brighter */
 --muted:       rgba(255,255,255,0.60); /* ← change from rgba(160,195,240,0.55) */
 
+
+/* --font-display: 'Syne', sans-serif;           /* headings */
+ /* --font-body:    'Plus Jakarta Sans', sans-serif; /* body  */
+ /* --font-mono:    'JetBrains Mono', monospace;     /* code/tags */
+   
+ 
   /* ── Fonts ── */
-  --font-display: 'Syne', sans-serif;           /* headings */
-  --font-body:    'Plus Jakarta Sans', sans-serif; /* body  */
-  --font-mono:    'JetBrains Mono', monospace;     /* code/tags */
+  --font-display: 'Space Grotesk', sans-serif;  /* headings */
+  --font-body:    'Inter', sans-serif;          /* body  */
+  --font-mono:    'JetBrains Mono', monospace;  /* code/tags */
 
   /* ── Motion ── */
   --ease-expo: cubic-bezier(0.16, 1, 0.3, 1);
