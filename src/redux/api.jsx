@@ -44,7 +44,8 @@ export const api = createApi({
         "Blogs",
         "contact",
         "PageSeo",
-        "ServicesDetailTwo"
+        "ServicesDetailTwo",
+        "NavDropdown"
     ],
 
     endpoints: (builder) => ({
@@ -132,7 +133,7 @@ export const api = createApi({
 
         /* ================= SERVICES DETAIL TWO ================= */
         getServicesDetailTwo: builder.query({
-            query: () => "/services-detail-two",
+            query: ({ categoryName, subcategoryName }) => `/services-detail-two?categoryName=${encodeURIComponent(categoryName)}&subcategoryName=${encodeURIComponent(subcategoryName)}`,
             providesTags: ["ServicesDetailTwo"],
         }),
         updateServicesDetailTwo: builder.mutation({
@@ -142,6 +143,10 @@ export const api = createApi({
                 body: data,
             }),
             invalidatesTags: ["ServicesDetailTwo"],
+        }),
+        getLatestTestimonials: builder.query({
+            query: () => "/services-detail-two/testimonials/latest",
+            providesTags: ["ServicesDetailTwo"],
         }),
 
         /* ================= APPLY JOB ================= */
@@ -201,6 +206,47 @@ export const api = createApi({
         }),
 
 
+
+        // ✅ GET ALL NAV DROPDOWN ITEMS
+        getNavDropdownItems: builder.query({
+            query: () => "/nav-dropdown",
+            providesTags: ["NavDropdown"],
+        }),
+
+        // ✅ GET SINGLE NAV DROPDOWN ITEM BY CATEGORY
+        getNavDropdownItemByCategory: builder.query({
+            query: (category) => `/nav-dropdown/category/${category}`,
+            providesTags: ["NavDropdown"],
+        }),
+
+        // ✅ CREATE NAV DROPDOWN ITEM
+        createNavDropdownItem: builder.mutation({
+            query: (data) => ({
+                url: "/nav-dropdown",
+                method: "POST",
+                body: data,
+            }),
+            invalidatesTags: ["NavDropdown"],
+        }),
+
+        // ✅ UPDATE NAV DROPDOWN ITEM
+        updateNavDropdownItem: builder.mutation({
+            query: ({ id, data }) => ({
+                url: `/nav-dropdown/${id}`,
+                method: "PUT",
+                body: data,
+            }),
+            invalidatesTags: ["NavDropdown"],
+        }),
+
+        // ✅ DELETE NAV DROPDOWN ITEM
+        deleteNavDropdownItem: builder.mutation({
+            query: (id) => ({
+                url: `/nav-dropdown/${id}`,
+                method: "DELETE",
+            }),
+            invalidatesTags: ["NavDropdown"],
+        }),
 
         // ✅ GET ALL SERVICES
         getServices: builder.query({
@@ -485,9 +531,16 @@ export const {
     useUpdateServiceMutation,
     useDeleteServiceMutation,
     useGetServiceByIdQuery,
+
+    useGetNavDropdownItemsQuery,
+    useGetNavDropdownItemByCategoryQuery,
+    useCreateNavDropdownItemMutation,
+    useUpdateNavDropdownItemMutation,
+    useDeleteNavDropdownItemMutation,
     
     useGetServicesDetailTwoQuery,
     useUpdateServicesDetailTwoMutation,
+    useGetLatestTestimonialsQuery,
 
     // Categories
     useGetCategoriesQuery,

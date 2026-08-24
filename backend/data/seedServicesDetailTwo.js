@@ -3,6 +3,8 @@ require('dotenv').config();
 const ServiceDetailTwo = require('../models/ServicesDetailsTwo');
 
 const PAGE_DATA = {
+    categoryName: "App Development",
+    subcategoryName: "android app development",
     pageTitle: "Services Detail Two",
     
     // Hero Section

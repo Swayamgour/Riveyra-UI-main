@@ -160,13 +160,7 @@ const SERVICES_DATA = [
             "API Integrations",
             "Automation Systems"
         ],
-        subcategories: [
-            "Custom Web & Mobile Apps",
-            "SaaS Platforms",
-            "AI Chatbots",
-            "API Integrations",
-            "Automation Systems"
-        ],
+       
         iconType: 'ai-ml',
         order: 1,
         isActive: true
@@ -183,13 +177,8 @@ const SERVICES_DATA = [
             "NLP Solutions",
             "Computer Vision"
         ],
-        subcategories: [
-            "Custom Web & Mobile Apps",
-            "SaaS Platforms",
-            "AI Chatbots",
-            "API Integrations",
-            "Automation Systems"
-        ],
+       
+       
         iconType: 'generative-ai',
         order: 2,
         isActive: true
@@ -206,13 +195,7 @@ const SERVICES_DATA = [
             "PWA",
             "Performance Optimization"
         ],
-        subcategories: [
-            "Custom Web & Mobile Apps",
-            "SaaS Platforms",
-            "AI Chatbots",
-            "API Integrations",
-            "Automation Systems"
-        ],
+       
         iconType: 'web-development',
         order: 3,
         isActive: true
@@ -229,13 +212,7 @@ const SERVICES_DATA = [
             "Business Intelligence",
             "Predictive Insights"
         ],
-        subcategories: [
-            "Custom Web & Mobile Apps",
-            "SaaS Platforms",
-            "AI Chatbots",
-            "API Integrations",
-            "Automation Systems"
-        ],
+        
         iconType: 'mobile-apps',
         order: 4,
         isActive: true
@@ -251,13 +228,7 @@ const SERVICES_DATA = [
             "Fraud Prevention",
             "Monitoring Systems"
         ],
-        subcategories: [
-            "Custom Web & Mobile Apps",
-            "SaaS Platforms",
-            "AI Chatbots",
-            "API Integrations",
-            "Automation Systems"
-        ],
+       
         iconType: 'blockchain-web3',
         order: 5,
         isActive: true
@@ -273,13 +244,7 @@ const SERVICES_DATA = [
             "CRM/ERP Automation",
             "Task Automation"
         ],
-          subcategories: [
-            "Custom Web & Mobile Apps",
-            "SaaS Platforms",
-            "AI Chatbots",
-            "API Integrations",
-            "Automation Systems"
-        ],
+       
         iconType: 'cybersecurity',
         order: 6,
         isActive: true
@@ -295,13 +260,7 @@ const SERVICES_DATA = [
             "WhatsApp Bots",
             "Voice Assistants"
         ],
-          subcategories: [
-            "Custom Web & Mobile Apps",
-            "SaaS Platforms",
-            "AI Chatbots",
-            "API Integrations",
-            "Automation Systems"
-        ],
+         
         iconType: 'cloud-devops',
         order: 7,
         isActive: true
@@ -318,13 +277,7 @@ const SERVICES_DATA = [
             "Generative Engine Optimization",
             "LLM Optimization"
         ],
-          subcategories: [
-            "Custom Web & Mobile Apps",
-            "SaaS Platforms",
-            "AI Chatbots",
-            "API Integrations",
-            "Automation Systems"
-        ],
+         
         iconType: 'erp',
         order: 8,
         isActive: true
@@ -340,13 +293,7 @@ const SERVICES_DATA = [
             "Smart Search",
             "Personalization"
         ],
-          subcategories: [
-            "Custom Web & Mobile Apps",
-            "SaaS Platforms",
-            "AI Chatbots",
-            "API Integrations",
-            "Automation Systems"
-        ],
+        
         iconType: 'ui-ux',
         order: 9,
         isActive: true
@@ -362,13 +309,7 @@ const SERVICES_DATA = [
             "Lead Generation",
             "Funnel Automation"
         ],
-          subcategories: [
-            "Custom Web & Mobile Apps",
-            "SaaS Platforms",
-            "AI Chatbots",
-            "API Integrations",
-            "Automation Systems"
-        ],
+         
         iconType: 'default',
         order: 10,
         isActive: true
@@ -384,13 +325,7 @@ const SERVICES_DATA = [
             "Automation",
             "Digital Transformation"
         ],
-          subcategories: [
-            "Custom Web & Mobile Apps",
-            "SaaS Platforms",
-            "AI Chatbots",
-            "API Integrations",
-            "Automation Systems"
-        ],
+          
         iconType: 'default',
         order: 11,
         isActive: true

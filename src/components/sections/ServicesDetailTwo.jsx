@@ -1,9 +1,13 @@
 import React, { useRef, useEffect, useState } from 'react';
 import { TypeAnimation } from 'react-type-animation';
+import { useParams } from 'react-router-dom';
+import { useGetServicesDetailTwoQuery } from '../../redux/api';
 import './ServicesDetailTwo.css';
 import Testimonials from './Testimonials';
 import ContactForm from '../ContactForm';
 import FAQSection from './FAQSection';
+import Loader from '../Loader';
+import Logo from '../ui/Logo';
 
 import CountUp from 'react-countup';
 
@@ -17,21 +21,21 @@ function ServicesDetailTwo() {
     const [processProgress, setProcessProgress] = useState(0);
     const [pageData, setPageData] = useState(null);
 
+    const { categoryName, subcategoryName } = useParams();
+    const { data: response, isLoading, error } = useGetServicesDetailTwoQuery(
+        { categoryName, subcategoryName },
+        { skip: !categoryName || !subcategoryName }
+    );
+
     useEffect(() => {
-        const fetchPageData = async () => {
-            try {
-                // Assuming standard frontend setup, adjust URL if needed
-                const response = await fetch('http://localhost:5007/api/v1/services-detail-two');
-                const result = await response.json();
-                if (result.success) {
-                    setPageData(result.data);
-                }
-            } catch (error) {
-                console.error("Error fetching page data:", error);
-            }
-        };
-        fetchPageData();
-    }, []);
+        if (response?.success) {
+            setPageData(response.data);
+        }
+    }, [response]);
+
+    useEffect(() => {
+        window.scrollTo(0, 0);
+    }, [categoryName, subcategoryName]);
 
     useEffect(() => {
         const duration = 5000;
@@ -187,29 +191,30 @@ function ServicesDetailTwo() {
                                     <polyline points="12 5 19 12 12 19"></polyline>
                                 </svg>
                             </a>
-                        </div>
-
-                        <div className="metrics-panel">
-                            {pageData?.metrics?.map((metric, idx) => (
-                                <div className="metric-unit" key={idx}>
-                                    <div className="unit-title">
-                                        <span className="emoji">{metric.icon}</span>{' '}
-                                        {metric.label}
-                                    </div>
-                                    <div className="unit-value">
-                                        <CountUp end={metric.value} decimals={metric.value % 1 !== 0 ? 1 : 0} duration={5} enableScrollSpy scrollSpyOnce />{metric.suffix}
-                                    </div>
-                                </div>
-                            ))}
-                        </div>
-                    </div>
+                        </div>                    </div>
 
                     <div className="graphics-content-block">
-                        <img 
-                            src={pageData?.heroimg || "/assets/ai softwaredevelopment.webp"} 
-                            alt="Hero Image" 
-                            style={{ width: '100%', height: 'auto', borderRadius: '12px', opacity: 0.95 }} 
+                        <img
+                            src={pageData?.heroimg || "/assets/ai softwaredevelopment.webp"}
+                            alt="Hero Image"
+                            style={{ width: '100%', height: 'auto', borderRadius: '12px', opacity: 0.95, transform: 'scale(1.1)' }}
                         />
+                    </div>
+                </div>
+
+                <div className="metrics-panel-container" style={{ width: '100%', maxWidth: '1350px', zIndex: 5 }}>
+                    <div className="metrics-panel">
+                        {pageData?.metrics?.map((metric, idx) => (
+                            <div className="metric-unit" key={idx}>
+                                <div className="unit-title">
+                                    <span className="emoji">{metric.icon}</span>{' '}
+                                    {metric.label}
+                                </div>
+                                <div className="unit-value">
+                                    <CountUp end={metric.value} decimals={metric.value % 1 !== 0 ? 1 : 0} duration={5} enableScrollSpy scrollSpyOnce />{metric.suffix}
+                                </div>
+                            </div>
+                        ))}
                     </div>
                 </div>
 
@@ -237,7 +242,7 @@ function ServicesDetailTwo() {
                 <div className="clx-wrap">
                     <div className="clx-heading-block">
                         <span className="clx-tag">The Riveyra Engine</span>
-                        <h2 className="clx-title">State-of-the-Art <span>Development Stack</span></h2>
+                        <h2 className="clx-title">State-of-the-Art <span className="gt">Development Stack</span></h2>
                         <div className="clx-sub">Harnessing advanced motion, WebGL, and modern frontend architectures for immersive experiences.</div>
                     </div>
 
@@ -275,7 +280,7 @@ function ServicesDetailTwo() {
 
                     <div className="services-header-block">
                         <div className="services-sub-title">{pageData?.servicesTag || 'Our Capabilities'}</div>
-                        <h2 className="services-main-title">{pageData?.servicesTitle || 'Everything Your Vision Needs to '}<span>{pageData?.servicesTitleHighlight || 'Scale Digitally'}</span></h2>
+                        <h2 className="services-main-title">{pageData?.servicesTitle || 'Everything Your Vision Needs to '}<span className="gt">{pageData?.servicesTitleHighlight || 'Scale Digitally'}</span></h2>
                         <p className="services-desc">{pageData?.servicesDesc || 'Six specialized engineering tracks, built with clean code and modern architecture to deliver flawless digital experiences.'}</p>
                     </div>
 
@@ -315,7 +320,7 @@ function ServicesDetailTwo() {
                             <div className="pulse-node"></div>
                             <span>{pageData?.universeTag || 'Full-Stack Development Hub'}</span>
                         </div>
-                        <h2 className="main-epic-title">{pageData?.universeTitle || 'Next-Gen Web '}<span>{pageData?.universeTitleHighlight || 'Domination Engine'}</span></h2>
+                        <h2 className="main-epic-title">{pageData?.universeTitle || 'Next-Gen Web '}<span className="gt">{pageData?.universeTitleHighlight || 'Domination Engine'}</span></h2>
                     </div>
 
                     <div className="showcase-engine">
@@ -387,7 +392,7 @@ function ServicesDetailTwo() {
 
                     <div className="why-section-heading">
                         <span className="why-section-tag">{pageData?.whyTag || 'Why Riveyra'}</span>
-                        <h2>{pageData?.whyTitle || 'Built for Performance — '}<span>{pageData?.whyTitleHighlight || 'Not Just Promises.'}</span></h2>
+                        <h2>{pageData?.whyTitle || 'Built for Performance — '}<span className="gt">{pageData?.whyTitleHighlight || 'Not Just Promises.'}</span></h2>
                     </div>
 
                     <div className="why-grid">
@@ -410,11 +415,10 @@ function ServicesDetailTwo() {
                         <path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z" className="shape-fill"></path>
                     </svg>
                 </div>
-
                 <div className="process-wrapper">
 
                     <div className="process-header">
-                        <h2 className="process-main-heading">{pageData?.processTitle || 'Our Structural '}<span>{pageData?.processTitleHighlight || 'Development Workflow'}</span></h2>
+                        <h2 className="process-main-heading">{pageData?.processTitle || 'Our Structural '}<span className="gt">{pageData?.processTitleHighlight || 'Development Workflow'}</span></h2>
                         <p className="process-sub-heading">{pageData?.processDesc || 'Engineered precision from strategic wireframing to high-performance deployments.'}</p>
                     </div>
 
@@ -470,13 +474,18 @@ function ServicesDetailTwo() {
             <section className="custom-contact-section">
                 <div className="custom-contact-wrapper">
                     <div className="custom-contact-left">
+                        <div style={{ display: 'inline-flex', alignItems: 'center', gap: 10, marginBottom: 24 }}>
+                            <div style={{ width: 28, height: 1, background: '#60a5fa' }} />
+                            <span style={{ fontSize: 10, letterSpacing: 4, color: 'rgba(96,165,250,0.7)', fontFamily: 'var(--font-mono)', textTransform: 'uppercase' }}>Ready to Start?</span>
+                        </div>
                         <div className="custom-contact-headings">
-                            <h2>Get In Touch</h2>
-                            <h2>Build Fast</h2>
-                            <h2 className="text-gradient">Scale Higher.</h2>
+                            <h2 style={{ paddingBottom: '0.08em' }}>
+                                Let's Build Something <br />
+                                <span className="gt">Extraordinary.</span>
+                            </h2>
                         </div>
                         <p className="custom-contact-desc">
-                            Partner with elite developers to build fast, secure, and custom websites tailored to scale your brand online.
+                            Have a project in mind? Get in touch and let's turn your vision into a digital reality that exceeds every expectation.
                         </p>
 
                         <div className="custom-contact-info-boxes">
@@ -502,6 +511,18 @@ function ServicesDetailTwo() {
                                 </div>
                                 <div className="wa-arrow">OPEN →</div>
                             </a>
+                        </div>
+                        
+                        <div style={{ 
+                            display: 'flex', 
+                            justifyContent: 'center', 
+                            alignItems: 'center', 
+                            marginTop: 'auto', 
+                            paddingTop: '80px',
+                            paddingBottom: '40px',
+                            opacity: 0.6
+                        }}>
+                            <Logo height={140} animate />
                         </div>
                     </div>
 

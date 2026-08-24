@@ -30,6 +30,7 @@ export default function AdminLayout() {
         { path: '/admin/ApplyCandidates', label: 'Applications', icon: <Icons.Career /> },
         { path: '/admin/ContactClient', label: 'Clients Queries', icon: <Icons.Career /> },
         { path: "/admin/categories", label: "Categories", icon: <Icons.Categories /> },
+        { path: "/admin/nav-dropdowns", label: "Navbar Items", icon: <Icons.Categories /> },
         { path: "/admin/blogs", label: "Blogs", icon: <Icons.Blogs /> },
         { path: "/admin/page-seo", label: "pages", icon: <Icons.Blogs /> },
 

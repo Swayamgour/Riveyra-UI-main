@@ -12,6 +12,7 @@ const blockSchema = new mongoose.Schema({
     reverse: Boolean
 }, { _id: false });
 
+
 const heroSchema = new mongoose.Schema({
     badge: String,
     title: String,
@@ -81,7 +82,6 @@ const serviceSchema = new mongoose.Schema({
     accent: String,
     path: String,
     tags: [String],
-    subcategories: [String],
     icons: String,
 
     // SEO

@@ -21,6 +21,7 @@ const categoryRoutes = require("./routes/categoryRoutes");
 const blogRoutes = require("./routes/blogRoutes");
 const pageSeoRoutes = require("./routes/pageSeoRoutes");
 const pageRoutes = require("./routes/serviceDetailTwo");
+const navDropdownRoutes = require("./routes/navDropdownRoutes");
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -63,6 +64,7 @@ app.use(`/api/${process.env.API_VERSION}/contact`, contactRoutes);
 app.use(`/api/${process.env.API_VERSION}/categories`, categoryRoutes);
 app.use(`/api/${process.env.API_VERSION}/blogs`, blogRoutes);
 app.use(`/api/${process.env.API_VERSION}/page-seo`, pageSeoRoutes);
+app.use(`/api/${process.env.API_VERSION}/nav-dropdown`, navDropdownRoutes);
 app.use(`/api/${process.env.API_VERSION}`, pageRoutes);
 
 

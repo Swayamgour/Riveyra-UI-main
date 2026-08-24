@@ -5,12 +5,11 @@ import { useNavigate, useLocation } from 'react-router-dom'
 import Logo from '../ui/Logo'
 import { NAV_LINKS } from '../../utils/constants'
 import { useBreakpoint } from '../../hooks/useBreakpoint.jsx'
-import { useGetServicesQuery } from '../../redux/api.jsx'
+import { useGetNavDropdownItemsQuery } from '../../redux/api.jsx'
 
 const PAGE_ROUTES = {
   contact: '/contact',
   about: '/about',
-  services: '/services',
   portfolio: '/portfolio',
   career: '/career',
   blogs: '/blogs',
@@ -31,7 +30,7 @@ export default function Navbar() {
   const navigate = useNavigate()
   const location = useLocation()
 
-  const { data } = useGetServicesQuery()
+  const { data } = useGetNavDropdownItemsQuery()
   const services = data?.data || []
 
   useEffect(() => {
@@ -176,7 +175,7 @@ export default function Navbar() {
                   >
                     <motion.a
                       href="#"
-                      onClick={e => { e.preventDefault(); handleNavClick(link) }}
+                      onClick={e => { e.preventDefault(); }}
                       initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }}
                       transition={{ delay: 0.1 + i * 0.07 }}
                       style={{
@@ -255,7 +254,7 @@ export default function Navbar() {
                                 style={{ display: 'flex', flexDirection: 'column' }}
                               >
                                 <div
-                                  onClick={() => { setServicesOpen(false); navigate(`/Service/${item.slug}`) }}
+                                  onClick={() => { setServicesOpen(false); navigate(`/ServiceCategories/${item.categories}`) }}
                                   onMouseEnter={(e) => e.currentTarget.style.color = 'var(--accent)'}
                                   onMouseLeave={(e) => e.currentTarget.style.color = '#ffffff'}
                                   style={{
@@ -269,24 +268,24 @@ export default function Navbar() {
                                     lineHeight: 1.3
                                   }}
                                 >
-                                  {item.title}
+                                  {item.categories}
                                 </div>
                                 <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
                                   {item?.subcategories?.length > 0 ? (
                                     item.subcategories.map((sub, i) => (
                                       <span
                                         key={i}
-                                        onClick={(e) => { 
-                                          e.stopPropagation(); 
-                                          setServicesOpen(false); 
-                                          navigate(`/Service/${item.slug}`);
+                                        onClick={(e) => {
+                                          e.stopPropagation();
+                                          setServicesOpen(false);
+                                          navigate(`/services/${encodeURIComponent(item.categories)}/${encodeURIComponent(typeof sub === 'string' ? sub : sub.name)}`);
                                         }}
-                                        onMouseEnter={(e) => { 
-                                          e.currentTarget.style.color = 'var(--accent)'; 
+                                        onMouseEnter={(e) => {
+                                          e.currentTarget.style.color = 'var(--accent)';
                                           e.currentTarget.style.transform = 'translateX(4px)';
                                         }}
-                                        onMouseLeave={(e) => { 
-                                          e.currentTarget.style.color = 'rgba(148,163,184,0.8)'; 
+                                        onMouseLeave={(e) => {
+                                          e.currentTarget.style.color = 'rgba(148,163,184,0.8)';
                                           e.currentTarget.style.transform = 'translateX(0)';
                                         }}
                                         style={{
@@ -299,7 +298,7 @@ export default function Navbar() {
                                           gap: 6
                                         }}
                                       >
-                                        <span style={{ fontSize: 8, opacity: 0.5 }}>▹</span> {sub}
+                                        <span style={{ fontSize: 8, opacity: 0.5 }}>▹</span> {typeof sub === 'string' ? sub : sub.name}
                                       </span>
                                     ))
                                   ) : (
@@ -403,7 +402,7 @@ export default function Navbar() {
               padding: '100px 6vw 40px 6vw',
             }}
           >
-            <div style={{ display: 'flex', flexDirection: 'column',  width: '100%' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', width: '100%' }}>
               {NAV_LINKS.map((link, i) => {
                 const isServices = link.toLowerCase() === 'services'
                 const active = isActivePage(link)
@@ -465,7 +464,7 @@ export default function Navbar() {
                                 initial={{ opacity: 0, y: 10 }}
                                 animate={{ opacity: 1, y: 0 }}
                                 transition={{ delay: idx * 0.04 }}
-                                onClick={() => { setMenuOpen(false); setMobileServicesOpen(false); navigate(`/Service/${item.slug}`) }}
+                                onClick={() => { setMenuOpen(false); setMobileServicesOpen(false); navigate(`/ServiceCategories/${item.categories}`) }}
                                 style={{
                                   display: 'flex',
                                   alignItems: 'center',
@@ -488,7 +487,7 @@ export default function Navbar() {
                                 </div>
                                 <div style={{ flex: 1 }}>
                                   <div style={{ color: '#fff', fontSize: 14, fontWeight: 600 }}>
-                                    {item.title}
+                                    {item.categories}
                                   </div>
                                   {item.desc && (
                                     <div style={{ fontSize: 11, color: 'rgba(148,163,184,0.6)', marginTop: 2, lineHeight: 1.3 }}>

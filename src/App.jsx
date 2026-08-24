@@ -13,6 +13,8 @@ import CareerPage from './pages/CareerPage'
 import BlogsPage from './pages/BlogsPage'
 import BlogDetailPage from './pages/BlogDetailPage'
 import ServiceDetail from './components/sections/ServiceDetail'
+import ServicesCategoriesSkeleton from './pages/ServicesCategoriesSkeleton'
+// import SubcategoryDetailSkeleton from './pages/SubcategoryDetailSkeleton'
 import ContactPopup from './components/ui/Contactpopup'
 import Admin from './pages/Admin/Admin'
 import ServicesManager from './pages/Admin/ServicesManager'
@@ -37,6 +39,7 @@ import PrivacyPolicy from './pages/PrivacyPolicy'
 import TermsOfService from './pages/TermsOfService'
 import ServicesDetailTwo from './components/sections/ServicesDetailTwo'
 import ServicesDetailTwoForm from './pages/Admin/ServicesDetailTwoForm'
+import NavDropdownManager from './pages/Admin/NavDropdownManager'
 // import CookiePolicy from './pages/CookiePolicy'
 // import Disclaimer from './pages/Disclaimer'
 
@@ -80,7 +83,9 @@ function AppShell() {
         <Route path="/blogs/:slug" element={<BlogDetailPage />} />
         <Route path="/Apply" element={<ApplyPage />} />
         <Route path="/Service/:slug" element={<ServiceDetail />} />
-        <Route path="/ServicesDetailTwo" element={<ServicesDetailTwo />} />
+        <Route path="/ServiceCategories/:slug" element={<ServicesCategoriesSkeleton />} />
+
+        <Route path="/services/:categoryName/:subcategoryName" element={<ServicesDetailTwo />} />
 
         <Route path="/privacy-policy" element={<PrivacyPolicy />} />
         <Route path="/terms-of-service" element={<TermsOfService />} />
@@ -114,6 +119,7 @@ function AppShell() {
 
 
           <Route path="categories" element={<CategoryManager />} />
+          <Route path="nav-dropdowns" element={<NavDropdownManager />} />
 
           <Route path="blogs" element={<BlogManager />} />
           <Route path="blogs/create" element={<BlogForm />} />

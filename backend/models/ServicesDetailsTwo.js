@@ -55,6 +55,10 @@ const FAQSchema = new mongoose.Schema({
 });
 
 const ServicesDetailTwoSchema = new mongoose.Schema({
+    // Universal Category Identifiers
+    categoryName: { type: String, required: true },
+    subcategoryName: { type: String, required: true },
+    
     pageTitle: { type: String, default: "Services Detail Two" },
     
     // Hero Section
@@ -116,6 +120,9 @@ const ServicesDetailTwoSchema = new mongoose.Schema({
     contactEmail: String,
     contactAddress: String
 });
+
+// Ensure uniqueness so we only have one detail page per subcategory
+ServicesDetailTwoSchema.index({ categoryName: 1, subcategoryName: 1 }, { unique: true });
 
 // Forcing exact collection name to prevent pluralization issues
 module.exports = mongoose.model('ServiceDetailTwo', ServicesDetailTwoSchema, 'serviceDetailTwo');

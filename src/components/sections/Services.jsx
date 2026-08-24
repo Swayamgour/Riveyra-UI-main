@@ -3,7 +3,15 @@ import { motion } from 'framer-motion'
 import { useBreakpoint } from '../../hooks/useBreakpoint.jsx'
 // import { SERVICES } from '../data.jsx'
 import { useNavigate } from 'react-router-dom'
-import { useGetServicesQuery } from '../../redux/api.jsx'
+import { useGetNavDropdownItemsQuery } from '../../redux/api.jsx'
+import { FiTrendingUp, FiMonitor, FiSmartphone, FiShield } from 'react-icons/fi'
+
+const CATEGORY_STYLES = {
+  "Digital Marketing": { icon: <FiTrendingUp size={22} />, accent: '#f87171' },
+  "Web Development":   { icon: <FiMonitor size={22} />, accent: '#60a5fa' },
+  "App Development":   { icon: <FiSmartphone size={22} />, accent: '#c084fc' },
+  "Cyber Security":    { icon: <FiShield size={22} />, accent: '#34d399' }
+}
 
 // ─── Service data ─────────────────────────────────────────────────────────────
 // {SERVICES}
@@ -213,18 +221,18 @@ if (typeof document !== 'undefined' && !document.getElementById('srv-styles')) {
 export default function Services() {
   const [hovered, setHovered] = useState(null)
   const { isMobile } = useBreakpoint()
-  // use
 
-  const { data } = useGetServicesQuery()
-
-  // console.log()
+  const { data } = useGetNavDropdownItemsQuery()
 
   const navigate = useNavigate()
+
+  // Depend on how your API returns the data, it might be in `data.data` or `data` directly
+  const items = data?.data || data || []
 
   return (
     <section id="services" className="srv-section">
       <div className="scroll-reveal" style={{ maxWidth: 1200, margin: '0 auto', position: 'relative', zIndex: 1, padding: '0 8px' }}>
-
+        
         {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 28 }}
@@ -241,7 +249,6 @@ export default function Services() {
             Deep Technical Expertise, <span className="gt">Supporting Modern Systems</span>
           </motion.h2>
 
-
           <p className="srv-sub">
             End-to-end solutions across AI, blockchain, cloud, and security — engineered to scale with your ambitions.
           </p>
@@ -249,11 +256,14 @@ export default function Services() {
 
         {/* Grid */}
         <div className="srv-grid">
-          {data?.data?.map((s, i) => {
+          {items.map((item, i) => {
             const isHov = hovered === i
+            const catStyle = CATEGORY_STYLES[item.categories] || { icon: <FiMonitor size={22} />, accent: '#60a5fa' }
+            const accent = catStyle.accent
+
             return (
               <motion.div
-                key={s.title}
+                key={item._id || i}
                 className="srv-card"
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
@@ -261,44 +271,53 @@ export default function Services() {
                 transition={{ delay: i * 0.06, duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
                 onMouseEnter={() => setHovered(i)}
                 onMouseLeave={() => setHovered(null)}
-                onClick={() => navigate(`Service/${s.slug}`)}
+                onClick={() => navigate(`/ServiceCategories/${item.categories}`)}
+                style={{ cursor: 'pointer' }}
               >
-                {/* Top accent bar — always visible on mobile via CSS, hover-only on desktop */}
                 <div
                   className="srv-card-top-bar"
-                  style={{ background: `linear-gradient(90deg, ${s.accent}, transparent)` }}
+                  style={{ background: `linear-gradient(90deg, ${accent}, transparent)` }}
                 />
 
                 <div
                   className="srv-icon-wrap"
                   style={{
-                    background: `${s.accent}14`,
-                    border: `1px solid ${s.accent}30`,
-                    color: s.accent,
-                    boxShadow: isHov ? `0 0 20px ${s.accent}22` : 'none',
+                    background: `${accent}14`,
+                    border: `1px solid ${accent}30`,
+                    color: accent,
+                    boxShadow: isHov ? `0 0 20px ${accent}22` : 'none',
                   }}
                 >
-                  <div>
-
-
-                    <img src={s.icons} />
-                  </div>
-                  {/* {s.icons} */}
+                  {catStyle.icon}
                 </div>
 
-                <h3 className="srv-title">{s.title}</h3>
-                <p className="srv-desc">{s.desc}</p>
+                <h3 className="srv-title">{item.categories}</h3>
+                <p className="srv-desc">{item.desc}</p>
 
                 <div className="srv-tags">
-                  {s.tags.map(t => (
-                    <span key={t} className="srv-tag" style={{ background: `${s.accent}10`, color: s.accent, border: `1px solid ${s.accent}22` }}>
-                      {t}
+                  {item.subcategories?.slice(0, 3).map((sub, idx) => {
+                    const subName = typeof sub === 'string' ? sub : sub.name;
+                    return (
+                      <span 
+                        key={idx} 
+                        className="srv-tag" 
+                        style={{ background: `${accent}10`, color: accent, border: `1px solid ${accent}22`, cursor: 'pointer' }}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          navigate(`/services/${encodeURIComponent(item.categories)}/${encodeURIComponent(subName)}`);
+                        }}
+                      >
+                        {subName}
+                      </span>
+                    )
+                  })}
+                  {item.subcategories?.length > 3 && (
+                    <span className="srv-tag" style={{ background: `${accent}10`, color: accent, border: `1px solid ${accent}22` }}>
+                      +{item.subcategories.length - 3} more
                     </span>
-                  ))}
+                  )}
                 </div>
 
-                {/* Arrow — always visible on mobile (isMobile bypasses framer opacity:0),
-                    hover-animated on desktop */}
                 <motion.div
                   className="srv-arrow"
                   animate={{
@@ -306,7 +325,7 @@ export default function Services() {
                     x: isMobile ? 0 : isHov ? 0 : -8,
                   }}
                   transition={{ duration: 0.25 }}
-                  style={{ color: s.accent, marginTop: isMobile ? 16 : 20 }}
+                  style={{ color: accent, marginTop: isMobile ? 16 : 20 }}
                 >
                   Explore Service
                   <svg viewBox="0 0 16 16" width="14" height="14" fill="none" stroke="currentColor" strokeWidth="2">

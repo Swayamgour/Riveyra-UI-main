@@ -1,12 +1,20 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
-import { useGetServicesDetailTwoQuery, useUpdateServicesDetailTwoMutation } from '../../redux/api';
+import { useGetServicesDetailTwoQuery, useUpdateServicesDetailTwoMutation, useGetNavDropdownItemsQuery } from '../../redux/api';
 
 const ServicesDetailTwoForm = () => {
     const navigate = useNavigate();
     
-    const { data: pageDataResp, isLoading: isFetching, isSuccess } = useGetServicesDetailTwoQuery();
+    const [selectedCategory, setSelectedCategory] = useState('');
+    const [selectedSubcategory, setSelectedSubcategory] = useState('');
+
+    const { data: navData } = useGetNavDropdownItemsQuery();
+
+    const { data: pageDataResp, isLoading: isFetching, isSuccess, isFetching: isFetchingData } = useGetServicesDetailTwoQuery(
+        { categoryName: selectedCategory, subcategoryName: selectedSubcategory },
+        { skip: !selectedCategory || !selectedSubcategory }
+    );
     const [updateServicesDetailTwo, { isLoading: isUpdating }] = useUpdateServicesDetailTwoMutation();
     
     const [activeTab, setActiveTab] = useState('hero');
@@ -71,8 +79,17 @@ const ServicesDetailTwoForm = () => {
                 ...prev,
                 ...pageDataResp.data
             }));
+        } else {
+            // Reset if no data found for the selected category/subcategory
+            setFormData(prev => ({
+                ...prev,
+                pageTitle: '',
+                heroBadge: '',
+                heroTitle: '',
+                // Keep other fields as they are or reset them fully
+            }));
         }
-    }, [isSuccess, pageDataResp]);
+    }, [isSuccess, pageDataResp, selectedCategory, selectedSubcategory]);
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -122,8 +139,18 @@ const ServicesDetailTwoForm = () => {
         e.preventDefault();
         setMessage({ type: '', text: '' });
         
+        if (!selectedCategory || !selectedSubcategory) {
+            setMessage({ type: 'error', text: 'Please select a Category and Subcategory first.' });
+            return;
+        }
+        
         try {
-            const result = await updateServicesDetailTwo(formData).unwrap();
+            const dataToSubmit = {
+                ...formData,
+                categoryName: selectedCategory,
+                subcategoryName: selectedSubcategory
+            };
+            const result = await updateServicesDetailTwo(dataToSubmit).unwrap();
             setMessage({ type: 'success', text: 'Page configuration updated successfully!' });
             window.scrollTo({ top: 0, behavior: 'smooth' });
         } catch (error) {
@@ -140,19 +167,69 @@ const ServicesDetailTwoForm = () => {
         { id: 'contact', label: 'Contact Info' }
     ];
 
-    if (isFetching) {
-        return <div style={{ color: 'white', padding: '50px', textAlign: 'center' }}>Loading Configuration...</div>;
-    }
+    const availableCategories = navData?.data || [];
+    const selectedCategoryData = availableCategories.find(c => c.categories === selectedCategory);
+    const availableSubcategories = selectedCategoryData?.subcategories || [];
 
     return (
         <div style={{
             maxWidth: 1000,
             margin: '0 auto',
-            padding: '2rem',
-            color: 'white',
-            fontFamily: 'system-ui, -apple-system, sans-serif'
+            padding: '40px 20px',
+            fontFamily: "'Inter', sans-serif",
+            color: '#fff',
+            minHeight: '100vh'
         }}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2rem' }}>
+            <h1 style={{ fontSize: '32px', fontWeight: 800, marginBottom: '8px', color: '#fff' }}>
+                Services Detail Builder
+            </h1>
+            <p style={{ color: 'rgba(255,255,255,0.6)', marginBottom: '32px' }}>
+                Select a category and subcategory to manage its specific content.
+            </p>
+
+            <div style={{ display: 'flex', gap: '20px', marginBottom: '40px', background: 'rgba(255,255,255,0.02)', padding: '24px', borderRadius: '16px', border: '1px solid rgba(255,255,255,0.05)' }}>
+                <div style={{ flex: 1 }}>
+                    <label style={{ display: 'block', marginBottom: '8px', fontSize: '14px', fontWeight: 500, color: 'rgba(255,255,255,0.8)' }}>Category</label>
+                    <select 
+                        value={selectedCategory} 
+                        onChange={(e) => {
+                            setSelectedCategory(e.target.value);
+                            setSelectedSubcategory('');
+                        }}
+                        style={{ width: '100%', padding: '12px', background: 'rgba(0,0,0,0.5)', border: '1px solid rgba(255,255,255,0.1)', color: '#fff', borderRadius: '8px' }}
+                    >
+                        <option value="">-- Select Category --</option>
+                        {availableCategories.map(cat => (
+                            <option key={cat._id} value={cat.categories}>{cat.categories}</option>
+                        ))}
+                    </select>
+                </div>
+                <div style={{ flex: 1 }}>
+                    <label style={{ display: 'block', marginBottom: '8px', fontSize: '14px', fontWeight: 500, color: 'rgba(255,255,255,0.8)' }}>Subcategory</label>
+                    <select 
+                        value={selectedSubcategory} 
+                        onChange={(e) => setSelectedSubcategory(e.target.value)}
+                        style={{ width: '100%', padding: '12px', background: 'rgba(0,0,0,0.5)', border: '1px solid rgba(255,255,255,0.1)', color: '#fff', borderRadius: '8px' }}
+                        disabled={!selectedCategory}
+                    >
+                        <option value="">-- Select Subcategory --</option>
+                        {availableSubcategories.map((sub, idx) => {
+                            const subName = typeof sub === 'string' ? sub : sub.name;
+                            return <option key={idx} value={subName}>{subName}</option>
+                        })}
+                    </select>
+                </div>
+            </div>
+
+            {(!selectedCategory || !selectedSubcategory) ? (
+                <div style={{ textAlign: 'center', padding: '60px', background: 'rgba(255,255,255,0.02)', borderRadius: '16px', border: '1px dashed rgba(255,255,255,0.1)', color: 'rgba(255,255,255,0.5)' }}>
+                    Please select a category and subcategory above to start editing.
+                </div>
+            ) : isFetchingData ? (
+                <div style={{ textAlign: 'center', padding: '60px' }}>Loading data...</div>
+            ) : (
+                <form onSubmit={handleSubmit} style={{ background: 'rgba(255,255,255,0.02)', borderRadius: '24px', border: '1px solid rgba(255,255,255,0.05)', overflow: 'hidden' }}>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2rem' }}>
                 <h1 style={{ fontSize: '24px', fontWeight: 'bold' }}>Services Detail Two - Configuration</h1>
                 <button 
                     onClick={handleSubmit}
@@ -205,7 +282,7 @@ const ServicesDetailTwoForm = () => {
                 ))}
             </div>
 
-            <form onSubmit={handleSubmit} style={{ background: 'rgba(255,255,255,0.02)', padding: '24px', borderRadius: '12px', border: '1px solid rgba(255,255,255,0.1)' }}>
+            <div style={{ background: 'rgba(255,255,255,0.02)', padding: '24px', borderRadius: '12px', border: '1px solid rgba(255,255,255,0.1)' }}>
                 {activeTab === 'hero' && (
                     <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
                         <div>
@@ -509,7 +586,9 @@ const ServicesDetailTwoForm = () => {
                         </div>
                     </div>
                 )}
-            </form>
+            </div>
+                </form>
+            )}
         </div>
     );
 };
