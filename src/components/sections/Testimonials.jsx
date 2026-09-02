@@ -111,7 +111,7 @@ export default function Testimonials({ testimonials }) {
             style={{ paddingBottom: '50px', cursor: 'grab' }}
           >
             {displayTestimonials.map((t, i) => (
-              <SwiperSlide key={t.name || i}>
+              <SwiperSlide key={t._id || `${t.name || 'testimonial'}-${i}`}>
                 <motion.div
                   initial={{ opacity: 0, y: 40 }}
                   whileInView={{ opacity: 1, y: 0 }}
@@ -178,7 +178,7 @@ export default function Testimonials({ testimonials }) {
           }}>
             {displayTestimonials.map((t, i) => (
               <motion.div
-                key={t.name || i}
+                key={t._id || `${t.name || 'testimonial'}-${i}`}
                 initial={{ opacity: 0, y: 40 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}

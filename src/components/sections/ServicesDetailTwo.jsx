@@ -11,6 +11,14 @@ import Logo from '../ui/Logo';
 
 import CountUp from 'react-countup';
 
+const formatIconUrl = (url, name = 'tech') => {
+    if (!url) return `https://cdn.simpleicons.org/${encodeURIComponent(name.toLowerCase().replace(/[^a-z0-9]/g, ''))}`;
+    if (url.startsWith('http://') || url.startsWith('https://') || url.startsWith('data:') || url.startsWith('/')) {
+        return url;
+    }
+    return `https://cdn.simpleicons.org/${encodeURIComponent(name.toLowerCase().replace(/[^a-z0-9]/g, ''))}/${url.replace('#', '')}`;
+};
+
 function ServicesDetailTwo() {
     const sectionRef = useRef(null);
     const orbRef = useRef(null);
@@ -249,7 +257,7 @@ function ServicesDetailTwo() {
                     <div className="clx-grid">
                         {pageData?.techStack ? pageData.techStack.map((tech, idx) => (
                             <div className="clx-card" key={idx}>
-                                <div className="logo"><img decoding="async" src={tech.iconUrl} alt={tech.name} /></div>
+                                <div className="logo"><img decoding="async" src={formatIconUrl(tech.iconUrl, tech.name)} alt={tech.name} /></div>
                                 <h3>{tech.name}</h3>
                             </div>
                         )) : (
@@ -330,7 +338,7 @@ function ServicesDetailTwo() {
                                 <div className="premium-box-5d" data-service={card.id} data-title={card.title} data-desc={card.desc} data-glow={card.glowColor} data-gradient={card.gradient} key={idx}>
                                     <div className="box-meta">
                                         <div className="box-icon-wrapper">
-                                            <img decoding="async" src={card.iconUrl} alt={card.title} />
+                                            <img decoding="async" src={formatIconUrl(card.iconUrl, card.title)} alt={card.title} />
                                         </div>
                                         <h3>{card.title}</h3>
                                     </div>
@@ -373,7 +381,7 @@ function ServicesDetailTwo() {
                                 <div className="premium-box-5d" data-service={card.id} data-title={card.title} data-desc={card.desc} data-glow={card.glowColor} data-gradient={card.gradient} key={idx}>
                                     <div className="box-meta">
                                         <div className="box-icon-wrapper">
-                                            <img decoding="async" src={card.iconUrl} alt={card.title} />
+                                            <img decoding="async" src={formatIconUrl(card.iconUrl, card.title)} alt={card.title} />
                                         </div>
                                         <h3>{card.title}</h3>
                                     </div>
