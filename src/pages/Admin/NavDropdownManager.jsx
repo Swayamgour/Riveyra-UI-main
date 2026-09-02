@@ -6,6 +6,7 @@ import {
   useCreateNavDropdownItemMutation,
   useUpdateNavDropdownItemMutation,
   useDeleteNavDropdownItemMutation,
+  useUploadServiceImageMutation,
 } from "../../redux/api";
 
 export default function NavDropdownManager() {
@@ -19,6 +20,7 @@ export default function NavDropdownManager() {
   const [createItem, { isLoading: isCreating }] = useCreateNavDropdownItemMutation();
   const [updateItem, { isLoading: isUpdating }] = useUpdateNavDropdownItemMutation();
   const [deleteItem] = useDeleteNavDropdownItemMutation();
+  const [uploadImage, { isLoading: isUploadingImg }] = useUploadServiceImageMutation();
 
   // FORM STATE
   const [formData, setFormData] = useState({
@@ -64,40 +66,39 @@ export default function NavDropdownManager() {
     setFormData({ ...formData, subcategories: updated });
   };
 
-  const handleTechToolCategoryAdd = () => {
+  const handleToolAdd = () => {
     setFormData({
       ...formData,
-      techTools: [...formData.techTools, { category: "", tools: [] }]
+      techTools: [...formData.techTools, { name: "", icon: "" }]
     });
   };
 
-  const handleTechToolCategoryChange = (index, value) => {
+  const handleToolChange = (index, field, value) => {
     const updated = [...formData.techTools];
-    updated[index].category = value;
+    updated[index][field] = value;
     setFormData({ ...formData, techTools: updated });
   };
 
-  const handleTechToolCategoryRemove = (index) => {
+  const handleToolRemove = (index) => {
     const updated = formData.techTools.filter((_, i) => i !== index);
     setFormData({ ...formData, techTools: updated });
   };
 
-  const handleToolAdd = (catIndex) => {
-    const updated = [...formData.techTools];
-    updated[catIndex].tools.push({ name: "", icon: "" });
-    setFormData({ ...formData, techTools: updated });
-  };
+  const handleImageUpload = async (e, index) => {
+    const file = e.target.files[0];
+    if (!file) return;
 
-  const handleToolChange = (catIndex, toolIndex, field, value) => {
-    const updated = [...formData.techTools];
-    updated[catIndex].tools[toolIndex][field] = value;
-    setFormData({ ...formData, techTools: updated });
-  };
+    const data = new FormData();
+    data.append("image", file);
 
-  const handleToolRemove = (catIndex, toolIndex) => {
-    const updated = [...formData.techTools];
-    updated[catIndex].tools = updated[catIndex].tools.filter((_, i) => i !== toolIndex);
-    setFormData({ ...formData, techTools: updated });
+    try {
+      const res = await uploadImage(data).unwrap();
+      if (res.success) {
+        handleToolChange(index, 'icon', res.url);
+      }
+    } catch (err) {
+      alert(err?.data?.message || "Image upload failed");
+    }
   };
 
   const handleSubmit = async (e) => {
@@ -232,30 +233,20 @@ export default function NavDropdownManager() {
               {/* TECH TOOLS */}
               <div style={{ marginBottom: 30 }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 15 }}>
-                  <h4>Tech Tools Groups (Right Panel)</h4>
-                  <button type="button" onClick={handleTechToolCategoryAdd} style={{ ...btnPrimary, background: '#10b981', padding: '6px 12px', fontSize: 12 }}>+ Add Tech Group</button>
+                  <h4>Tech Tools (Right Panel)</h4>
+                  <button type="button" onClick={handleToolAdd} style={{ ...btnPrimary, background: '#10b981', padding: '6px 12px', fontSize: 12 }}>+ Add Tool</button>
                 </div>
-                {formData.techTools.map((techGroup, catIdx) => (
-                  <div key={catIdx} style={{ background: 'rgba(255,255,255,0.02)', padding: 20, borderRadius: 8, marginBottom: 20, border: '1px solid rgba(255,255,255,0.05)' }}>
-                    <div style={{ display: 'flex', gap: 10, marginBottom: 15 }}>
-                      <input placeholder="Group Name (e.g. Frontend)" value={techGroup.category} onChange={(e) => handleTechToolCategoryChange(catIdx, e.target.value)} style={{ ...inputStyle, marginBottom: 0, flex: 1 }} />
-                      <button type="button" onClick={() => handleTechToolCategoryRemove(catIdx)} style={btnDanger}>Delete Group</button>
-                    </div>
-                    
-                    <div style={{ paddingLeft: 20, borderLeft: '2px solid rgba(255,255,255,0.1)' }}>
-                      <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 10 }}>
-                        <span style={{ fontSize: 12, color: 'rgba(255,255,255,0.5)' }}>Tools in this group</span>
-                        <button type="button" onClick={() => handleToolAdd(catIdx)} style={{ ...btnPrimary, background: '#6366f1', padding: '4px 8px', fontSize: 11 }}>+ Add Tool</button>
+                {formData.techTools.map((tool, idx) => (
+                  <div key={idx} style={{ display: 'flex', gap: 10, alignItems: 'flex-start', background: 'rgba(0,0,0,0.2)', padding: 15, borderRadius: 8, marginBottom: 10 }}>
+                    <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: 10 }}>
+                      <input placeholder="Tool Name (e.g. React)" value={tool.name} onChange={(e) => handleToolChange(idx, 'name', e.target.value)} style={{ ...inputStyle, marginBottom: 0 }} />
+                      <div style={{ display: 'flex', gap: 10 }}>
+                          {tool.icon && <img src={tool.icon} alt="Icon Preview" style={{ width: '40px', height: '40px', objectFit: 'contain' }} />}
+                          <input placeholder="Icon URL" value={tool.icon} onChange={(e) => handleToolChange(idx, 'icon', e.target.value)} style={{ ...inputStyle, marginBottom: 0, flex: 1 }} />
+                          <input type="file" accept="image/*" onChange={(e) => handleImageUpload(e, idx)} style={{ ...inputStyle, marginBottom: 0, flex: 1 }} disabled={isUploadingImg} />
                       </div>
-                      
-                      {techGroup.tools.map((tool, toolIdx) => (
-                        <div key={toolIdx} style={{ display: 'flex', gap: 10, marginBottom: 10 }}>
-                          <input placeholder="Tool Name (e.g. React)" value={tool.name} onChange={(e) => handleToolChange(catIdx, toolIdx, 'name', e.target.value)} style={{ ...inputStyle, marginBottom: 0, flex: 1 }} />
-                          <input placeholder="Icon URL" value={tool.icon} onChange={(e) => handleToolChange(catIdx, toolIdx, 'icon', e.target.value)} style={{ ...inputStyle, marginBottom: 0, flex: 1 }} />
-                          <button type="button" onClick={() => handleToolRemove(catIdx, toolIdx)} style={btnDanger}>X</button>
-                        </div>
-                      ))}
                     </div>
+                    <button type="button" onClick={() => handleToolRemove(idx)} style={btnDanger}>X</button>
                   </div>
                 ))}
               </div>
@@ -283,7 +274,7 @@ export default function NavDropdownManager() {
               <div style={{ display: 'flex', gap: 10, fontSize: 12, color: 'rgba(255,255,255,0.4)', marginBottom: 20 }}>
                 <span>{item.subcategories?.length || 0} Subcats</span>
                 <span>•</span>
-                <span>{item.techTools?.length || 0} Tech Groups</span>
+                <span>{item.techTools?.length || 0} Tech Tools</span>
               </div>
 
               <div style={{ display: 'flex', gap: 10 }}>

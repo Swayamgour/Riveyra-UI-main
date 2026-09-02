@@ -58,9 +58,9 @@ const ServicesDetailTwoSchema = new mongoose.Schema({
     // Universal Category Identifiers
     categoryName: { type: String, required: true },
     subcategoryName: { type: String, required: true },
-    
+
     pageTitle: { type: String, default: "Services Detail Two" },
-    
+
     // Hero Section
     heroBadge: { type: String },
     heroTitle: { type: String },
@@ -68,10 +68,10 @@ const ServicesDetailTwoSchema = new mongoose.Schema({
     heroimg: { type: String },
     heroDescription: { type: String },
     metrics: [MetricSchema],
-    
+
     // Graphics Panel
     statsPanel: [StatPanelSchema],
-    
+
     // Tech Stack Section
     techStackTag: String,
     techStackTitle: String,
@@ -79,14 +79,14 @@ const ServicesDetailTwoSchema = new mongoose.Schema({
     techStackDesc: String,
     techStack: [TechStackSchema],
     techStats: [{ highlight: String, text: String }],
-    
+
     // Services Section
     servicesTag: String,
     servicesTitle: String,
     servicesTitleHighlight: String,
     servicesDesc: String,
     services: [ServiceCardSchema],
-    
+
     // Universe Section
     universeTag: String,
     universeTitle: String,
@@ -94,31 +94,33 @@ const ServicesDetailTwoSchema = new mongoose.Schema({
     universecenter: String,
     universecenterdesc: String,
     universeCards: [UniverseCardSchema],
-    
+
     // Why Riveyra Section
     whyTag: String,
     whyTitle: String,
     whyTitleHighlight: String,
     whyCards: [ServiceCardSchema],
-    
+
     // Process Section
     processTitle: String,
     processTitleHighlight: String,
     processDesc: String,
     processSteps: [ProcessStepSchema],
-    
+
     // Testimonials
     testimonials: [TestimonialSchema],
-    
+
     // FAQs
     faqs: [FAQSchema],
     
-    // Contact Section
+    // Contact Section (Commented out as it's not currently used in frontend)
+    /*
     contactHeadings: [{ type: String }],
     contactDesc: String,
     contactPhone: String,
     contactEmail: String,
     contactAddress: String
+    */
 });
 
 // Ensure uniqueness so we only have one detail page per subcategory

@@ -289,20 +289,22 @@ export default function Navbar() {
                                           e.currentTarget.style.transform = 'translateX(0)';
                                         }}
                                         style={{
-                                          fontSize: 12.5,
-                                          color: 'rgba(148,163,184,0.8)',
+                                          fontSize: 18,
+                                          color: 'rgba(148,163,184,0.85)',
                                           cursor: 'pointer',
                                           transition: 'all 0.2s ease',
                                           display: 'flex',
                                           alignItems: 'center',
-                                          gap: 6
+                                          gap: 6,
+                                          lineHeight: 1.4,
+                                          textTransform: 'capitalize'
                                         }}
                                       >
-                                        <span style={{ fontSize: 8, opacity: 0.5 }}>▹</span> {typeof sub === 'string' ? sub : sub.name}
+                                        <span style={{ fontSize: 9, opacity: 0.6, color: 'var(--accent)' }}>▹</span> {typeof sub === 'string' ? sub : sub.name}
                                       </span>
                                     ))
                                   ) : (
-                                    <span style={{ color: 'rgba(148,163,184,0.4)', fontSize: 12, fontStyle: 'italic' }}>
+                                    <span style={{ color: 'rgba(148,163,184,0.4)', fontSize: 13, fontStyle: 'italic' }}>
                                       No categories available
                                     </span>
                                   )}

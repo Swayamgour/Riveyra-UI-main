@@ -102,7 +102,7 @@ const TiltCard = ({ sub, serviceCategory, onClick, delay }) => {
         }}
       >
         {/* Animated Gradient Glow on Hover */}
-        <motion.div 
+        <motion.div
           style={{
             position: 'absolute',
             inset: '-1px',
@@ -127,7 +127,7 @@ const TiltCard = ({ sub, serviceCategory, onClick, delay }) => {
             {serviceCategory}
           </div>
         </div>
-        
+
         <div style={{ marginTop: 'auto', transform: 'translateZ(20px)', position: 'relative', zIndex: 1 }}>
           <div style={{
             background: 'rgba(79, 142, 247, 0.1)',
@@ -143,9 +143,9 @@ const TiltCard = ({ sub, serviceCategory, onClick, delay }) => {
             gap: '8px',
             transition: 'all 0.3s ease'
           }}
-          className="discover-btn"
+            className="discover-btn"
           >
-            Discover 
+            Discover
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ transition: 'transform 0.3s' }}>
               <line x1="5" y1="12" x2="19" y2="12"></line>
               <polyline points="12 5 19 12 12 19"></polyline>
@@ -172,7 +172,7 @@ const ServicesCategoriesSkeleton = () => {
   const { slug: categoryName } = useParams();
   const navigate = useNavigate();
   const { data: response, isLoading, error } = useGetNavDropdownItemByCategoryQuery(categoryName);
-  
+
   const [activeCategoryIndex, setActiveCategoryIndex] = useState(0);
 
   const service = response?.data;
@@ -184,7 +184,7 @@ const ServicesCategoriesSkeleton = () => {
   }, [categoryName]);
 
   if (isLoading) return <Loader />;
-  
+
   if (error || !service) {
     return (
       <div style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#fff', background: '#050B18' }}>
@@ -196,43 +196,53 @@ const ServicesCategoriesSkeleton = () => {
 
   return (
     <div style={{ background: '#030712', minHeight: '100vh', paddingTop: '100px', color: '#f1f5f9', position: 'relative', overflow: 'hidden' }}>
-      
+
       {/* Immersive Animated Background */}
       <div style={{ position: 'absolute', inset: 0, pointerEvents: 'none', overflow: 'hidden', zIndex: 0 }}>
         {/* Glow Orbs */}
-        <motion.div 
+        <motion.div
           animate={{ x: [0, 100, 0], y: [0, -100, 0] }}
           transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
           style={{ position: 'absolute', top: '-10%', left: '-10%', width: '50vw', height: '50vw', background: 'radial-gradient(circle, rgba(79, 142, 247, 0.15) 0%, transparent 70%)', filter: 'blur(60px)' }}
         />
-        <motion.div 
+        <motion.div
           animate={{ x: [0, -100, 0], y: [0, 100, 0] }}
           transition={{ duration: 15, repeat: Infinity, ease: "linear" }}
           style={{ position: 'absolute', bottom: '-10%', right: '-10%', width: '40vw', height: '40vw', background: 'radial-gradient(circle, rgba(139, 92, 246, 0.15) 0%, transparent 70%)', filter: 'blur(60px)' }}
         />
-        <div style={{ 
-          position: 'absolute', 
-          inset: 0, 
+        <div style={{
+          position: 'absolute',
+          inset: 0,
           backgroundImage: `
             linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
             linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px)
-          `, 
+          `,
           backgroundSize: '50px 50px',
           maskImage: 'linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,0.2) 100%)',
           WebkitMaskImage: 'linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,0) 100%)'
         }} />
       </div>
 
-      <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 5%', position: 'relative', zIndex: 1 }}>
-        
+      <div style={{ position: 'relative', zIndex: 1 }}>
+
         {/* Hero Section */}
-        <section style={{ textAlign: 'center', position: 'relative', padding: '0 0 40px 0' }}>
-          <motion.div 
+        <section style={{ textAlign: 'center', position: 'relative', padding: '40px 5% 60px', maxWidth: '1200px', margin: '0 auto' }}>
+          <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+            style={{
+              background: 'rgba(5, 11, 24, 0.7)',
+              backdropFilter: 'blur(20px)',
+              border: '1px solid rgba(255,255,255,0.05)',
+              padding: '60px 40px',
+              borderRadius: '24px',
+              maxWidth: '900px',
+              margin: '0 auto',
+              boxShadow: '0 20px 40px rgba(0,0,0,0.3)'
+            }}
           >
-            <motion.div 
+            <motion.div
               initial={{ scale: 0.9, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               transition={{ delay: 0.2, duration: 0.5 }}
@@ -251,7 +261,7 @@ const ServicesCategoriesSkeleton = () => {
                 {service.desc}
               </p>
             )}
-            
+
             <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', justifyContent: 'center', gap: '12px', alignItems: 'center', fontSize: '14px', color: 'rgba(255,255,255,0.5)' }}>
               <li><Link to="/" style={{ color: 'rgba(255,255,255,0.5)', textDecoration: 'none', transition: 'color 0.3s' }} onMouseEnter={e => e.currentTarget.style.color = '#fff'} onMouseLeave={e => e.currentTarget.style.color = 'rgba(255,255,255,0.5)'}>Home</Link></li>
               <li>/</li>
@@ -262,161 +272,128 @@ const ServicesCategoriesSkeleton = () => {
           </motion.div>
         </section>
 
-        {/* Divider */}
-        <div style={{ height: '1px', background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent)', width: '80%', margin: '0 auto' }} />
-
         {/* 3D Glassmorphism Categories Section */}
-        <section style={{ padding: '60px 0' }}>
-          <div style={{ textAlign: 'center', marginBottom: '30px' }}>
-            <motion.h2 
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              style={{ fontSize: 'clamp(28px, 5vw, 42px)', fontWeight: 700, marginBottom: '16px', letterSpacing: '-0.5px' }}
-            >
-              Explore <span style={{ background: 'linear-gradient(135deg, #60a5fa 0%, #c084fc 100%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>{service.categories}</span>
-            </motion.h2>
-            <motion.p 
-              initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
-              viewport={{ once: true }}
-              style={{ color: 'rgba(255,255,255,0.6)', fontSize: '18px', maxWidth: '600px', margin: '0 auto' }}
-            >
-              Discover our specialized services tailored to elevate your business.
-            </motion.p>
-          </div>
+        <section style={{ padding: '80px 5%', background: '#0a0f1c', borderTop: '1px solid rgba(255,255,255,0.03)', borderBottom: '1px solid rgba(255,255,255,0.03)' }}>
+          <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
+            <div style={{ textAlign: 'center', marginBottom: '40px' }}>
+              <motion.h2
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                style={{ fontSize: 'clamp(28px, 5vw, 42px)', fontWeight: 700, marginBottom: '16px', letterSpacing: '-0.5px' }}
+              >
+                Explore <span style={{ background: 'linear-gradient(135deg, #60a5fa 0%, #c084fc 100%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>{service.categories}</span>
+              </motion.h2>
+              <motion.p
+                initial={{ opacity: 0 }}
+                whileInView={{ opacity: 1 }}
+                viewport={{ once: true }}
+                style={{ color: 'rgba(255,255,255,0.6)', fontSize: '18px', maxWidth: '600px', margin: '0 auto' }}
+              >
+                Discover our specialized services tailored to elevate your business.
+              </motion.p>
+            </div>
 
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(320px, 1fr))', gap: '32px' }}>
-            {service.subcategories && service.subcategories.length > 0 ? (
-              service.subcategories.map((sub, idx) => (
-                <TiltCard 
-                  key={idx} 
-                  sub={sub} 
-                  serviceCategory={service.categories}
-                  onClick={() => navigate(`/services/${encodeURIComponent(service.categories)}/${encodeURIComponent(typeof sub === 'string' ? sub : sub.name)}`)}
-                  delay={0.1 * idx}
-                />
-              ))
-            ) : (
-              <div style={{ gridColumn: '1 / -1', textAlign: 'center', color: 'rgba(255,255,255,0.5)', padding: '40px' }}>
-                No categories available.
-              </div>
-            )}
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(320px, 1fr))', gap: '32px' }}>
+              {service.subcategories && service.subcategories.length > 0 ? (
+                service.subcategories.map((sub, idx) => (
+                  <TiltCard
+                    key={idx}
+                    sub={sub}
+                    serviceCategory={service.categories}
+                    onClick={() => navigate(`/services/${encodeURIComponent(service.categories)}/${encodeURIComponent(typeof sub === 'string' ? sub : sub.name)}`)}
+                    delay={0.1 * idx}
+                  />
+                ))
+              ) : (
+                <div style={{ gridColumn: '1 / -1', textAlign: 'center', color: 'rgba(255,255,255,0.5)', padding: '40px' }}>
+                  No categories available.
+                </div>
+              )}
+            </div>
           </div>
         </section>
-
-        {/* Divider */}
-        <div style={{ height: '1px', background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent)', width: '80%', margin: '0 auto' }} />
 
         {/* Interactive Tech Stack Section */}
-        <section style={{ padding: '60px 0' }}>
-          <div style={{ textAlign: 'center', marginBottom: '30px' }}>
-            <motion.h2 
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              style={{ fontSize: 'clamp(28px, 5vw, 42px)', fontWeight: 700, marginBottom: '16px', letterSpacing: '-0.5px' }}
-            >
-              Powered by <span style={{ background: 'linear-gradient(135deg, #60a5fa 0%, #c084fc 100%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>Next-Gen Tech</span>
-            </motion.h2>
-            <motion.p 
-              initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
-              viewport={{ once: true }}
-              style={{ color: 'rgba(255,255,255,0.6)', fontSize: '18px', maxWidth: '600px', margin: '0 auto' }}
-            >
-              We leverage the most advanced tools and frameworks to build scalable {service.categories.toLowerCase()} solutions.
-            </motion.p>
-          </div>
-
-          <div style={{ 
-            display: 'flex', 
-            flexDirection: 'column',
-            gap: '20px',
-            background: 'rgba(255,255,255,0.02)',
-            backdropFilter: 'blur(20px)',
-            border: '1px solid rgba(255,255,255,0.05)',
-            borderRadius: '32px',
-            padding: '12px',
-            overflow: 'hidden',
-          }}>
-            {/* Animated Tabs */}
-            <div style={{ display: 'flex', gap: '8px', overflowX: 'auto', padding: '12px', paddingBottom: '20px' }} className="hide-scrollbar">
-              {currentTechTools.map((cat, idx) => (
-                <button
-                  key={idx}
-                  onClick={() => setActiveCategoryIndex(idx)}
-                  style={{
-                    position: 'relative',
-                    padding: '12px 24px',
-                    background: 'transparent',
-                    border: 'none',
-                    color: activeCategoryIndex === idx ? '#fff' : 'rgba(255,255,255,0.5)',
-                    fontSize: '15px',
-                    fontWeight: 600,
-                    cursor: 'pointer',
-                    whiteSpace: 'nowrap',
-                    transition: 'color 0.3s ease',
-                    zIndex: 1
-                  }}
-                >
-                  {activeCategoryIndex === idx && (
-                    <motion.div
-                      layoutId="activeTab"
-                      style={{ position: 'absolute', inset: 0, background: 'rgba(79, 142, 247, 0.15)', border: '1px solid rgba(79, 142, 247, 0.3)', borderRadius: '100px', zIndex: -1 }}
-                      transition={{ type: "spring", stiffness: 300, damping: 30 }}
-                    />
-                  )}
-                  {cat.category}
-                </button>
-              ))}
+        {currentTechTools?.length > 0 &&
+          <section style={{ padding: '80px 5%', maxWidth: '1200px', margin: '0 auto' }}>
+            <div style={{ textAlign: 'center', marginBottom: '40px' }}>
+              <motion.h2
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                style={{ fontSize: 'clamp(28px, 5vw, 42px)', fontWeight: 700, marginBottom: '16px', letterSpacing: '-0.5px' }}
+              >
+                Powered by <span style={{ background: 'linear-gradient(135deg, #60a5fa 0%, #c084fc 100%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>Next-Gen Tech</span>
+              </motion.h2>
+              <motion.p
+                initial={{ opacity: 0 }}
+                whileInView={{ opacity: 1 }}
+                viewport={{ once: true }}
+                style={{ color: 'rgba(255,255,255,0.6)', fontSize: '18px', maxWidth: '600px', margin: '0 auto' }}
+              >
+                We leverage the most advanced tools and frameworks to build scalable {service.categories.toLowerCase()} solutions.
+              </motion.p>
             </div>
 
-            {/* Content Area with Marquee/Grid */}
-            <div style={{ 
-              padding: '24px 12px 40px',
+            <div style={{
               display: 'flex',
-              flexWrap: 'wrap',
-              gap: '16px',
-              justifyContent: 'center',
-              minHeight: '200px'
+              flexDirection: 'column',
+              gap: '20px',
+              background: 'rgba(255,255,255,0.02)',
+              backdropFilter: 'blur(20px)',
+              border: '1px solid rgba(255,255,255,0.05)',
+              borderRadius: '32px',
+              padding: '12px',
+              overflow: 'hidden',
             }}>
-              <AnimatePresence mode="popLayout">
-                {currentTechTools[activeCategoryIndex]?.tools.map((tool, idx) => (
-                  <motion.div
-                    key={`${activeCategoryIndex}-${tool.name}`}
-                    initial={{ opacity: 0, scale: 0.8, y: 20 }}
-                    animate={{ opacity: 1, scale: 1, y: 0 }}
-                    exit={{ opacity: 0, scale: 0.8, y: -20 }}
-                    transition={{ type: 'spring', stiffness: 200, damping: 20, delay: idx * 0.05 }}
-                    style={{
-                      background: 'rgba(255,255,255,0.03)',
-                      border: '1px solid rgba(255,255,255,0.08)',
-                      borderRadius: '20px',
-                      padding: '16px 24px',
-                      display: 'flex',
-                      alignItems: 'center',
-                      gap: '12px',
-                      cursor: 'default'
-                    }}
-                    whileHover={{
-                      y: -5,
-                      background: 'rgba(255,255,255,0.06)',
-                      borderColor: 'rgba(255,255,255,0.15)'
-                    }}
-                  >
-                    <img 
-                      src={tool.icon} 
-                      alt={tool.name} 
-                      style={{ width: '32px', height: '32px', objectFit: 'contain', filter: tool.icon.includes('ffffff') ? 'none' : 'drop-shadow(0px 2px 4px rgba(0,0,0,0.2))' }} 
-                    />
-                    <span style={{ fontSize: '16px', fontWeight: 600, color: '#e2e8f0' }}>{tool.name}</span>
-                  </motion.div>
-                ))}
-              </AnimatePresence>
+
+              {console.log(currentTechTools)}
+              {/* Content Area with Marquee/Grid */}
+              <div style={{
+                padding: '24px 12px 40px',
+                display: 'flex',
+                flexWrap: 'wrap',
+                gap: '16px',
+                justifyContent: 'center',
+                minHeight: '200px'
+              }}>
+                <AnimatePresence mode="popLayout">
+                  {currentTechTools.map((tool, idx) => (
+                    <motion.div
+                      key={tool.name}
+                      initial={{ opacity: 0, scale: 0.8, y: 20 }}
+                      animate={{ opacity: 1, scale: 1, y: 0 }}
+                      exit={{ opacity: 0, scale: 0.8, y: -20 }}
+                      transition={{ type: 'spring', stiffness: 200, damping: 20, delay: idx * 0.05 }}
+                      style={{
+                        background: 'rgba(255,255,255,0.03)',
+                        border: '1px solid rgba(255,255,255,0.08)',
+                        borderRadius: '20px',
+                        padding: '16px 24px',
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '12px',
+                        cursor: 'default'
+                      }}
+                      whileHover={{
+                        y: -5,
+                        background: 'rgba(255,255,255,0.06)',
+                        borderColor: 'rgba(255,255,255,0.15)'
+                      }}
+                    >
+                      <img
+                        src={tool.icon}
+                        alt={tool.name}
+                        style={{ width: '32px', height: '32px', objectFit: 'contain', filter: tool.icon.includes('ffffff') ? 'none' : 'drop-shadow(0px 2px 4px rgba(0,0,0,0.2))' }}
+                      />
+                      <span style={{ fontSize: '16px', fontWeight: 600, color: '#e2e8f0' }}>{tool.name}</span>
+                    </motion.div>
+                  ))}
+                </AnimatePresence>
+              </div>
             </div>
-          </div>
-        </section>
+          </section>}
 
       </div>
 
@@ -424,9 +401,9 @@ const ServicesCategoriesSkeleton = () => {
       <section style={{ position: 'relative', padding: '60px 5%', background: '#050B18', overflow: 'hidden', borderTop: '1px solid rgba(255,255,255,0.05)' }}>
         {/* Glowing Background for CTA */}
         <div style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', width: '80vw', height: '300px', background: 'radial-gradient(ellipse at center, rgba(79,142,247,0.15) 0%, transparent 70%)', filter: 'blur(40px)', pointerEvents: 'none' }} />
-        
+
         <div style={{ maxWidth: '800px', margin: '0 auto', textAlign: 'center', position: 'relative', zIndex: 1 }}>
-          <motion.h2 
+          <motion.h2
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -434,7 +411,7 @@ const ServicesCategoriesSkeleton = () => {
           >
             Ready to Build Something <span style={{ background: 'linear-gradient(135deg, #60a5fa 0%, #c084fc 100%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>Amazing?</span>
           </motion.h2>
-          <motion.p 
+          <motion.p
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
@@ -443,14 +420,14 @@ const ServicesCategoriesSkeleton = () => {
           >
             Let's transform your vision into reality with our expert {service.categories.toLowerCase()} solutions.
           </motion.p>
-          
+
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
             transition={{ delay: 0.3 }}
           >
-            <MagneticButton 
+            <MagneticButton
               onClick={() => navigate('/contact')}
               style={{
                 background: '#4F8EF7',
@@ -469,7 +446,7 @@ const ServicesCategoriesSkeleton = () => {
           </motion.div>
         </div>
       </section>
-      
+
       <style>{`
         .hide-scrollbar::-webkit-scrollbar {
           display: none;

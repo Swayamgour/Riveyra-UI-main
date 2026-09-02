@@ -181,3 +181,17 @@ exports.deleteServicesDetailTwo = async (req, res) => {
         res.status(500).json({ success: false, message: 'Server Error' });
     }
 };
+
+// Upload image handler
+exports.uploadServiceImage = async (req, res) => {
+    try {
+        if (!req.file) {
+            return res.status(400).json({ success: false, message: 'No image uploaded' });
+        }
+        // Cloudinary puts the URL in req.file.path
+        res.status(200).json({ success: true, url: req.file.path });
+    } catch (error) {
+        console.error("Error in uploadServiceImage:", error);
+        res.status(500).json({ success: false, message: 'Server Error during upload' });
+    }
+};

@@ -512,12 +512,12 @@ function ServicesDetailTwo() {
                                 <div className="wa-arrow">OPEN →</div>
                             </a>
                         </div>
-                        
-                        <div style={{ 
-                            display: 'flex', 
-                            justifyContent: 'center', 
-                            alignItems: 'center', 
-                            marginTop: 'auto', 
+
+                        <div style={{
+                            display: 'flex',
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                            marginTop: 'auto',
                             paddingTop: '80px',
                             paddingBottom: '40px',
                             opacity: 0.6

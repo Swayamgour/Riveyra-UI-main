@@ -139,7 +139,6 @@ const LegalPageLayout = ({ title, badge = "Legal", lastUpdated, sections = [] })
 								onClick={() => scrollToSection(s.id)}
 								style={{
 									textAlign: "left",
-									background: "none",
 									border: "none",
 									padding: "7px 10px",
 									borderRadius: 8,

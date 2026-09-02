@@ -2,31 +2,15 @@
 import Logo from '../ui/Logo'
 import Icons from '../ui/Icons'
 import { useBreakpoint } from '../../hooks/useBreakpoint.jsx'
-import { Link, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
+import { useGetNavDropdownItemsQuery } from '../../redux/api.jsx'
 
 const cols = [
-  {
-    title: 'Services',
-    links: [
-      { name: 'AI Software Development', path: '/ServiceDetail/ai-software-development' },
-      { name: 'Machine Learning Solutions', path: '/ServiceDetail/machine-learning-solutions' },
-      { name: 'AI Web Development', path: '/ServiceDetail/ai-software-development' },
-      { name: 'AI Data Analytics & BI', path: '/ServiceDetail/ai-software-development' },
-      { name: 'AI Cybersecurity', path: '/ServiceDetail/ai-software-development' },
-      // { name: 'Automation & RPA', path: '/ServiceDetail/ai-software-development' },/
-      // { name: 'Conversational AI', path: '/ServiceDetail/ai-software-development' },
-      // { name: 'AI SEO, AEO, GEO, LLMO', path: '/ServiceDetail/ai-software-development' },
-      // { name: 'AI E-commerce', path: '/ServiceDetail/ai-software-development' },
-      // { name: 'AI Digital Marketing', path: '/ServiceDetail/ai-software-development' },
-      // { name: 'Enterprise AI Solutions', path: '/ServiceDetail/ai-software-development' }
-    ]
-  },
   {
     title: 'Company',
     links: [
       { name: 'Home', path: '/' },
       { name: 'About Us', path: '/about' },
-      { name: 'Our Services', path: '/services' },
       { name: 'Portfolio', path: '/portfolio' },
       { name: 'Careers', path: '/career' },
       { name: 'Contact', path: '/contact' },
@@ -37,21 +21,9 @@ const cols = [
     links: [
       { name: 'Privacy Policy', path: '/privacy-policy' },
       { name: 'Terms of Service', path: '/terms-of-service' },
-      // { name: 'Cookie Policy', path: '' },
-      // { name: 'Disclaimer', path: '#' },
     ],
   },
 ]
-
-
-
-
-
-
-
-
-
-
 
 const socials = [
   { url: "https://x.com/RiveyraInfotech", Icon: Icons.Twitter, label: 'Twitter' },
@@ -61,17 +33,19 @@ const socials = [
 ]
 
 export default function Footer() {
-
   const { isMobile, isTablet } = useBreakpoint()
-
-
   const navigate = useNavigate()
+  const { data } = useGetNavDropdownItemsQuery()
+  const services = data?.data || []
 
   return (
     <footer style={{ position: 'relative', overflow: 'hidden' }}>
       {/* Background */}
       <div style={{ position: 'absolute', inset: 0 }}>
-        <img src="https://images.unsplash.com/photo-1519681393784-d120267933ba?w=1600&q=40" alt="" loading="lazy"
+        <img
+          src="https://images.unsplash.com/photo-1519681393784-d120267933ba?w=1600&q=40"
+          alt=""
+          loading="lazy"
           style={{ width: '100%', height: '100%', objectFit: 'cover', filter: 'blur(40px) brightness(0.06)', opacity: 0.9 }}
         />
         <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to bottom,rgba(3,8,16,0.97),rgba(3,8,16,0.99))' }} />
@@ -102,8 +76,9 @@ export default function Footer() {
               </p>
               <div style={{ display: 'flex', gap: 10, justifyContent: 'center' }}>
                 {socials.map(({ Icon, label, url }) => (
-                  <div key={label} data-hover
-                    // onClick={() => window.open(Icon?.path, target)}
+                  <div
+                    key={label}
+                    data-hover
                     onClick={() => window.open(url, "_blank", "noopener,noreferrer")}
                     style={{ width: 38, height: 38, borderRadius: 8, border: '1px solid rgba(96,165,250,0.16)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'rgba(255,255,255,0.5)', cursor: 'pointer', transition: 'all 0.2s' }}
                     onMouseEnter={e => { e.currentTarget.style.borderColor = '#60a5fa'; e.currentTarget.style.color = '#93c5fd'; e.currentTarget.style.background = 'rgba(96,165,250,0.1)' }}
@@ -135,10 +110,10 @@ export default function Footer() {
                 </p>
                 <div style={{ display: 'flex', gap: 10 }}>
                   {socials.map(({ Icon, label, url }) => (
-                    <div key={label} data-hover
-                      // onClick={() => window.open(Icon?.path, target)}
+                    <div
+                      key={label}
+                      data-hover
                       onClick={() => window.open(url, "_blank", "noopener,noreferrer")}
-
                       style={{ width: 40, height: 40, borderRadius: 8, border: '1px solid rgba(96,165,250,0.16)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'rgba(255,255,255,0.5)', cursor: 'pointer', transition: 'all 0.2s' }}
                       onMouseEnter={e => { e.currentTarget.style.borderColor = '#60a5fa'; e.currentTarget.style.color = '#93c5fd'; e.currentTarget.style.background = 'rgba(96,165,250,0.1)' }}
                       onMouseLeave={e => { e.currentTarget.style.borderColor = 'rgba(96,165,250,0.16)'; e.currentTarget.style.color = 'rgba(255,255,255,0.5)'; e.currentTarget.style.background = 'transparent' }}
@@ -150,35 +125,61 @@ export default function Footer() {
               </div>
             )}
 
-            {/* Link cols */}
+            {/* Dynamic Services Column */}
+            <div>
+              <h4 style={{ color: '#60a5fa', marginBottom: 16 }}>Services</h4>
+              <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
+                {services.map((item, index) => (
+                  <li key={item._id || index} style={{ marginBottom: 10 }}>
+                    <span
+                      onClick={() => navigate(`/ServiceCategories/${item.categories || item.slug}`)}
+                      style={{
+                        color: 'rgba(255,255,255,0.4)',
+                        textDecoration: 'none',
+                        cursor: 'pointer',
+                        transition: 'color 0.2s',
+                        display: 'inline-block',
+                      }}
+                      onMouseEnter={e => e.currentTarget.style.color = '#93c5fd'}
+                      onMouseLeave={e => e.currentTarget.style.color = 'rgba(255,255,255,0.4)'}
+                    >
+                      {item.categories}
+                    </span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            {/* Static Link Columns (Company, Legal) */}
             {cols.map((col) => (
               <div key={col.title}>
                 <h4 style={{ color: '#60a5fa', marginBottom: 16 }}>
                   {col.title}
                 </h4>
 
-                <ul style={{ listStyle: 'none', padding: 0 }}>
+                <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
                   {col.links.map((link) => (
                     <li key={link.name} style={{ marginBottom: 10 }}>
-
                       {link.path !== '#' ? (
                         <span
                           onClick={() => navigate(link.path)}
-
                           style={{
                             color: 'rgba(255,255,255,0.4)',
                             textDecoration: 'none',
+                            cursor: 'pointer',
+                            transition: 'color 0.2s',
+                            display: 'inline-block',
                           }}
+                          onMouseEnter={e => e.currentTarget.style.color = '#93c5fd'}
+                          onMouseLeave={e => e.currentTarget.style.color = 'rgba(255,255,255,0.4)'}
                         >
                           {link.name}
-
                         </span>
                       ) : (
                         <span style={{ color: 'rgba(255,255,255,0.4)' }}>
                           {link.name}
                         </span>
                       )}
-
                     </li>
                   ))}
                 </ul>

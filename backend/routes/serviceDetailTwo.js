@@ -1,11 +1,16 @@
 const express = require('express');
 const router = express.Router();
+const upload = require('../config/multer'); // Cloudinary multer config
 const { 
     getServicesDetailTwo, 
     updateServicesDetailTwo, 
     deleteServicesDetailTwo,
-    getLatestTestimonials
+    getLatestTestimonials,
+    uploadServiceImage
 } = require('../controllers/serviceDetailTwo');
+
+// Upload image to Cloudinary
+router.post('/services-detail-two/upload', upload.single('image'), uploadServiceImage);
 
 // Fetch latest testimonials across subcategories
 router.get('/services-detail-two/testimonials/latest', getLatestTestimonials);
