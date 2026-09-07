@@ -129,24 +129,27 @@ export default function Footer() {
             <div>
               <h4 style={{ color: '#60a5fa', marginBottom: 16 }}>Services</h4>
               <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
-                {services.map((item, index) => (
-                  <li key={item._id || index} style={{ marginBottom: 10 }}>
-                    <span
-                      onClick={() => navigate(`/ServiceCategories/${item.categories || item.slug}`)}
-                      style={{
-                        color: 'rgba(255,255,255,0.4)',
-                        textDecoration: 'none',
-                        cursor: 'pointer',
-                        transition: 'color 0.2s',
-                        display: 'inline-block',
-                      }}
-                      onMouseEnter={e => e.currentTarget.style.color = '#93c5fd'}
-                      onMouseLeave={e => e.currentTarget.style.color = 'rgba(255,255,255,0.4)'}
-                    >
-                      {item.categories}
-                    </span>
-                  </li>
-                ))}
+                {services.map((item, index) => {
+                  const slug = (item.categories || item.slug || '').toLowerCase().trim().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
+                  return (
+                    <li key={item._id || index} style={{ marginBottom: 10 }}>
+                      <span
+                        onClick={() => navigate(`/${slug}`)}
+                        style={{
+                          color: 'rgba(255,255,255,0.4)',
+                          textDecoration: 'none',
+                          cursor: 'pointer',
+                          transition: 'color 0.2s',
+                          display: 'inline-block',
+                        }}
+                        onMouseEnter={e => e.currentTarget.style.color = '#93c5fd'}
+                        onMouseLeave={e => e.currentTarget.style.color = 'rgba(255,255,255,0.4)'}
+                      >
+                        {item.categories}
+                      </span>
+                    </li>
+                  );
+                })}
               </ul>
             </div>
 

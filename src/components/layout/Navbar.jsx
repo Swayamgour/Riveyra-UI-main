@@ -254,7 +254,11 @@ export default function Navbar() {
                                 style={{ display: 'flex', flexDirection: 'column' }}
                               >
                                 <div
-                                  onClick={() => { setServicesOpen(false); navigate(`/ServiceCategories/${item.categories}`) }}
+                                  onClick={() => {
+                                    setServicesOpen(false);
+                                    const slug = (item.categories || '').toLowerCase().trim().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
+                                    navigate(`/${slug}`);
+                                  }}
                                   onMouseEnter={(e) => e.currentTarget.style.color = 'var(--accent)'}
                                   onMouseLeave={(e) => e.currentTarget.style.color = '#ffffff'}
                                   style={{
@@ -278,7 +282,10 @@ export default function Navbar() {
                                         onClick={(e) => {
                                           e.stopPropagation();
                                           setServicesOpen(false);
-                                          navigate(`/services/${encodeURIComponent(item.categories)}/${encodeURIComponent(typeof sub === 'string' ? sub : sub.name)}`);
+                                          const catSlug = (item.categories || '').toLowerCase().trim().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
+                                          const subName = typeof sub === 'string' ? sub : sub.name;
+                                          const subSlug = (subName || '').toLowerCase().trim().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
+                                          navigate(`/${catSlug}/${subSlug}`);
                                         }}
                                         onMouseEnter={(e) => {
                                           e.currentTarget.style.color = 'var(--accent)';
@@ -289,7 +296,7 @@ export default function Navbar() {
                                           e.currentTarget.style.transform = 'translateX(0)';
                                         }}
                                         style={{
-                                          fontSize: 18,
+                                          fontSize: 16,
                                           color: 'rgba(148,163,184,0.85)',
                                           cursor: 'pointer',
                                           transition: 'all 0.2s ease',
@@ -466,7 +473,12 @@ export default function Navbar() {
                                 initial={{ opacity: 0, y: 10 }}
                                 animate={{ opacity: 1, y: 0 }}
                                 transition={{ delay: idx * 0.04 }}
-                                onClick={() => { setMenuOpen(false); setMobileServicesOpen(false); navigate(`/ServiceCategories/${item.categories}`) }}
+                                onClick={() => {
+                                  setMenuOpen(false);
+                                  setMobileServicesOpen(false);
+                                  const slug = (item.categories || '').toLowerCase().trim().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
+                                  navigate(`/${slug}`);
+                                }}
                                 style={{
                                   display: 'flex',
                                   alignItems: 'center',

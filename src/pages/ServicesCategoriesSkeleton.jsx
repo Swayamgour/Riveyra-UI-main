@@ -1,8 +1,9 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { useGetNavDropdownItemByCategoryQuery } from '../redux/api';
+import { useGetNavDropdownItemByCategoryQuery, useGetNavDropdownItemsQuery } from '../redux/api';
 import Loader from '../components/Loader';
+import { resolveLucideIcon } from '../utils/resolveLucideIcon';
 
 // Magnetic Button Component
 const MagneticButton = ({ children, onClick, style }) => {
@@ -48,9 +49,10 @@ const MagneticButton = ({ children, onClick, style }) => {
 };
 
 // 3D Tilt Card Component
-const TiltCard = ({ sub, serviceCategory, onClick, delay }) => {
+const TiltCard = ({ sub, serviceCategory, serviceColor = '#4F8EF7', serviceIcon, serviceTag, onClick, delay }) => {
   const [rotateX, setRotateX] = useState(0);
   const [rotateY, setRotateY] = useState(0);
+  const [isHovered, setIsHovered] = useState(false);
 
   const handleMouseMove = (e) => {
     const rect = e.currentTarget.getBoundingClientRect();
@@ -65,7 +67,10 @@ const TiltCard = ({ sub, serviceCategory, onClick, delay }) => {
   const handleMouseLeave = () => {
     setRotateX(0);
     setRotateY(0);
+    setIsHovered(false);
   };
+
+  const cardIcon = resolveLucideIcon(sub?.iconName, 22) || serviceIcon;
 
   return (
     <motion.div
@@ -77,13 +82,14 @@ const TiltCard = ({ sub, serviceCategory, onClick, delay }) => {
       <motion.div
         onClick={onClick}
         onMouseMove={handleMouseMove}
+        onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={handleMouseLeave}
         animate={{ rotateX, rotateY }}
         transition={{ type: 'spring', stiffness: 400, damping: 30 }}
         style={{
-          background: 'rgba(255, 255, 255, 0.03)',
+          background: isHovered ? `${serviceColor}08` : 'rgba(255, 255, 255, 0.03)',
           backdropFilter: 'blur(16px)',
-          border: '1px solid rgba(255, 255, 255, 0.08)',
+          border: `1px solid ${isHovered ? `${serviceColor}60` : 'rgba(255, 255, 255, 0.08)'}`,
           borderRadius: '24px',
           padding: '32px',
           display: 'flex',
@@ -94,11 +100,10 @@ const TiltCard = ({ sub, serviceCategory, onClick, delay }) => {
           position: 'relative',
           overflow: 'hidden',
           transformStyle: 'preserve-3d',
-          boxShadow: '0 10px 30px -10px rgba(0,0,0,0.5)'
-        }}
-        whileHover={{
-          borderColor: 'rgba(79, 142, 247, 0.5)',
-          boxShadow: '0 20px 40px -10px rgba(79, 142, 247, 0.2)'
+          boxShadow: isHovered 
+            ? `0 20px 40px -10px ${serviceColor}30, 0 0 0 1px ${serviceColor}20` 
+            : '0 10px 30px -10px rgba(0,0,0,0.5)',
+          transition: 'border-color 0.3s, background 0.3s, box-shadow 0.3s'
         }}
       >
         {/* Animated Gradient Glow on Hover */}
@@ -106,15 +111,34 @@ const TiltCard = ({ sub, serviceCategory, onClick, delay }) => {
           style={{
             position: 'absolute',
             inset: '-1px',
-            background: 'linear-gradient(45deg, transparent, rgba(79, 142, 247, 0.2), transparent)',
-            opacity: 0,
-            zIndex: 0
+            background: `linear-gradient(45deg, transparent, ${serviceColor}25, transparent)`,
+            opacity: isHovered ? 1 : 0,
+            zIndex: 0,
+            pointerEvents: 'none',
+            transition: 'opacity 0.3s'
           }}
-          whileHover={{ opacity: 1 }}
-          transition={{ duration: 0.3 }}
         />
 
         <div style={{ transform: 'translateZ(30px)', position: 'relative', zIndex: 1 }}>
+          {cardIcon && (
+            <div style={{
+              width: 44,
+              height: 44,
+              borderRadius: 12,
+              background: `linear-gradient(135deg, ${serviceColor}25, ${serviceColor}08)`,
+              border: `1px solid ${serviceColor}40`,
+              color: serviceColor,
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              marginBottom: 20,
+              boxShadow: isHovered ? `0 0 20px ${serviceColor}40` : 'none',
+              transition: 'box-shadow 0.3s'
+            }}>
+              {cardIcon}
+            </div>
+          )}
+
           <h5 style={{ fontSize: '22px', fontWeight: 700, color: '#fff', margin: '0 0 12px 0', letterSpacing: '-0.5px' }}>
             {typeof sub === 'string' ? sub : sub.name}
           </h5>
@@ -123,69 +147,94 @@ const TiltCard = ({ sub, serviceCategory, onClick, delay }) => {
               {sub.desc}
             </p>
           )}
-          <div style={{ fontSize: '11px', color: '#4F8EF7', fontWeight: 600, letterSpacing: '2px', textTransform: 'uppercase', marginBottom: '32px' }}>
-            {serviceCategory}
+          <div style={{ fontSize: '11px', color: serviceColor, fontWeight: 600, letterSpacing: '2px', textTransform: 'uppercase', marginBottom: '32px' }}>
+            {serviceTag || serviceCategory}
           </div>
         </div>
 
         <div style={{ marginTop: 'auto', transform: 'translateZ(20px)', position: 'relative', zIndex: 1 }}>
-          <div style={{
-            background: 'rgba(79, 142, 247, 0.1)',
-            color: '#4F8EF7',
-            border: '1px solid rgba(79, 142, 247, 0.2)',
-            padding: '12px 24px',
-            borderRadius: '40px',
-            fontSize: '14px',
-            fontWeight: 600,
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            gap: '8px',
-            transition: 'all 0.3s ease'
-          }}
-            className="discover-btn"
+          <div 
+            style={{
+              background: isHovered ? serviceColor : `${serviceColor}15`,
+              color: isHovered ? '#fff' : serviceColor,
+              border: `1px solid ${serviceColor}40`,
+              padding: '12px 24px',
+              borderRadius: '40px',
+              fontSize: '14px',
+              fontWeight: 600,
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              gap: '8px',
+              transition: 'all 0.3s ease',
+              boxShadow: isHovered ? `0 0 20px ${serviceColor}60` : 'none'
+            }}
           >
             Discover
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ transition: 'transform 0.3s' }}>
+            <svg 
+              width="16" 
+              height="16" 
+              viewBox="0 0 24 24" 
+              fill="none" 
+              stroke="currentColor" 
+              strokeWidth="2" 
+              strokeLinecap="round" 
+              strokeLinejoin="round" 
+              style={{ 
+                transform: isHovered ? 'translateX(4px)' : 'none',
+                transition: 'transform 0.3s' 
+              }}
+            >
               <line x1="5" y1="12" x2="19" y2="12"></line>
               <polyline points="12 5 19 12 12 19"></polyline>
             </svg>
           </div>
         </div>
-
-        {/* Global style for hover effect on the button inside the card */}
-        <style>{`
-          div:hover > div > .discover-btn {
-            background: #4F8EF7 !important;
-            color: #fff !important;
-          }
-          div:hover > div > .discover-btn svg {
-            transform: translateX(4px);
-          }
-        `}</style>
       </motion.div>
     </motion.div>
   );
 };
 
 const ServicesCategoriesSkeleton = () => {
-  const { slug: categoryName } = useParams();
+  const { slug } = useParams();
   const navigate = useNavigate();
-  const { data: response, isLoading, error } = useGetNavDropdownItemByCategoryQuery(categoryName);
+
+  // Fetch all items from nav-dropdown to match slug to exact category in frontend
+  const { data: allItemsResp, isLoading: isLoadingAll } = useGetNavDropdownItemsQuery();
+  const allServices = allItemsResp?.data || [];
+
+  // Match slug to category item
+  const matchedServiceFromList = allServices.find(item => {
+    const itemSlug = (item.categories || '').toLowerCase().trim().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
+    const currentSlug = (slug || '').toLowerCase().trim().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
+    return itemSlug === currentSlug || (item.categories || '').toLowerCase() === (slug || '').toLowerCase();
+  });
+
+  const categoryName = matchedServiceFromList ? matchedServiceFromList.categories : slug;
+
+  // Query by exact category name
+  const { data: response, isLoading: isLoadingSingle, error } = useGetNavDropdownItemByCategoryQuery(
+    categoryName,
+    { skip: !categoryName }
+  );
 
   const [activeCategoryIndex, setActiveCategoryIndex] = useState(0);
 
-  const service = response?.data;
+  const service = response?.data || matchedServiceFromList;
+  const serviceColor = (service?.color || service?.accent || '').trim() || '#4F8EF7';
+  const serviceTag = (service?.tag || '').trim() || 'Expertise';
+  const serviceIcon = resolveLucideIcon(service?.iconName, 18);
   const currentTechTools = service?.techTools || [];
+  const isLoading = isLoadingAll || (isLoadingSingle && !matchedServiceFromList);
 
   useEffect(() => {
     window.scrollTo(0, 0);
     setActiveCategoryIndex(0);
-  }, [categoryName]);
+  }, [slug]);
 
   if (isLoading) return <Loader />;
 
-  if (error || !service) {
+  if ((!isLoading && !service) || (error && !matchedServiceFromList)) {
     return (
       <div style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#fff', background: '#050B18' }}>
         <h2>Service not found</h2>
@@ -203,12 +252,12 @@ const ServicesCategoriesSkeleton = () => {
         <motion.div
           animate={{ x: [0, 100, 0], y: [0, -100, 0] }}
           transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-          style={{ position: 'absolute', top: '-10%', left: '-10%', width: '50vw', height: '50vw', background: 'radial-gradient(circle, rgba(79, 142, 247, 0.15) 0%, transparent 70%)', filter: 'blur(60px)' }}
+          style={{ position: 'absolute', top: '-10%', left: '-10%', width: '50vw', height: '50vw', background: `radial-gradient(circle, ${serviceColor}25 0%, transparent 70%)`, filter: 'blur(60px)' }}
         />
         <motion.div
           animate={{ x: [0, -100, 0], y: [0, 100, 0] }}
           transition={{ duration: 15, repeat: Infinity, ease: "linear" }}
-          style={{ position: 'absolute', bottom: '-10%', right: '-10%', width: '40vw', height: '40vw', background: 'radial-gradient(circle, rgba(139, 92, 246, 0.15) 0%, transparent 70%)', filter: 'blur(60px)' }}
+          style={{ position: 'absolute', bottom: '-10%', right: '-10%', width: '40vw', height: '40vw', background: `radial-gradient(circle, ${serviceColor}18 0%, transparent 70%)`, filter: 'blur(60px)' }}
         />
         <div style={{
           position: 'absolute',
@@ -246,13 +295,29 @@ const ServicesCategoriesSkeleton = () => {
               initial={{ scale: 0.9, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               transition={{ delay: 0.2, duration: 0.5 }}
-              style={{ display: 'inline-block', padding: '6px 16px', background: 'rgba(79, 142, 247, 0.1)', border: '1px solid rgba(79, 142, 247, 0.2)', borderRadius: '30px', color: '#4F8EF7', fontSize: '13px', fontWeight: 600, letterSpacing: '1px', textTransform: 'uppercase', marginBottom: '24px' }}
+              style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '8px',
+                padding: '8px 20px',
+                background: `${serviceColor}18`,
+                border: `1px solid ${serviceColor}40`,
+                borderRadius: '30px',
+                color: serviceColor,
+                fontSize: '13px',
+                fontWeight: 600,
+                letterSpacing: '1px',
+                textTransform: 'uppercase',
+                marginBottom: '24px',
+                boxShadow: `0 0 25px ${serviceColor}25`
+              }}
             >
-              Expertise
+              {serviceIcon && <span style={{ display: 'flex', alignItems: 'center' }}>{serviceIcon}</span>}
+              <span>{serviceTag}</span>
             </motion.div>
 
             <h1 style={{ fontSize: 'clamp(40px, 6vw, 64px)', fontWeight: 800, margin: '0 0 24px', letterSpacing: '-1px', lineHeight: 1.1 }}>
-              <span style={{ background: 'linear-gradient(135deg, #60a5fa 0%, #c084fc 100%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>
+              <span style={{ background: `linear-gradient(135deg, #ffffff 30%, ${serviceColor} 100%)`, WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>
                 {service.categories}
               </span>
             </h1>
@@ -282,7 +347,7 @@ const ServicesCategoriesSkeleton = () => {
                 viewport={{ once: true }}
                 style={{ fontSize: 'clamp(28px, 5vw, 42px)', fontWeight: 700, marginBottom: '16px', letterSpacing: '-0.5px' }}
               >
-                Explore <span style={{ background: 'linear-gradient(135deg, #60a5fa 0%, #c084fc 100%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>{service.categories}</span>
+                Explore <span style={{ background: `linear-gradient(135deg, #ffffff 20%, ${serviceColor} 100%)`, WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>{service.categories}</span>
               </motion.h2>
               <motion.p
                 initial={{ opacity: 0 }}
@@ -296,15 +361,23 @@ const ServicesCategoriesSkeleton = () => {
 
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(320px, 1fr))', gap: '32px' }}>
               {service.subcategories && service.subcategories.length > 0 ? (
-                service.subcategories.map((sub, idx) => (
-                  <TiltCard
-                    key={idx}
-                    sub={sub}
-                    serviceCategory={service.categories}
-                    onClick={() => navigate(`/services/${encodeURIComponent(service.categories)}/${encodeURIComponent(typeof sub === 'string' ? sub : sub.name)}`)}
-                    delay={0.1 * idx}
-                  />
-                ))
+                service.subcategories.map((sub, idx) => {
+                  const catSlug = (service.categories || '').toLowerCase().trim().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
+                  const subName = typeof sub === 'string' ? sub : sub.name;
+                  const subSlug = (subName || '').toLowerCase().trim().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
+                  return (
+                    <TiltCard
+                      key={idx}
+                      sub={sub}
+                      serviceCategory={service.categories}
+                      serviceColor={serviceColor}
+                      serviceIcon={serviceIcon}
+                      serviceTag={serviceTag}
+                      onClick={() => navigate(`/${catSlug}/${subSlug}`)}
+                      delay={0.1 * idx}
+                    />
+                  );
+                })
               ) : (
                 <div style={{ gridColumn: '1 / -1', textAlign: 'center', color: 'rgba(255,255,255,0.5)', padding: '40px' }}>
                   No categories available.
@@ -400,7 +473,7 @@ const ServicesCategoriesSkeleton = () => {
       {/* Premium CTA Section */}
       <section style={{ position: 'relative', padding: '60px 5%', background: '#050B18', overflow: 'hidden', borderTop: '1px solid rgba(255,255,255,0.05)' }}>
         {/* Glowing Background for CTA */}
-        <div style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', width: '80vw', height: '300px', background: 'radial-gradient(ellipse at center, rgba(79,142,247,0.15) 0%, transparent 70%)', filter: 'blur(40px)', pointerEvents: 'none' }} />
+        <div style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', width: '80vw', height: '300px', background: `radial-gradient(ellipse at center, ${serviceColor}22 0%, transparent 70%)`, filter: 'blur(40px)', pointerEvents: 'none' }} />
 
         <div style={{ maxWidth: '800px', margin: '0 auto', textAlign: 'center', position: 'relative', zIndex: 1 }}>
           <motion.h2
@@ -409,7 +482,7 @@ const ServicesCategoriesSkeleton = () => {
             viewport={{ once: true }}
             style={{ fontSize: 'clamp(32px, 6vw, 56px)', fontWeight: 800, margin: '0 0 24px', letterSpacing: '-1px', lineHeight: 1.1 }}
           >
-            Ready to Build Something <span style={{ background: 'linear-gradient(135deg, #60a5fa 0%, #c084fc 100%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>Amazing?</span>
+            Ready to Build Something <span style={{ background: `linear-gradient(135deg, #ffffff 20%, ${serviceColor} 100%)`, WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>Amazing?</span>
           </motion.h2>
           <motion.p
             initial={{ opacity: 0 }}
@@ -430,7 +503,7 @@ const ServicesCategoriesSkeleton = () => {
             <MagneticButton
               onClick={() => navigate('/contact')}
               style={{
-                background: '#4F8EF7',
+                background: serviceColor,
                 color: '#fff',
                 border: 'none',
                 padding: '16px 40px',
@@ -438,7 +511,7 @@ const ServicesCategoriesSkeleton = () => {
                 fontSize: '16px',
                 fontWeight: 600,
                 cursor: 'pointer',
-                boxShadow: '0 10px 30px -10px rgba(79, 142, 247, 0.5)'
+                boxShadow: `0 10px 30px -10px ${serviceColor}80`
               }}
             >
               Get in Touch

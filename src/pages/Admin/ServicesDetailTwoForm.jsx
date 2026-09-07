@@ -35,7 +35,6 @@ const ServicesDetailTwoForm = () => {
         techStackTitle: '',
         techStackTitleHighlight: '',
         techStackDesc: '',
-        techStats: [],
         techStack: [],
 
         servicesTag: '',
@@ -61,7 +60,7 @@ const ServicesDetailTwoForm = () => {
         processDesc: '',
         processSteps: [],
 
-        testimonials: [],
+       
         faqs: [],
 
         /* --- CONTACT TAB (Commented Out) ---
@@ -189,7 +188,7 @@ const ServicesDetailTwoForm = () => {
         { id: 'metrics', label: 'Metrics & Tech' },
         { id: 'cards', label: 'Service Cards' },
         { id: 'process', label: 'Process Steps' },
-        { id: 'social', label: 'Testimonials & FAQs' },
+        { id: 'faqs', label: 'FAQs' },
         // { id: 'contact', label: 'Contact Info' }
     ];
 
@@ -409,17 +408,7 @@ const ServicesDetailTwoForm = () => {
                                     <button type="button" onClick={() => handleAddObject('techStack', { name: '', iconUrl: '' })} style={addBtnStyle}>+ Add Tech</button>
                                 </div>
 
-                                <div style={sectionStyle}>
-                                    <h3 style={{ marginBottom: '16px', color: '#3b82f6' }}>Tech Stats Array</h3>
-                                    {(formData.techStats || []).map((item, idx) => (
-                                        <div key={idx} style={itemBoxStyle}>
-                                            <input placeholder="Highlight (e.g. 3D & Motion)" value={item.highlight} onChange={(e) => handleUpdateObject('techStats', idx, 'highlight', e.target.value)} style={inputStyle} />
-                                            <input placeholder="Text (e.g. Immersive Experiences)" value={item.text} onChange={(e) => handleUpdateObject('techStats', idx, 'text', e.target.value)} style={inputStyle} />
-                                            <button type="button" onClick={() => handleRemoveObject('techStats', idx)} style={deleteBtnStyle}>Delete</button>
-                                        </div>
-                                    ))}
-                                    <button type="button" onClick={() => handleAddObject('techStats', { highlight: '', text: '' })} style={addBtnStyle}>+ Add Tech Stat</button>
-                                </div>
+                               
                             </div>
                         )}
 
@@ -563,28 +552,8 @@ const ServicesDetailTwoForm = () => {
                             </div>
                         )}
 
-                        {activeTab === 'social' && (
+                        {activeTab === 'faqs' && (
                             <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
-                                <div style={sectionStyle}>
-                                    <h3 style={{ marginBottom: '16px', color: '#3b82f6' }}>Testimonials</h3>
-                                    {formData.testimonials.map((item, idx) => (
-                                        <div key={idx} style={itemBoxStyle}>
-                                            <input placeholder="Name" value={item.name} onChange={(e) => handleUpdateObject('testimonials', idx, 'name', e.target.value)} style={inputStyle} />
-                                            <input placeholder="Role" value={item.role} onChange={(e) => handleUpdateObject('testimonials', idx, 'role', e.target.value)} style={inputStyle} />
-                                            <input placeholder="Company" value={item.company} onChange={(e) => handleUpdateObject('testimonials', idx, 'company', e.target.value)} style={inputStyle} />
-                                            <textarea placeholder="Review Content" value={item.content} onChange={(e) => handleUpdateObject('testimonials', idx, 'content', e.target.value)} style={{ ...inputStyle, minHeight: '60px' }} />
-                                            <input placeholder="Rating (e.g. 5)" type="number" value={item.rating} onChange={(e) => handleUpdateObject('testimonials', idx, 'rating', e.target.value)} style={inputStyle} />
-                                            <div style={{ display: 'flex', flexDirection: 'column', gap: '6px', width: '100%' }}>
-                                                {item.imageUrl && <img src={item.imageUrl} alt="Reviewer" style={{ width: '50px', height: '50px', objectFit: 'cover', borderRadius: '50%' }} />}
-                                                <input placeholder="Image URL" value={item.imageUrl} onChange={(e) => handleUpdateObject('testimonials', idx, 'imageUrl', e.target.value)} style={inputStyle} />
-                                                <input type="file" accept="image/*" onChange={(e) => handleImageUpload(e, (url) => handleUpdateObject('testimonials', idx, 'imageUrl', url))} style={inputStyle} disabled={isUploadingImg} />
-                                            </div>
-                                            <button type="button" onClick={() => handleRemoveObject('testimonials', idx)} style={deleteBtnStyle}>Delete</button>
-                                        </div>
-                                    ))}
-                                    <button type="button" onClick={() => handleAddObject('testimonials', { name: '', role: '', company: '', content: '', rating: 5, imageUrl: '' })} style={addBtnStyle}>+ Add Testimonial</button>
-                                </div>
-
                                 <div style={sectionStyle}>
                                     <h3 style={{ marginBottom: '16px', color: '#3b82f6' }}>FAQs</h3>
                                     {formData.faqs.map((item, idx) => (

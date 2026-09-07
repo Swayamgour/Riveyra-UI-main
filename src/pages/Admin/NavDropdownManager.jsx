@@ -8,6 +8,7 @@ import {
   useDeleteNavDropdownItemMutation,
   useUploadServiceImageMutation,
 } from "../../redux/api";
+import { resolveLucideIcon } from "../../utils/resolveLucideIcon";
 
 export default function NavDropdownManager() {
   const { isMobile, isTablet } = useBreakpoint();
@@ -26,6 +27,9 @@ export default function NavDropdownManager() {
   const [formData, setFormData] = useState({
     categories: "",
     desc: "",
+    iconName: "",
+    color: "",
+    tag: "",
     subcategories: [],
     techTools: []
   });
@@ -35,11 +39,14 @@ export default function NavDropdownManager() {
       setFormData({
         categories: editing.categories || "",
         desc: editing.desc || "",
+        iconName: editing.iconName || "",
+        color: editing.color || editing.accent || "",
+        tag: editing.tag || "",
         subcategories: editing.subcategories ? JSON.parse(JSON.stringify(editing.subcategories)) : [],
         techTools: editing.techTools ? JSON.parse(JSON.stringify(editing.techTools)) : []
       });
     } else {
-      setFormData({ categories: "", desc: "", subcategories: [], techTools: [] });
+      setFormData({ categories: "", desc: "", iconName: "", color: "", tag: "", subcategories: [], techTools: [] });
     }
   }, [editing]);
 
@@ -104,14 +111,18 @@ export default function NavDropdownManager() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
+      const payload = {
+        ...formData,
+        accent: formData.color || formData.accent || ''
+      };
       if (editing) {
-        await updateItem({ id: editing._id, data: formData }).unwrap();
+        await updateItem({ id: editing._id, data: payload }).unwrap();
       } else {
-        await createItem(formData).unwrap();
+        await createItem(payload).unwrap();
       }
       setEditing(null);
       setShowForm(false);
-      setFormData({ categories: "", desc: "", subcategories: [], techTools: [] });
+      setFormData({ categories: "", desc: "", iconName: "", color: "", tag: "", subcategories: [], techTools: [] });
     } catch (err) {
       alert(err?.data?.message || "Something went wrong");
     }
@@ -209,6 +220,64 @@ export default function NavDropdownManager() {
               <label style={{ display: 'block', marginBottom: 8, color: 'rgba(255,255,255,0.7)' }}>Category Description (Short summary)</label>
               <textarea name="desc" value={formData.desc} onChange={handleChange} style={{ ...inputStyle, minHeight: '80px' }} />
 
+              <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr 1fr', gap: '16px', marginTop: '10px' }}>
+                <div>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 8 }}>
+                    <label style={{ color: 'rgba(255,255,255,0.7)', fontSize: '14px' }}>
+                      Lucide Icon Name
+                    </label>
+                    {formData.iconName && (
+                      <span style={{ display: 'inline-flex', alignItems: 'center', gap: 6, fontSize: '12px', color: resolveLucideIcon(formData.iconName, 16) ? '#4ade80' : '#f87171' }}>
+                        {resolveLucideIcon(formData.iconName, 16)}
+                        {resolveLucideIcon(formData.iconName, 16) ? 'Valid Icon' : 'Icon not found'}
+                      </span>
+                    )}
+                  </div>
+                  <input 
+                    name="iconName" 
+                    value={formData.iconName || ''} 
+                    onChange={handleChange} 
+                    placeholder="e.g. Shield, Cpu, Monitor, Cloud, Globe" 
+                    style={inputStyle} 
+                  />
+                </div>
+
+                <div>
+                  <label style={{ display: 'block', marginBottom: 8, color: 'rgba(255,255,255,0.7)' }}>
+                    Custom Accent Color (HEX or RGB)
+                  </label>
+                  <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
+                    <input 
+                      type="color" 
+                      name="color" 
+                      value={formData.color?.startsWith('#') && formData.color.length === 7 ? formData.color : '#3b82f6'} 
+                      onChange={handleChange} 
+                      style={{ width: '45px', height: '42px', padding: 2, background: 'transparent', border: '1px solid rgba(255,255,255,0.2)', borderRadius: '6px', cursor: 'pointer', marginBottom: '16px' }} 
+                    />
+                    <input 
+                      name="color" 
+                      value={formData.color || ''} 
+                      onChange={handleChange} 
+                      placeholder="#3b82f6 or #f43f5e" 
+                      style={{ ...inputStyle, flex: 1 }} 
+                    />
+                  </div>
+                </div>
+
+                <div>
+                  <label style={{ display: 'block', marginBottom: 8, color: 'rgba(255,255,255,0.7)' }}>
+                    Track Badge Tag (e.g. Core Tech, Security, Intelligence)
+                  </label>
+                  <input 
+                    name="tag" 
+                    value={formData.tag || ''} 
+                    onChange={handleChange} 
+                    placeholder="e.g. Core Tech" 
+                    style={inputStyle} 
+                  />
+                </div>
+              </div>
+
               <hr style={{ border: 'none', borderTop: '1px solid rgba(255,255,255,0.1)', margin: '30px 0' }} />
 
               {/* SUBCATEGORIES */}
@@ -268,7 +337,31 @@ export default function NavDropdownManager() {
         <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : 'repeat(auto-fill, minmax(300px, 1fr))', gap: 20 }}>
           {items.map(item => (
             <div key={item._id} style={{ background: 'rgba(255,255,255,0.03)', padding: 20, borderRadius: 12, border: '1px solid rgba(255,255,255,0.05)' }}>
-              <h4 style={{ fontSize: 20, marginBottom: 5, color: '#60a5fa' }}>{item.categories}</h4>
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 8 }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+                  {item.iconName && resolveLucideIcon(item.iconName, 22) && (
+                    <span style={{ color: item.color || item.accent || '#60a5fa', display: 'flex' }}>
+                      {resolveLucideIcon(item.iconName, 22)}
+                    </span>
+                  )}
+                  <h4 style={{ fontSize: 20, margin: 0, color: item.color || item.accent || '#60a5fa' }}>{item.categories}</h4>
+                </div>
+                {item.color && (
+                  <span style={{ width: 14, height: 14, borderRadius: '50%', background: item.color, border: '1px solid rgba(255,255,255,0.3)', display: 'inline-block' }} title={`Color: ${item.color}`} />
+                )}
+              </div>
+              <div style={{ display: 'flex', gap: 8, marginBottom: 10, flexWrap: 'wrap' }}>
+                {item.iconName && (
+                  <span style={{ fontSize: 11, background: 'rgba(96,165,250,0.15)', color: '#60a5fa', padding: '2px 8px', borderRadius: 4, display: 'inline-flex', alignItems: 'center', gap: 4 }}>
+                    {resolveLucideIcon(item.iconName, 12)} {item.iconName}
+                  </span>
+                )}
+                {item.tag && (
+                  <span style={{ fontSize: 11, background: 'rgba(255,255,255,0.08)', color: '#ddd', padding: '2px 8px', borderRadius: 4 }}>
+                    Tag: {item.tag}
+                  </span>
+                )}
+              </div>
               <p style={{ fontSize: 14, color: 'rgba(255,255,255,0.6)', marginBottom: 15, display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>{item.desc}</p>
               
               <div style={{ display: 'flex', gap: 10, fontSize: 12, color: 'rgba(255,255,255,0.4)', marginBottom: 20 }}>

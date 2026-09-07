@@ -42,12 +42,7 @@ const PAGE_DATA = {
         { name: "Next.js", iconUrl: "https://cdn.simpleicons.org/nextdotjs/000000" },
         { name: "Framer", iconUrl: "https://cdn.simpleicons.org/framer/0055FF" }
     ],
-    techStats: [
-        { highlight: "3D & Motion", text: "Immersive Experiences" },
-        { highlight: "60 FPS", text: "Silky Smooth Animations" },
-        { highlight: "Zero", text: "Layout Shifts (CLS)" },
-        { highlight: "100%", text: "Modern Architecture" }
-    ],
+
     
     // Services Section
     servicesTag: "Our Capabilities",
@@ -101,12 +96,7 @@ const PAGE_DATA = {
         { stepNumber: "05", title: "Quality Assurance & Live Launch", desc: "Before migration to production servers, we test codebases via comprehensive stress-tests, mobile performance evaluations, and secure loop audits. We optimize rendering scripts, launch asset structures, and execute a flawlessly polished web deployment.", iconSvg: `<svg viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>` }
     ],
     
-    // Testimonials
-    testimonials: [
-        { name: "Sarah Jenkins", role: "CTO", company: "TechFlow Solutions", content: "Riveyra completely transformed our backend architecture. The performance gains are incredible, cutting our load times in half while supporting 10x the concurrent users. The team's expertise is unmatched.", rating: 5, imageUrl: "https://i.pravatar.cc/150?img=47" },
-        { name: "David Chen", role: "Founder", company: "Elevate Startup", content: "Working with Riveyra was a game-changer. They built our entire React frontend from scratch. The 3D elements and smooth animations give us the premium feel we desperately needed to stand out.", rating: 5, imageUrl: "https://i.pravatar.cc/150?img=11" },
-        { name: "Emily Watson", role: "Product Manager", company: "GlobalRetail", content: "Their API integrations and headless e-commerce setup are flawless. We haven't had a single drop in uptime since launch. True professionals who write exceptionally clean code.", rating: 5, imageUrl: "https://i.pravatar.cc/150?img=5" }
-    ],
+ 
     
     // FAQs
     faqs: [

@@ -1,15 +1,13 @@
 import React, { useRef, useEffect, useState } from 'react';
 import { TypeAnimation } from 'react-type-animation';
 import { useParams } from 'react-router-dom';
-import { useGetServicesDetailTwoQuery } from '../../redux/api';
+import { useGetServicesDetailTwoQuery, useGetNavDropdownItemsQuery } from '../../redux/api';
 import './ServicesDetailTwo.css';
-import Testimonials from './Testimonials';
-import ContactForm from '../ContactForm';
 import FAQSection from './FAQSection';
-import Loader from '../Loader';
-import Logo from '../ui/Logo';
+
 
 import CountUp from 'react-countup';
+import CTA from './CTA';
 
 const formatIconUrl = (url, name = 'tech') => {
     if (!url) return `https://cdn.simpleicons.org/${encodeURIComponent(name.toLowerCase().replace(/[^a-z0-9]/g, ''))}`;
@@ -29,10 +27,38 @@ function ServicesDetailTwo() {
     const [processProgress, setProcessProgress] = useState(0);
     const [pageData, setPageData] = useState(null);
 
-    const { categoryName, subcategoryName } = useParams();
+    const params = useParams();
+    const rawCategory = params.categorySlug || params.categoryName;
+    const rawSubcategory = params.subcategorySlug || params.subcategoryName;
+
+    // Fetch all nav items to resolve lowercase slugs to exact category & subcategory names
+    const { data: allItemsResp } = useGetNavDropdownItemsQuery();
+    const allServices = allItemsResp?.data || [];
+
+    let resolvedCategory = rawCategory;
+    let resolvedSubcategory = rawSubcategory;
+
+    if (allServices.length > 0 && rawCategory && rawSubcategory) {
+        const toSlug = (str) => (str || '').toLowerCase().trim().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
+        const currentCatSlug = toSlug(rawCategory);
+        const currentSubSlug = toSlug(rawSubcategory);
+
+        const matchedCat = allServices.find(item => toSlug(item.categories) === currentCatSlug || item.categories.toLowerCase() === rawCategory.toLowerCase());
+        if (matchedCat) {
+            resolvedCategory = matchedCat.categories;
+            const matchedSub = matchedCat.subcategories?.find(s => {
+                const sName = typeof s === 'string' ? s : s.name;
+                return toSlug(sName) === currentSubSlug || sName.toLowerCase() === rawSubcategory.toLowerCase();
+            });
+            if (matchedSub) {
+                resolvedSubcategory = typeof matchedSub === 'string' ? matchedSub : matchedSub.name;
+            }
+        }
+    }
+
     const { data: response, isLoading, error } = useGetServicesDetailTwoQuery(
-        { categoryName, subcategoryName },
-        { skip: !categoryName || !subcategoryName }
+        { categoryName: resolvedCategory, subcategoryName: resolvedSubcategory },
+        { skip: !resolvedCategory || !resolvedSubcategory }
     );
 
     useEffect(() => {
@@ -43,7 +69,7 @@ function ServicesDetailTwo() {
 
     useEffect(() => {
         window.scrollTo(0, 0);
-    }, [categoryName, subcategoryName]);
+    }, [rawCategory, rawSubcategory]);
 
     useEffect(() => {
         const duration = 5000;
@@ -212,41 +238,41 @@ function ServicesDetailTwo() {
 
                 <div className="metrics-panel-container" style={{ width: '100%', maxWidth: '1350px', zIndex: 5 }}>
                     <div className="metrics-panel">
-                        {pageData?.metrics?.map((metric, idx) => (
-                            <div className="metric-unit" key={idx}>
-                                <div className="unit-title">
-                                    <span className="emoji">{metric.icon}</span>{' '}
-                                    {metric.label}
+                        {pageData?.metrics?.map((metric, idx) => {
+                            const colors = ['#60a5fa', '#34d399', '#c084fc', '#fbbf24', '#f87171', '#38bdf8'];
+                            const counterColor = metric.color || metric.accent || colors[idx % colors.length];
+
+                            return (
+                                <div className="metric-unit" key={idx}>
+                                    <div className="unit-title">
+                                        <span className="emoji">{metric.icon}</span>{' '}
+                                        {metric.label}
+                                    </div>
+                                    <div className="unit-value" style={{ color: counterColor }}>
+                                        <CountUp end={metric.value} decimals={metric.value % 1 !== 0 ? 1 : 0} duration={5} enableScrollSpy scrollSpyOnce />
+                                        <span style={{ color: counterColor }}>{metric.suffix}</span>
+                                    </div>
                                 </div>
-                                <div className="unit-value">
-                                    <CountUp end={metric.value} decimals={metric.value % 1 !== 0 ? 1 : 0} duration={5} enableScrollSpy scrollSpyOnce />{metric.suffix}
-                                </div>
-                            </div>
-                        ))}
+                            );
+                        })}
                     </div>
                 </div>
 
                 <div className="wave-shape-divider">
                     <svg
-                        viewBox="0 0 1440 120"
+                        viewBox="0 0 1440 180"
                         preserveAspectRatio="none"
                         xmlns="http://www.w3.org/2000/svg"
                     >
                         <path
                             className="shape-fill"
-                            d="M0,32C240,75,480,96,720,75C960,53,1200,11,1440,0L1440,120L0,120Z"
+                            d="M0,64L48,80C96,96,192,128,288,128C384,128,480,96,576,80C672,64,768,64,864,80C960,96,1056,128,1152,122.7C1248,117,1344,75,1392,53.3L1440,32L1440,180L1392,180C1344,180,1248,180,1152,180C1056,180,960,180,864,180C768,180,672,180,576,180C480,180,384,180,288,180C192,180,96,180,48,180L0,180Z"
                         ></path>
                     </svg>
                 </div>
             </section>
 
             <section className="clx-tech-section">
-                <div className="clx-divider">
-                    <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
-                        <path d="M0,0V46.29c47.79,22.2,103.59,32.17,158,28,70.36-5.37,136.33-33.31,206.8-37.5C438.64,32.43,512.34,53.67,583,72.05c69.27,18,138.3,24.88,209.4,13.08,36.15-6,69.85-17.84,104.45-29.34C989.49,25,1095.63,10.28,1200,32.89V0Z" className="shape-fill"></path>
-                    </svg>
-                </div>
-
                 <div className="clx-wrap">
                     <div className="clx-heading-block">
                         <span className="clx-tag">The Riveyra Engine</span>
@@ -274,12 +300,7 @@ function ServicesDetailTwo() {
                         )}
                     </div>
 
-                    <div className="stats">
-                        <div className="stat"><b>3D &amp; Motion</b>Immersive Experiences</div>
-                        <div className="stat"><b>60 FPS</b>Silky Smooth Animations</div>
-                        <div className="stat"><b>Zero</b>Layout Shifts (CLS)</div>
-                        <div className="stat"><b>100%</b>Modern Architecture</div>
-                    </div>
+                    
                 </div>
             </section>
 
@@ -418,11 +439,6 @@ function ServicesDetailTwo() {
             </section>
 
             <section className="process-section-container">
-                <div className="process-shape-divider-top">
-                    <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
-                        <path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z" className="shape-fill"></path>
-                    </svg>
-                </div>
                 <div className="process-wrapper">
 
                     <div className="process-header">
@@ -475,69 +491,12 @@ function ServicesDetailTwo() {
                 </div>
             </section>
 
-            <Testimonials testimonials={pageData?.testimonials} />
+           
 
             <FAQSection faqs={pageData?.faqs} />
 
             <section className="custom-contact-section">
-                <div className="custom-contact-wrapper">
-                    <div className="custom-contact-left">
-                        <div style={{ display: 'inline-flex', alignItems: 'center', gap: 10, marginBottom: 24 }}>
-                            <div style={{ width: 28, height: 1, background: '#60a5fa' }} />
-                            <span style={{ fontSize: 10, letterSpacing: 4, color: 'rgba(96,165,250,0.7)', fontFamily: 'var(--font-mono)', textTransform: 'uppercase' }}>Ready to Start?</span>
-                        </div>
-                        <div className="custom-contact-headings">
-                            <h2 style={{ paddingBottom: '0.08em' }}>
-                                Let's Build Something <br />
-                                <span className="gt">Extraordinary.</span>
-                            </h2>
-                        </div>
-                        <p className="custom-contact-desc">
-                            Have a project in mind? Get in touch and let's turn your vision into a digital reality that exceeds every expectation.
-                        </p>
-
-                        <div className="custom-contact-info-boxes">
-                            {pageData?.contactInfo?.map((info, idx) => (
-                                <div className="custom-info-box" key={idx}>
-                                    <div className="custom-info-icon" dangerouslySetInnerHTML={{ __html: info.iconSvg }}></div>
-                                    <div className="custom-info-content">
-                                        <h3>{info.title} :</h3>
-                                        <p>{info.value}</p>
-                                    </div>
-                                </div>
-                            ))}
-
-                            <a
-                                href="https://wa.me/+919919888269"
-                                target="_blank" rel="noopener noreferrer"
-                                className="custom-whatsapp-btn"
-                            >
-                                <div className="wa-icon">💬</div>
-                                <div className="wa-text">
-                                    <div className="wa-title">Chat on WhatsApp</div>
-                                    <div className="wa-subtitle">Instant reply during business hours</div>
-                                </div>
-                                <div className="wa-arrow">OPEN →</div>
-                            </a>
-                        </div>
-
-                        <div style={{
-                            display: 'flex',
-                            justifyContent: 'center',
-                            alignItems: 'center',
-                            marginTop: 'auto',
-                            paddingTop: '80px',
-                            paddingBottom: '40px',
-                            opacity: 0.6
-                        }}>
-                            <Logo height={140} animate />
-                        </div>
-                    </div>
-
-                    <div className="custom-contact-right">
-                        <ContactForm />
-                    </div>
-                </div>
+                <CTA/>
             </section>
         </>
     );

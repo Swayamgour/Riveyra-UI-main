@@ -5,15 +5,11 @@ const {
     getServicesDetailTwo, 
     updateServicesDetailTwo, 
     deleteServicesDetailTwo,
-    getLatestTestimonials,
     uploadServiceImage
 } = require('../controllers/serviceDetailTwo');
 
 // Upload image to Cloudinary
 router.post('/services-detail-two/upload', upload.single('image'), uploadServiceImage);
-
-// Fetch latest testimonials across subcategories
-router.get('/services-detail-two/testimonials/latest', getLatestTestimonials);
 
 // We use the same path, but rely on query parameters (e.g. ?categoryName=X&subcategoryName=Y)
 router.get('/services-detail-two', getServicesDetailTwo);

@@ -1,51 +1,30 @@
 const ServicesDetailTwo = require('../models/ServicesDetailsTwo');
 
-exports.getLatestTestimonials = async (req, res) => {
-    try {
-        const testimonials = await ServicesDetailTwo.aggregate([
-            { $unwind: "$testimonials" },
-            // Group by subcategory to ensure we only get one testimonial per subcategory
-            {
-                $group: {
-                    _id: "$subcategoryName",
-                    categoryName: { $first: "$categoryName" },
-                    testimonial: { $first: "$testimonials" }
-                }
-            },
-            // Safely project fields instead of using $mergeObjects (which can throw 500 if testimonial is a string)
-            {
-                $project: {
-                    _id: 0,
-                    subcategoryName: "$_id",
-                    categoryName: "$categoryName",
-                    name: "$testimonial.name",
-                    role: "$testimonial.role",
-                    company: "$testimonial.company",
-                    content: "$testimonial.content",
-                    rating: "$testimonial.rating",
-                    imageUrl: "$testimonial.imageUrl",
-                    accent: "$testimonial.accent"
-                }
-            },
-            { $limit: 10 }
-        ]);
-
-        res.status(200).json({ success: true, data: testimonials });
-    } catch (error) {
-        console.error("Error in getLatestTestimonials:", error);
-        res.status(500).json({ success: false, message: 'Server Error' });
-    }
-};
 
 exports.getServicesDetailTwo = async (req, res) => {
     try {
-        const { categoryName, subcategoryName } = req.query;
+        const rawCategory = decodeURIComponent(req.query.categoryName || '').trim();
+        const rawSubcategory = decodeURIComponent(req.query.subcategoryName || '').trim();
 
-        if (!categoryName || !subcategoryName) {
+        if (!rawCategory || !rawSubcategory) {
             return res.status(400).json({ success: false, message: 'categoryName and subcategoryName are required' });
         }
 
-        const pageData = await ServicesDetailTwo.findOne({ categoryName, subcategoryName });
+        const toSlug = (str) => (str || '').toLowerCase().trim().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
+
+        // 1. Try exact/regex match
+        let pageData = await ServicesDetailTwo.findOne({
+            categoryName: { $regex: new RegExp(`^${rawCategory.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}$`, 'i') },
+            subcategoryName: { $regex: new RegExp(`^${rawSubcategory.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}$`, 'i') }
+        });
+
+        // 2. If not found, match by slug comparison
+        if (!pageData) {
+            const allPages = await ServicesDetailTwo.find({});
+            pageData = allPages.find(doc => {
+                return toSlug(doc.categoryName) === toSlug(rawCategory) && toSlug(doc.subcategoryName) === toSlug(rawSubcategory);
+            });
+        }
 
         if (pageData) {
             return res.status(200).json({ success: true, data: pageData });
@@ -80,10 +59,7 @@ exports.getServicesDetailTwo = async (req, res) => {
                     { name: "Node.js", iconUrl: "https://cdn.simpleicons.org/nodedotjs/339933" },
                     { name: "MongoDB", iconUrl: "https://cdn.simpleicons.org/mongodb/47A248" }
                 ],
-                techStats: [
-                    { highlight: "3D & Motion", text: "Immersive Experiences" },
-                    { highlight: "60 FPS", text: "Silky Smooth Animations" }
-                ],
+         
                 servicesTag: "Our Capabilities",
                 servicesTitle: "Everything Your Vision Needs to ",
                 servicesTitleHighlight: "Scale Digitally",
@@ -118,9 +94,8 @@ exports.getServicesDetailTwo = async (req, res) => {
                     { stepNumber: "01", title: "Discovery & Tech Stack Planning", desc: "We begin by auditing your business scope to outline technical parameters.", iconSvg: `<svg viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>` },
                     { stepNumber: "02", title: "UI/UX Wireframing", desc: "Our design architects structure highly conversion-focused layout blueprints.", iconSvg: `<svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="3" y1="9" x2="21" y2="9"></line><line x1="9" y1="21" x2="9" y2="9"></line></svg>` }
                 ],
-                testimonials: [
-                    { name: "Sarah Jenkins", role: "CTO", company: "TechFlow Solutions", content: "Riveyra completely transformed our backend architecture. The performance gains are incredible.", rating: 5, imageUrl: "https://i.pravatar.cc/150?img=47" }
-                ],
+              
+              
                 faqs: [
                     { question: "Do you offer custom web development?", answer: "We specialize exclusively in bespoke, custom-coded web solutions." }
                 ],

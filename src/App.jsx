@@ -83,14 +83,16 @@ function AppShell() {
         <Route path="/blogs/:slug" element={<BlogDetailPage />} />
         <Route path="/Apply" element={<ApplyPage />} />
         <Route path="/Service/:slug" element={<ServiceDetail />} />
-        <Route path="/ServiceCategories/:slug" element={<ServicesCategoriesSkeleton />} />
-
-        <Route path="/services/:categoryName/:subcategoryName" element={<ServicesDetailTwo />} />
-
         <Route path="/privacy-policy" element={<PrivacyPolicy />} />
         <Route path="/terms-of-service" element={<TermsOfService />} />
         {/* <Route path="/cookie-policy" element={<CookiePolicy />} />
         <Route path="/disclaimer" element={<Disclaimer />} /> */}
+
+ 
+        <Route path="/:slug" element={<ServicesCategoriesSkeleton />} />
+
+       
+        <Route path="/:categorySlug/:subcategorySlug" element={<ServicesDetailTwo />} />
 
 
         <Route path="/admin/login" element={<Login />} />

@@ -26,12 +26,24 @@ exports.createNavDropdownItem = async (req, res) => {
     }
 };
 
-// @desc    Get single NavDropdown item by category
+// @desc    Get single NavDropdown item by category or slug
 // @route   GET /api/v1/nav-dropdown/:categories
 // @access  Public
 exports.getNavDropdownItemByCategory = async (req, res) => {
     try {
-        const item = await NavDropdownItem.findOne({ categories: req.params.categories });
+        const rawParam = decodeURIComponent(req.params.categories || '').trim();
+        
+        // 1. Try exact match on category name
+        let item = await NavDropdownItem.findOne({ categories: { $regex: new RegExp(`^${rawParam.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}$`, 'i') } });
+        
+        // 2. If not found, try matching normalized slug (e.g. 'cyber-security' -> 'cyber security')
+        if (!item) {
+            const allItems = await NavDropdownItem.find({});
+            item = allItems.find(doc => {
+                const slug = doc.categories.toLowerCase().trim().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
+                return slug === rawParam.toLowerCase();
+            });
+        }
         
         if (!item) {
             return res.status(404).json({ success: false, message: "Item not found" });

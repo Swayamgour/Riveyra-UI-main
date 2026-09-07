@@ -145,10 +145,6 @@ export const api = createApi({
             }),
             invalidatesTags: ["ServicesDetailTwo"],
         }),
-        getLatestTestimonials: builder.query({
-            query: () => "/services-detail-two/testimonials/latest",
-            providesTags: ["ServicesDetailTwo"],
-        }),
         uploadServiceImage: builder.mutation({
             query: (formData) => ({
                 url: "/services-detail-two/upload",
@@ -549,7 +545,6 @@ export const {
     useGetServicesDetailTwoQuery,
     useUpdateServicesDetailTwoMutation,
     useUploadServiceImageMutation,
-    useGetLatestTestimonialsQuery,
 
     // Categories
     useGetCategoriesQuery,

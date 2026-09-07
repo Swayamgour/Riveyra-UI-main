@@ -12,11 +12,7 @@ const TechStackSchema = new mongoose.Schema({
     iconUrl: { type: String, required: true }
 });
 
-const StatPanelSchema = new mongoose.Schema({
-    label: String,
-    value: String,
-    sub: String
-});
+
 
 const ServiceCardSchema = new mongoose.Schema({
     title: String,
@@ -40,14 +36,7 @@ const ProcessStepSchema = new mongoose.Schema({
     iconSvg: String
 });
 
-const TestimonialSchema = new mongoose.Schema({
-    name: String,
-    role: String,
-    company: String,
-    content: String,
-    rating: { type: Number, default: 5 },
-    imageUrl: String
-});
+
 
 const FAQSchema = new mongoose.Schema({
     question: String,
@@ -69,8 +58,7 @@ const ServicesDetailTwoSchema = new mongoose.Schema({
     heroDescription: { type: String },
     metrics: [MetricSchema],
 
-    // Graphics Panel
-    statsPanel: [StatPanelSchema],
+  
 
     // Tech Stack Section
     techStackTag: String,
@@ -78,7 +66,7 @@ const ServicesDetailTwoSchema = new mongoose.Schema({
     techStackTitleHighlight: String,
     techStackDesc: String,
     techStack: [TechStackSchema],
-    techStats: [{ highlight: String, text: String }],
+
 
     // Services Section
     servicesTag: String,
@@ -107,8 +95,7 @@ const ServicesDetailTwoSchema = new mongoose.Schema({
     processDesc: String,
     processSteps: [ProcessStepSchema],
 
-    // Testimonials
-    testimonials: [TestimonialSchema],
+   
 
     // FAQs
     faqs: [FAQSchema],

@@ -7,7 +7,6 @@ import SectionTag from '../ui/SectionTag'
 import Icons from '../ui/Icons'
 import { TESTIMONIALS } from '../../utils/constants'
 import { useBreakpoint } from '../../hooks/useBreakpoint.jsx'
-import { useGetLatestTestimonialsQuery } from '../../redux/api.jsx'
 
 // Swiper imports
 import { Swiper, SwiperSlide } from 'swiper/react'
@@ -25,11 +24,8 @@ const AVATARS = [
 
 export default function Testimonials({ testimonials }) {
   const { isMobile, isTablet } = useBreakpoint()
-  const { data: latestTestimonialsRes, isLoading } = useGetLatestTestimonialsQuery()
 
-  // Use props if passed, otherwise use API data. Fallback to constants if API has no data.
-  const displayTestimonials = testimonials || 
-    (latestTestimonialsRes?.data?.length > 0 ? latestTestimonialsRes.data : TESTIMONIALS)
+  const displayTestimonials = testimonials || TESTIMONIALS
 
   return (
     <section
@@ -94,12 +90,8 @@ export default function Testimonials({ testimonials }) {
             background: rgba(255, 255, 255, 0.4);
           }
         `}</style>
-        
-        {isLoading && !testimonials ? (
-          <div style={{ textAlign: 'center', color: '#fff', padding: 40 }}>
-            Loading testimonials...
-          </div>
-        ) : !testimonials ? (
+
+        {!testimonials ? (
           // Render Swiper for Home Page
           <Swiper
             modules={[Autoplay, Pagination]}
@@ -138,12 +130,12 @@ export default function Testimonials({ testimonials }) {
                       <Icons.Quote />
                     </div>
 
-                    <p className="scrollable-review" style={{ 
-                      fontSize: 15, 
-                      lineHeight: 1.88, 
-                      color: 'rgba(255,255,255,0.88)', 
-                      fontFamily: 'var(--font-body)', 
-                      marginBottom: 28, 
+                    <p className="scrollable-review" style={{
+                      fontSize: 15,
+                      lineHeight: 1.88,
+                      color: 'rgba(255,255,255,0.88)',
+                      fontFamily: 'var(--font-body)',
+                      marginBottom: 28,
                       fontStyle: 'italic',
                       maxHeight: '85px',
                       overflowY: 'auto',
@@ -205,12 +197,12 @@ export default function Testimonials({ testimonials }) {
                     <Icons.Quote />
                   </div>
 
-                  <p className="scrollable-review" style={{ 
-                    fontSize: 15, 
-                    lineHeight: 1.88, 
-                    color: 'rgba(255,255,255,0.88)', 
-                    fontFamily: 'var(--font-body)', 
-                    marginBottom: 28, 
+                  <p className="scrollable-review" style={{
+                    fontSize: 15,
+                    lineHeight: 1.88,
+                    color: 'rgba(255,255,255,0.88)',
+                    fontFamily: 'var(--font-body)',
+                    marginBottom: 28,
                     fontStyle: 'italic',
                     maxHeight: '85px',
                     overflowY: 'auto',
