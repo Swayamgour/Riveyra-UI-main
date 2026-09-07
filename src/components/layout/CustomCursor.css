@@ -1,0 +1,19 @@
+/* Extracted inline styles for CustomCursor.jsx */
+
+.customcursor-gen-1 {
+  position: fixed;
+  z-index: 9999;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  transition: width 0.12s, height 0.12s, background 0.2s;
+}
+
+.customcursor-gen-2 {
+  position: fixed;
+  z-index: 9998;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  transition: width 0.22s cubic-bezier(0.16,1,0.3,1), height 0.22s cubic-bezier(0.16,1,0.3,1), border-color 0.2s;
+}

@@ -13,6 +13,8 @@ import CareerPage from './pages/CareerPage'
 import BlogsPage from './pages/BlogsPage'
 import BlogDetailPage from './pages/BlogDetailPage'
 import ServiceDetail from './components/sections/ServiceDetail'
+import ServicesCategoriesSkeleton from './pages/ServicesCategoriesSkeleton'
+// import SubcategoryDetailSkeleton from './pages/SubcategoryDetailSkeleton'
 import ContactPopup from './components/ui/Contactpopup'
 import Admin from './pages/Admin/Admin'
 import ServicesManager from './pages/Admin/ServicesManager'
@@ -35,27 +37,43 @@ import PageSeoListPage from './pages/Admin/PageSeoListPage'
 import PageSeoForm from './pages/Admin/PageSeoForm'
 import PrivacyPolicy from './pages/PrivacyPolicy'
 import TermsOfService from './pages/TermsOfService'
+import ServicesDetailTwo from './components/sections/ServicesDetailTwo'
+import ServicesDetailTwoForm from './pages/Admin/ServicesDetailTwoForm'
+import NavDropdownManager from './pages/Admin/NavDropdownManager'
 // import CookiePolicy from './pages/CookiePolicy'
 // import Disclaimer from './pages/Disclaimer'
 
 function AppShell() {
-  // useScrollReveal()
-  // const location = useLocation()
-
-  // useEffect(() => {
-  //   const lenis = new Lenis({
-  //     duration: 1.5,
-  //     easing: t => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-  //   })
-  //   const raf = time => { lenis.raf(time); requestAnimationFrame(raf) }
-  //   requestAnimationFrame(raf)
-  //   window.scrollTo({ top: 0, behavior: 'instant' })
-  //   return () => lenis.destroy()
-  // }, [location.pathname])
-
-
   const location = useLocation()
   const isAdminRoute = location.pathname.startsWith('/admin');
+
+  // Buttery momentum scroll — same "smooth" feel as premium agency sites (e.g. Appinventiv).
+  // Kept off on /admin so table/form scrolling there stays native.
+  useEffect(() => {
+    if (isAdminRoute) return
+
+    const lenis = new Lenis({
+      duration: 1.2,
+      easing: t => Math.min(1, 1.001 - Math.pow(2, -10 * t)), // ease-out-expo — matches --ease-expo
+      smoothWheel: true,
+      touchMultiplier: 1.5,
+    })
+
+    let rafId
+    const raf = time => {
+      lenis.raf(time)
+      rafId = requestAnimationFrame(raf)
+    }
+    rafId = requestAnimationFrame(raf)
+
+    window.__lenis = lenis // let ScrollToTop / anchor links drive Lenis instead of the native scrollbar
+
+    return () => {
+      cancelAnimationFrame(rafId)
+      lenis.destroy()
+      window.__lenis = null
+    }
+  }, [isAdminRoute])
 
   // console.log(location.pathname)
 
@@ -64,20 +82,23 @@ function AppShell() {
       <CustomCursor />
       <ScrollToTop />
 
-      {!isAdminRoute && <ContactPopup />}
+      {/* {!isAdminRoute && <ContactPopup />} */}
       {!isAdminRoute && <Navbar />}
 
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/about" element={<AboutPage />} />
-        <Route path="/services" element={<ServicesPage />} />
+        {/* <Route path="/services" element={<ServicesPage />} /> */}
         <Route path="/portfolio" element={<PortfolioPage />} />
         <Route path="/career" element={<CareerPage />} />
         <Route path="/blogs" element={<BlogsPage />} />
         <Route path="/blogs/:slug" element={<BlogDetailPage />} />
         <Route path="/Apply" element={<ApplyPage />} />
-        <Route path="/Service/:id" element={<ServiceDetail />} />
+        <Route path="/Service/:slug" element={<ServiceDetail />} />
+        <Route path="/ServiceCategories/:slug" element={<ServicesCategoriesSkeleton />} />
+
+        <Route path="/services/:categorySlug/:subcategorySlug" element={<ServicesDetailTwo />} />
 
         <Route path="/privacy-policy" element={<PrivacyPolicy />} />
         <Route path="/terms-of-service" element={<TermsOfService />} />
@@ -107,7 +128,12 @@ function AppShell() {
           <Route path="services/create" element={<ServiceForm />} />
           <Route path="services/:id/edit" element={<ServiceForm />} />
 
+          <Route path="servicesDetailTwo" element={<ServicesDetailTwoForm />} />
+          <Route path="servicesDetailTwo/:categorySlug/:subcategorySlug" element={<ServicesDetailTwoForm />} />
+
+
           <Route path="categories" element={<CategoryManager />} />
+          <Route path="nav-dropdowns" element={<NavDropdownManager />} />
 
           <Route path="blogs" element={<BlogManager />} />
           <Route path="blogs/create" element={<BlogForm />} />

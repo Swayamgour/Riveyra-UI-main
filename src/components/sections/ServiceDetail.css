@@ -1,0 +1,81 @@
+/* Extracted inline styles for ServiceDetail.jsx */
+
+.servicedetail-gen-1 {
+  padding: 100px;
+}
+
+@media (max-width: 768px) {
+  .servicedetail-gen-1 {
+    padding: 60px;
+  }
+}
+
+.servicedetail-gen-2 {
+  color: #fff;
+  padding: 100px;
+  text-align: center;
+}
+
+@media (max-width: 768px) {
+  .servicedetail-gen-2 {
+    padding: 60px;
+  }
+}
+
+.servicedetail-gen-3 {
+  white-space: pre-line;
+}
+
+.servicedetail-gen-4 {
+  text-align: center;
+  margin-top: 32px;
+  color: #4F8EF7;
+  font-size: 14px;
+}
+
+@media (max-width: 768px) {
+  .servicedetail-gen-4 {
+    margin-top: 19px;
+  }
+}
+
+.servicedetail-gen-5 {
+  text-align: center;
+  margin-top: 32px;
+  color: #4F8EF7;
+  font-size: 14px;
+}
+
+@media (max-width: 768px) {
+  .servicedetail-gen-5 {
+    margin-top: 19px;
+  }
+}
+
+.servicedetail-gen-6 {
+  text-align: center;
+  margin-top: 32px;
+  color: rgba(255,255,255,0.8);
+}
+
+@media (max-width: 768px) {
+  .servicedetail-gen-6 {
+    margin-top: 19px;
+  }
+}
+
+.servicedetail-gen-7 {
+  transition: transform 0.3s;
+}
+
+.servicedetail-gen-8 {
+  margin-top: 32px;
+  font-size: 14px;
+  color: #4F8EF7;
+}
+
+@media (max-width: 768px) {
+  .servicedetail-gen-8 {
+    margin-top: 19px;
+  }
+}

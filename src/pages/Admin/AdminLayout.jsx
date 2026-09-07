@@ -6,6 +6,7 @@ import { motion } from 'framer-motion';
 const Icons = {
     Dashboard: () => <span>📊</span>,
     Services: () => <span>⚙️</span>,
+    ServicesDetailTwo: () => <span>⚙️</span>,
     Portfolio: () => <span>🎨</span>,
     Career: () => <span>💼</span>,
     ArrowRight: () => <span>→</span>,
@@ -23,11 +24,13 @@ export default function AdminLayout() {
     const navItems = [
         { path: '/admin/dashboard', label: 'Dashboard', icon: <Icons.Dashboard /> },
         { path: '/admin/services', label: 'Services', icon: <Icons.Services /> },
+        { path: '/admin/servicesDetailTwo', label: 'Service Detail Pages', icon: <Icons.ServicesDetailTwo /> },
         { path: '/admin/portfolio', label: 'Portfolio', icon: <Icons.Portfolio /> },
         { path: '/admin/careers', label: 'Careers', icon: <Icons.Career /> },
         { path: '/admin/ApplyCandidates', label: 'Applications', icon: <Icons.Career /> },
         { path: '/admin/ContactClient', label: 'Clients Queries', icon: <Icons.Career /> },
-        { path: "/admin/categories", label: "Categories", icon: <Icons.Categories /> },
+        { path: "/admin/categories", label: "Blog Categories", icon: <Icons.Categories /> },
+        { path: "/admin/nav-dropdowns", label: "Service Categories", icon: <Icons.Categories /> },
         { path: "/admin/blogs", label: "Blogs", icon: <Icons.Blogs /> },
         { path: "/admin/page-seo", label: "pages", icon: <Icons.Blogs /> },
 

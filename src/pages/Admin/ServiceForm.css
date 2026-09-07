@@ -1,0 +1,2117 @@
+/* Extracted inline styles for ServiceForm.jsx */
+
+.serviceform-gen-1 {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #0a0e1a 0%, #0f1422 100%);
+  padding: 40px 5%;
+}
+
+.serviceform-gen-2 {
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+@media (max-width: 768px) {
+  .serviceform-gen-2 {
+    max-width: 100%;
+  }
+}
+
+.serviceform-gen-3 {
+  margin-bottom: 40px;
+}
+
+@media (max-width: 768px) {
+  .serviceform-gen-3 {
+    margin-bottom: 24px;
+  }
+}
+
+.serviceform-gen-4 {
+  font-size: clamp(28px, 5vw, 42px);
+  font-weight: 800;
+  background: linear-gradient(135deg, #60a5fa, #a78bfa);
+  -webkit--background-clip: text;
+  -webkit--text-fill-color: transparent;
+  margin-bottom: 8px;
+}
+
+.serviceform-gen-5 {
+  color: rgba(255,255,255,0.6);
+  font-size: 15px;
+}
+
+.serviceform-gen-6 {
+  padding: 14px 18px;
+  border-radius: 10px;
+  margin-bottom: 24px;
+  font-size: 14px;
+}
+
+@media (max-width: 768px) {
+  .serviceform-gen-6 {
+    margin-bottom: 14px;
+  }
+}
+
+.serviceform-gen-7 {
+  padding: 14px 18px;
+  border-radius: 10px;
+  margin-bottom: 24px;
+  background: rgba(239,68,68,0.1);
+  border: 1px solid #ef4444;
+  color: #ef4444;
+  font-size: 14px;
+}
+
+@media (max-width: 768px) {
+  .serviceform-gen-7 {
+    margin-bottom: 14px;
+  }
+}
+
+.serviceform-gen-8 {
+  margin-top: 8px;
+  margin-left: 20px;
+}
+
+.serviceform-gen-9 {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 24px;
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+  padding-bottom: 12px;
+}
+
+@media (max-width: 768px) {
+  .serviceform-gen-9 {
+    margin-bottom: 14px;
+  }
+}
+
+.serviceform-gen-10 {
+  padding: 10px 20px;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.serviceform-gen-11 {
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 20px;
+  padding: 32px 28px;
+}
+
+.serviceform-gen-12 {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+@media (max-width: 768px) {
+  .serviceform-gen-12 {
+    gap: 14px;
+  }
+}
+
+.serviceform-gen-13 {
+  font-size: 18px;
+  font-weight: 600;
+  color: #fff;
+  margin-bottom: 8px;
+}
+
+@media (max-width: 768px) {
+  .serviceform-gen-13 {
+    font-size: 15px;
+  }
+}
+
+@media (max-width: 480px) {
+  .serviceform-gen-13 {
+    font-size: 13px;
+  }
+}
+
+.serviceform-gen-14 {
+  color: #ef4444;
+}
+
+.serviceform-gen-15 {
+  color: rgba(255,255,255,0.8);
+  margin-bottom: 8px;
+  display: block;
+}
+
+.serviceform-gen-16 {
+  padding: 12px 16px;
+  background: rgba(0,0,0,0.3);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 8px;
+  color: #fff;
+  cursor: pointer;
+}
+
+.serviceform-gen-17 {
+  margin-top: 10px;
+}
+
+.serviceform-gen-18 {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.serviceform-gen-19 {
+  color: rgba(255,255,255,0.8);
+  margin-bottom: 8px;
+  display: block;
+}
+
+.serviceform-gen-20 {
+  color: #ef4444;
+}
+
+.serviceform-gen-21 {
+  width: 100%;
+  padding: 12px 16px;
+  background: rgba(0,0,0,0.3);
+  border-radius: 8px;
+  color: #fff;
+  font-size: 14px;
+}
+
+.serviceform-gen-22 {
+  color: #ef4444;
+  font-size: 12px;
+  margin-top: 4px;
+}
+
+.serviceform-gen-23 {
+  color: rgba(255,255,255,0.8);
+  margin-bottom: 8px;
+  display: block;
+}
+
+.serviceform-gen-24 {
+  color: #ef4444;
+}
+
+.serviceform-gen-25 {
+  width: 100%;
+  padding: 12px 16px;
+  background: rgba(0,0,0,0.3);
+  border-radius: 8px;
+  color: #fff;
+  font-size: 14px;
+  resize: vertical;
+}
+
+.serviceform-gen-26 {
+  color: #ef4444;
+  font-size: 12px;
+  margin-top: 4px;
+}
+
+.serviceform-gen-27 {
+  color: rgba(255,255,255,0.8);
+  margin-bottom: 8px;
+  display: block;
+}
+
+.serviceform-gen-28 {
+  color: #ef4444;
+}
+
+.serviceform-gen-29 {
+  width: 100%;
+  padding: 12px 16px;
+  background: rgba(0,0,0,0.3);
+  border-radius: 8px;
+  color: #fff;
+  font-size: 14px;
+}
+
+.serviceform-gen-30 {
+  color: #ef4444;
+  font-size: 12px;
+  margin-top: 4px;
+}
+
+.serviceform-gen-31 {
+  color: rgba(255,255,255,0.8);
+  margin-bottom: 8px;
+  display: block;
+}
+
+.serviceform-gen-32 {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.serviceform-gen-33 {
+  width: 50px;
+  height: 40px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.serviceform-gen-34 {
+  flex: 1;
+  padding: 12px 16px;
+  background: rgba(0,0,0,0.3);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 8px;
+  color: #fff;
+  font-size: 14px;
+}
+
+.serviceform-gen-35 {
+  color: rgba(255,255,255,0.8);
+  margin-bottom: 8px;
+  display: block;
+}
+
+.serviceform-gen-36 {
+  display: flex;
+  gap: 8px;
+}
+
+.serviceform-gen-37 {
+  flex: 1;
+  padding: 12px 16px;
+  background: rgba(0,0,0,0.3);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 8px;
+  color: #fff;
+  font-size: 14px;
+}
+
+.serviceform-gen-38 {
+  padding: 12px 20px;
+  background: rgba(96,165,250,0.2);
+  border: 1px solid #60a5fa;
+  border-radius: 8px;
+  color: #60a5fa;
+  cursor: pointer;
+}
+
+.serviceform-gen-39 {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.serviceform-gen-40 {
+  padding: 6px 12px;
+  background: rgba(96,165,250,0.15);
+  border: 1px solid rgba(96,165,250,0.3);
+  border-radius: 6px;
+  color: #60a5fa;
+  font-size: 13px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.serviceform-gen-41 {
+  background: none;
+  border: none;
+  color: #ef4444;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+@media (max-width: 768px) {
+  .serviceform-gen-41 {
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 480px) {
+  .serviceform-gen-41 {
+    font-size: 11px;
+  }
+}
+
+.serviceform-gen-42 {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+@media (max-width: 768px) {
+  .serviceform-gen-42 {
+    gap: 14px;
+  }
+}
+
+.serviceform-gen-43 {
+  font-size: 18px;
+  font-weight: 600;
+  color: #fff;
+  margin-bottom: 8px;
+}
+
+@media (max-width: 768px) {
+  .serviceform-gen-43 {
+    font-size: 15px;
+  }
+}
+
+@media (max-width: 480px) {
+  .serviceform-gen-43 {
+    font-size: 13px;
+  }
+}
+
+.serviceform-gen-44 {
+  color: #ef4444;
+}
+
+.serviceform-gen-45 {
+  color: rgba(255,255,255,0.8);
+  margin-bottom: 8px;
+  display: block;
+}
+
+.serviceform-gen-46 {
+  color: #ef4444;
+}
+
+.serviceform-gen-47 {
+  width: 100%;
+  padding: 12px 16px;
+  background: rgba(0,0,0,0.3);
+  border-radius: 8px;
+  color: #fff;
+}
+
+.serviceform-gen-48 {
+  color: #ef4444;
+  font-size: 12px;
+  margin-top: 4px;
+}
+
+.serviceform-gen-49 {
+  color: rgba(255,255,255,0.8);
+  margin-bottom: 8px;
+  display: block;
+}
+
+.serviceform-gen-50 {
+  color: #ef4444;
+}
+
+.serviceform-gen-51 {
+  width: 100%;
+  padding: 12px 16px;
+  background: rgba(0,0,0,0.3);
+  border-radius: 8px;
+  color: #fff;
+}
+
+.serviceform-gen-52 {
+  color: #ef4444;
+  font-size: 12px;
+  margin-top: 4px;
+}
+
+.serviceform-gen-53 {
+  color: rgba(255,255,255,0.8);
+  margin-bottom: 8px;
+  display: block;
+}
+
+.serviceform-gen-54 {
+  color: #ef4444;
+}
+
+.serviceform-gen-55 {
+  width: 100%;
+  padding: 12px 16px;
+  background: rgba(0,0,0,0.3);
+  border-radius: 8px;
+  color: #fff;
+}
+
+.serviceform-gen-56 {
+  color: #ef4444;
+  font-size: 12px;
+  margin-top: 4px;
+}
+
+.serviceform-gen-57 {
+  color: rgba(255,255,255,0.8);
+  margin-bottom: 8px;
+  display: block;
+}
+
+.serviceform-gen-58 {
+  width: 100%;
+  padding: 12px 16px;
+  background: rgba(0,0,0,0.3);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 8px;
+  color: #fff;
+}
+
+.serviceform-gen-59 {
+  color: rgba(255,255,255,0.8);
+  margin-bottom: 8px;
+  display: block;
+}
+
+.serviceform-gen-60 {
+  color: #ef4444;
+}
+
+.serviceform-gen-61 {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.serviceform-gen-62 {
+  flex: 1;
+  padding: 12px 16px;
+  background: rgba(0,0,0,0.3);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 8px;
+  color: #fff;
+}
+
+.serviceform-gen-63 {
+  padding: 12px 16px;
+  background: rgba(239,68,68,0.2);
+  border: 1px solid #ef4444;
+  border-radius: 8px;
+  color: #ef4444;
+  cursor: pointer;
+}
+
+.serviceform-gen-64 {
+  display: flex;
+  gap: 8px;
+}
+
+.serviceform-gen-65 {
+  flex: 1;
+  padding: 12px 16px;
+  background: rgba(0,0,0,0.3);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 8px;
+  color: #fff;
+}
+
+.serviceform-gen-66 {
+  padding: 12px 20px;
+  background: rgba(96,165,250,0.2);
+  border: 1px solid #60a5fa;
+  border-radius: 8px;
+  color: #60a5fa;
+  cursor: pointer;
+}
+
+.serviceform-gen-67 {
+  color: #ef4444;
+  font-size: 12px;
+  margin-top: 4px;
+}
+
+.serviceform-gen-68 {
+  color: rgba(255,255,255,0.8);
+  margin-bottom: 8px;
+  display: block;
+}
+
+.serviceform-gen-69 {
+  width: 100%;
+  padding: 12px 16px;
+  background: rgba(0,0,0,0.3);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 8px;
+  color: #fff;
+}
+
+.serviceform-gen-70 {
+  color: rgba(255,255,255,0.8);
+  margin-bottom: 8px;
+  display: block;
+}
+
+.serviceform-gen-71 {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.serviceform-gen-72 {
+  flex: 1;
+  padding: 12px 16px;
+  background: rgba(0,0,0,0.3);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 8px;
+  color: #fff;
+}
+
+.serviceform-gen-73 {
+  padding: 12px 16px;
+  background: rgba(239,68,68,0.2);
+  border: 1px solid #ef4444;
+  border-radius: 8px;
+  color: #ef4444;
+  cursor: pointer;
+}
+
+.serviceform-gen-74 {
+  display: flex;
+  gap: 8px;
+}
+
+.serviceform-gen-75 {
+  flex: 1;
+  padding: 12px 16px;
+  background: rgba(0,0,0,0.3);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 8px;
+  color: #fff;
+}
+
+.serviceform-gen-76 {
+  padding: 12px 20px;
+  background: rgba(96,165,250,0.2);
+  border: 1px solid #60a5fa;
+  border-radius: 8px;
+  color: #60a5fa;
+  cursor: pointer;
+}
+
+.serviceform-gen-77 {
+  color: rgba(255,255,255,0.8);
+  margin-bottom: 8px;
+  display: block;
+}
+
+.serviceform-gen-78 {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.serviceform-gen-79 {
+  flex: 1;
+  padding: 12px 16px;
+  background: rgba(0,0,0,0.3);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 8px;
+  color: #fff;
+}
+
+.serviceform-gen-80 {
+  padding: 12px 16px;
+  background: rgba(239,68,68,0.2);
+  border: 1px solid #ef4444;
+  border-radius: 8px;
+  color: #ef4444;
+  cursor: pointer;
+}
+
+.serviceform-gen-81 {
+  display: flex;
+  gap: 8px;
+}
+
+.serviceform-gen-82 {
+  flex: 1;
+  padding: 12px 16px;
+  background: rgba(0,0,0,0.3);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 8px;
+  color: #fff;
+}
+
+.serviceform-gen-83 {
+  padding: 12px 20px;
+  background: rgba(96,165,250,0.2);
+  border: 1px solid #60a5fa;
+  border-radius: 8px;
+  color: #60a5fa;
+  cursor: pointer;
+}
+
+.serviceform-gen-84 {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+@media (max-width: 768px) {
+  .serviceform-gen-84 {
+    margin-bottom: 14px;
+  }
+}
+
+.serviceform-gen-85 {
+  font-size: 18px;
+  font-weight: 600;
+  color: #fff;
+}
+
+@media (max-width: 768px) {
+  .serviceform-gen-85 {
+    font-size: 15px;
+  }
+}
+
+@media (max-width: 480px) {
+  .serviceform-gen-85 {
+    font-size: 13px;
+  }
+}
+
+.serviceform-gen-86 {
+  padding: 10px 20px;
+  background: rgba(96,165,250,0.2);
+  border: 1px solid #60a5fa;
+  border-radius: 8px;
+  color: #60a5fa;
+  cursor: pointer;
+}
+
+.serviceform-gen-87 {
+  background: rgba(255,255,255,0.05);
+  border-radius: 16px;
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+.serviceform-gen-88 {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.serviceform-gen-89 {
+  color: #60a5fa;
+}
+
+.serviceform-gen-90 {
+  padding: 6px 12px;
+  background: rgba(239,68,68,0.2);
+  border: 1px solid #ef4444;
+  border-radius: 6px;
+  color: #ef4444;
+  cursor: pointer;
+}
+
+.serviceform-gen-91 {
+  display: grid;
+  gap: 16px;
+}
+
+.serviceform-gen-92 {
+  padding: 12px 16px;
+  background: rgba(0,0,0,0.3);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 8px;
+  color: #fff;
+}
+
+.serviceform-gen-93 {
+  padding: 12px 16px;
+  background: rgba(0,0,0,0.3);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 8px;
+  color: #fff;
+}
+
+.serviceform-gen-94 {
+  padding: 12px 16px;
+  background: rgba(0,0,0,0.3);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 8px;
+  color: #fff;
+}
+
+.serviceform-gen-95 {
+  color: rgba(255,255,255,0.8);
+  margin-bottom: 8px;
+  display: block;
+}
+
+.serviceform-gen-96 {
+  padding: 12px 16px;
+  background: rgba(0,0,0,0.3);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 8px;
+  color: #fff;
+  cursor: pointer;
+}
+
+.serviceform-gen-97 {
+  margin-top: 8px;
+}
+
+.serviceform-gen-98 {
+  max-width: 100%;
+  max-height: 150px;
+  border-radius: 8px;
+  object-fit: cover;
+}
+
+.serviceform-gen-99 {
+  margin-top: 8px;
+  padding: 4px 12px;
+  background: rgba(239,68,68,0.2);
+  border: 1px solid #ef4444;
+  border-radius: 6px;
+  color: #ef4444;
+  cursor: pointer;
+  font-size: 12px;
+}
+
+.serviceform-gen-100 {
+  color: rgba(255,255,255,0.8);
+  font-size: 14px;
+  margin-bottom: 8px;
+  display: block;
+}
+
+.serviceform-gen-101 {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.serviceform-gen-102 {
+  flex: 1;
+  padding: 12px 16px;
+  background: rgba(0,0,0,0.3);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 8px;
+  color: #fff;
+}
+
+.serviceform-gen-103 {
+  padding: 12px 16px;
+  background: rgba(239,68,68,0.2);
+  border: 1px solid #ef4444;
+  border-radius: 8px;
+  color: #ef4444;
+  cursor: pointer;
+}
+
+.serviceform-gen-104 {
+  display: flex;
+  gap: 8px;
+}
+
+.serviceform-gen-105 {
+  flex: 1;
+  padding: 12px 16px;
+  background: rgba(0,0,0,0.3);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 8px;
+  color: #fff;
+}
+
+.serviceform-gen-106 {
+  padding: 12px 20px;
+  background: rgba(96,165,250,0.2);
+  border: 1px solid #60a5fa;
+  border-radius: 8px;
+  color: #60a5fa;
+  cursor: pointer;
+}
+
+.serviceform-gen-107 {
+  padding: 12px 16px;
+  background: rgba(0,0,0,0.3);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 8px;
+  color: #fff;
+}
+
+.serviceform-gen-108 {
+  padding: 12px 16px;
+  background: rgba(0,0,0,0.3);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 8px;
+  color: #fff;
+}
+
+.serviceform-gen-109 {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.serviceform-gen-110 {
+  color: rgba(255,255,255,0.8);
+}
+
+.serviceform-gen-111 {
+  text-align: center;
+  padding: 60px;
+  background: rgba(255,255,255,0.03);
+  border-radius: 16px;
+  color: rgba(255,255,255,0.4);
+}
+
+@media (max-width: 768px) {
+  .serviceform-gen-111 {
+    padding: 36px;
+  }
+}
+
+.serviceform-gen-112 {
+  font-size: 18px;
+  font-weight: 600;
+  color: #fff;
+  margin-bottom: 24px;
+}
+
+@media (max-width: 768px) {
+  .serviceform-gen-112 {
+    font-size: 15px;
+    margin-bottom: 14px;
+  }
+}
+
+@media (max-width: 480px) {
+  .serviceform-gen-112 {
+    font-size: 13px;
+  }
+}
+
+.serviceform-gen-113 {
+  margin-bottom: 24px;
+}
+
+@media (max-width: 768px) {
+  .serviceform-gen-113 {
+    margin-bottom: 14px;
+  }
+}
+
+.serviceform-gen-114 {
+  color: rgba(255,255,255,0.8);
+  margin-bottom: 8px;
+  display: block;
+}
+
+.serviceform-gen-115 {
+  width: 100%;
+  padding: 12px 16px;
+  background: rgba(0,0,0,0.3);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 8px;
+  color: #fff;
+}
+
+.serviceform-gen-116 {
+  margin-bottom: 24px;
+}
+
+@media (max-width: 768px) {
+  .serviceform-gen-116 {
+    margin-bottom: 14px;
+  }
+}
+
+.serviceform-gen-117 {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.serviceform-gen-118 {
+  color: rgba(255,255,255,0.8);
+}
+
+.serviceform-gen-119 {
+  padding: 8px 16px;
+  background: rgba(96,165,250,0.2);
+  border: 1px solid #60a5fa;
+  border-radius: 8px;
+  color: #60a5fa;
+  cursor: pointer;
+}
+
+.serviceform-gen-120 {
+  background: rgba(255,255,255,0.05);
+  border-radius: 12px;
+  padding: 16px;
+  margin-bottom: 16px;
+}
+
+.serviceform-gen-121 {
+  display: grid;
+  gap: 12px;
+}
+
+.serviceform-gen-122 {
+  padding: 12px 16px;
+  background: rgba(0,0,0,0.3);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 8px;
+  color: #fff;
+}
+
+.serviceform-gen-123 {
+  padding: 12px 16px;
+  background: rgba(0,0,0,0.3);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 8px;
+  color: #fff;
+}
+
+.serviceform-gen-124 {
+  padding: 12px 16px;
+  background: rgba(0,0,0,0.3);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 8px;
+  color: #fff;
+}
+
+.serviceform-gen-125 {
+  padding: 8px;
+  background: rgba(239,68,68,0.2);
+  border: 1px solid #ef4444;
+  border-radius: 8px;
+  color: #ef4444;
+  cursor: pointer;
+}
+
+.serviceform-gen-126 {
+  display: grid;
+  gap: 12px;
+  margin-top: 16px;
+}
+
+.serviceform-gen-127 {
+  padding: 12px 16px;
+  background: rgba(0,0,0,0.3);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 8px;
+  color: #fff;
+}
+
+.serviceform-gen-128 {
+  padding: 12px 16px;
+  background: rgba(0,0,0,0.3);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 8px;
+  color: #fff;
+}
+
+.serviceform-gen-129 {
+  padding: 12px 16px;
+  background: rgba(0,0,0,0.3);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 8px;
+  color: #fff;
+}
+
+.serviceform-gen-130 {
+  font-size: 18px;
+  font-weight: 600;
+  color: #fff;
+  margin-bottom: 24px;
+}
+
+@media (max-width: 768px) {
+  .serviceform-gen-130 {
+    font-size: 15px;
+    margin-bottom: 14px;
+  }
+}
+
+@media (max-width: 480px) {
+  .serviceform-gen-130 {
+    font-size: 13px;
+  }
+}
+
+.serviceform-gen-131 {
+  margin-bottom: 24px;
+}
+
+@media (max-width: 768px) {
+  .serviceform-gen-131 {
+    margin-bottom: 14px;
+  }
+}
+
+.serviceform-gen-132 {
+  color: rgba(255,255,255,0.8);
+  margin-bottom: 8px;
+  display: block;
+}
+
+.serviceform-gen-133 {
+  width: 100%;
+  padding: 12px 16px;
+  background: rgba(0,0,0,0.3);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 8px;
+  color: #fff;
+}
+
+.serviceform-gen-134 {
+  margin-bottom: 24px;
+}
+
+@media (max-width: 768px) {
+  .serviceform-gen-134 {
+    margin-bottom: 14px;
+  }
+}
+
+.serviceform-gen-135 {
+  color: rgba(255,255,255,0.8);
+  margin-bottom: 8px;
+  display: block;
+}
+
+.serviceform-gen-136 {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.serviceform-gen-137 {
+  flex: 1;
+  padding: 12px 16px;
+  background: rgba(0,0,0,0.3);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 8px;
+  color: #fff;
+}
+
+.serviceform-gen-138 {
+  padding: 12px 16px;
+  background: rgba(239,68,68,0.2);
+  border: 1px solid #ef4444;
+  border-radius: 8px;
+  color: #ef4444;
+  cursor: pointer;
+}
+
+.serviceform-gen-139 {
+  display: flex;
+  gap: 8px;
+}
+
+.serviceform-gen-140 {
+  flex: 1;
+  padding: 12px 16px;
+  background: rgba(0,0,0,0.3);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 8px;
+  color: #fff;
+}
+
+.serviceform-gen-141 {
+  padding: 12px 20px;
+  background: rgba(96,165,250,0.2);
+  border: 1px solid #60a5fa;
+  border-radius: 8px;
+  color: #60a5fa;
+  cursor: pointer;
+}
+
+.serviceform-gen-142 {
+  color: rgba(255,255,255,0.8);
+  margin-bottom: 8px;
+  display: block;
+}
+
+.serviceform-gen-143 {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.serviceform-gen-144 {
+  flex: 1;
+  padding: 12px 16px;
+  background: rgba(0,0,0,0.3);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 8px;
+  color: #fff;
+}
+
+.serviceform-gen-145 {
+  padding: 12px 16px;
+  background: rgba(239,68,68,0.2);
+  border: 1px solid #ef4444;
+  border-radius: 8px;
+  color: #ef4444;
+  cursor: pointer;
+}
+
+.serviceform-gen-146 {
+  display: flex;
+  gap: 8px;
+}
+
+.serviceform-gen-147 {
+  flex: 1;
+  padding: 12px 16px;
+  background: rgba(0,0,0,0.3);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 8px;
+  color: #fff;
+}
+
+.serviceform-gen-148 {
+  padding: 12px 20px;
+  background: rgba(96,165,250,0.2);
+  border: 1px solid #60a5fa;
+  border-radius: 8px;
+  color: #60a5fa;
+  cursor: pointer;
+}
+
+.serviceform-gen-149 {
+  font-size: 18px;
+  font-weight: 600;
+  color: #fff;
+  margin-bottom: 24px;
+}
+
+@media (max-width: 768px) {
+  .serviceform-gen-149 {
+    font-size: 15px;
+    margin-bottom: 14px;
+  }
+}
+
+@media (max-width: 480px) {
+  .serviceform-gen-149 {
+    font-size: 13px;
+  }
+}
+
+.serviceform-gen-150 {
+  margin-bottom: 24px;
+}
+
+@media (max-width: 768px) {
+  .serviceform-gen-150 {
+    margin-bottom: 14px;
+  }
+}
+
+.serviceform-gen-151 {
+  color: rgba(255,255,255,0.8);
+  margin-bottom: 8px;
+  display: block;
+}
+
+.serviceform-gen-152 {
+  width: 100%;
+  padding: 12px 16px;
+  background: rgba(0,0,0,0.3);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 8px;
+  color: #fff;
+}
+
+.serviceform-gen-153 {
+  margin-bottom: 32px;
+}
+
+@media (max-width: 768px) {
+  .serviceform-gen-153 {
+    margin-bottom: 19px;
+  }
+}
+
+.serviceform-gen-154 {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.serviceform-gen-155 {
+  color: rgba(255,255,255,0.8);
+}
+
+.serviceform-gen-156 {
+  padding: 8px 16px;
+  background: rgba(96,165,250,0.2);
+  border: 1px solid #60a5fa;
+  border-radius: 8px;
+  color: #60a5fa;
+  cursor: pointer;
+}
+
+.serviceform-gen-157 {
+  background: rgba(255,255,255,0.05);
+  border-radius: 12px;
+  padding: 16px;
+  margin-bottom: 20px;
+}
+
+.serviceform-gen-158 {
+  color: #60a5fa;
+  margin-bottom: 12px;
+  font-size: 14px;
+}
+
+.serviceform-gen-159 {
+  display: grid;
+  gap: 12px;
+}
+
+.serviceform-gen-160 {
+  padding: 12px 16px;
+  background: rgba(0,0,0,0.3);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 8px;
+  color: #fff;
+}
+
+.serviceform-gen-161 {
+  padding: 12px 16px;
+  background: rgba(0,0,0,0.3);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 8px;
+  color: #fff;
+}
+
+.serviceform-gen-162 {
+  padding: 12px 16px;
+  background: rgba(0,0,0,0.3);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 8px;
+  color: #fff;
+  resize: vertical;
+}
+
+.serviceform-gen-163 {
+  padding: 10px;
+  background: rgba(96,165,250,0.2);
+  border: 1px solid #60a5fa;
+  border-radius: 8px;
+  color: #60a5fa;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.serviceform-gen-164 {
+  background: rgba(255,255,255,0.05);
+  border-radius: 12px;
+  padding: 16px;
+  margin-bottom: 16px;
+}
+
+.serviceform-gen-165 {
+  display: flex;
+  justify-content: space-between;
+  align-items: start;
+  margin-bottom: 12px;
+}
+
+.serviceform-gen-166 {
+  color: #60a5fa;
+}
+
+.serviceform-gen-167 {
+  padding: 6px 12px;
+  background: rgba(239,68,68,0.2);
+  border: 1px solid #ef4444;
+  border-radius: 6px;
+  color: #ef4444;
+  cursor: pointer;
+  font-size: 12px;
+}
+
+.serviceform-gen-168 {
+  display: grid;
+  gap: 12px;
+}
+
+.serviceform-gen-169 {
+  padding: 12px 16px;
+  background: rgba(0,0,0,0.3);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 8px;
+  color: #fff;
+}
+
+.serviceform-gen-170 {
+  padding: 12px 16px;
+  background: rgba(0,0,0,0.3);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 8px;
+  color: #fff;
+}
+
+.serviceform-gen-171 {
+  padding: 12px 16px;
+  background: rgba(0,0,0,0.3);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 8px;
+  color: #fff;
+}
+
+.serviceform-gen-172 {
+  text-align: center;
+  padding: 40px;
+  background: rgba(255,255,255,0.03);
+  border-radius: 12px;
+  color: rgba(255,255,255,0.4);
+  font-size: 14px;
+}
+
+@media (max-width: 768px) {
+  .serviceform-gen-172 {
+    padding: 24px;
+  }
+}
+
+.serviceform-gen-173 {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.serviceform-gen-174 {
+  color: rgba(255,255,255,0.8);
+}
+
+.serviceform-gen-175 {
+  padding: 8px 16px;
+  background: rgba(96,165,250,0.2);
+  border: 1px solid #60a5fa;
+  border-radius: 8px;
+  color: #60a5fa;
+  cursor: pointer;
+}
+
+.serviceform-gen-176 {
+  background: rgba(255,255,255,0.05);
+  border-radius: 12px;
+  padding: 16px;
+  margin-bottom: 20px;
+}
+
+.serviceform-gen-177 {
+  color: #60a5fa;
+  margin-bottom: 12px;
+  font-size: 14px;
+}
+
+.serviceform-gen-178 {
+  display: grid;
+  gap: 12px;
+}
+
+.serviceform-gen-179 {
+  padding: 12px 16px;
+  background: rgba(0,0,0,0.3);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 8px;
+  color: #fff;
+}
+
+.serviceform-gen-180 {
+  padding: 12px 16px;
+  background: rgba(0,0,0,0.3);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 8px;
+  color: #fff;
+  resize: vertical;
+}
+
+.serviceform-gen-181 {
+  padding: 10px;
+  background: rgba(96,165,250,0.2);
+  border: 1px solid #60a5fa;
+  border-radius: 8px;
+  color: #60a5fa;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.serviceform-gen-182 {
+  background: rgba(255,255,255,0.05);
+  border-radius: 12px;
+  padding: 16px;
+  margin-bottom: 16px;
+}
+
+.serviceform-gen-183 {
+  display: flex;
+  justify-content: space-between;
+  align-items: start;
+  margin-bottom: 12px;
+}
+
+.serviceform-gen-184 {
+  color: #60a5fa;
+}
+
+.serviceform-gen-185 {
+  padding: 6px 12px;
+  background: rgba(239,68,68,0.2);
+  border: 1px solid #ef4444;
+  border-radius: 6px;
+  color: #ef4444;
+  cursor: pointer;
+  font-size: 12px;
+}
+
+.serviceform-gen-186 {
+  display: grid;
+  gap: 12px;
+}
+
+.serviceform-gen-187 {
+  padding: 12px 16px;
+  background: rgba(0,0,0,0.3);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 8px;
+  color: #fff;
+}
+
+.serviceform-gen-188 {
+  padding: 12px 16px;
+  background: rgba(0,0,0,0.3);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 8px;
+  color: #fff;
+}
+
+.serviceform-gen-189 {
+  text-align: center;
+  padding: 40px;
+  background: rgba(255,255,255,0.03);
+  border-radius: 12px;
+  color: rgba(255,255,255,0.4);
+  font-size: 14px;
+}
+
+@media (max-width: 768px) {
+  .serviceform-gen-189 {
+    padding: 24px;
+  }
+}
+
+.serviceform-gen-190 {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+@media (max-width: 768px) {
+  .serviceform-gen-190 {
+    margin-bottom: 14px;
+  }
+}
+
+.serviceform-gen-191 {
+  font-size: 18px;
+  font-weight: 600;
+  color: #fff;
+}
+
+@media (max-width: 768px) {
+  .serviceform-gen-191 {
+    font-size: 15px;
+  }
+}
+
+@media (max-width: 480px) {
+  .serviceform-gen-191 {
+    font-size: 13px;
+  }
+}
+
+.serviceform-gen-192 {
+  padding: 10px 20px;
+  background: rgba(96,165,250,0.2);
+  border: 1px solid #60a5fa;
+  border-radius: 8px;
+  color: #60a5fa;
+  cursor: pointer;
+}
+
+.serviceform-gen-193 {
+  display: grid;
+  gap: 12px;
+  margin-top: 20px;
+}
+
+.serviceform-gen-194 {
+  padding: 12px 16px;
+  background: rgba(0,0,0,0.3);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 8px;
+  color: #fff;
+}
+
+.serviceform-gen-195 {
+  padding: 12px 16px;
+  background: rgba(0,0,0,0.3);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 8px;
+  color: #fff;
+}
+
+.serviceform-gen-196 {
+  padding: 12px;
+  background: rgba(96,165,250,0.2);
+  border: 1px solid #60a5fa;
+  border-radius: 8px;
+  color: #60a5fa;
+  cursor: pointer;
+}
+
+.serviceform-gen-197 {
+  background: rgba(255,255,255,0.05);
+  border-radius: 12px;
+  padding: 20px;
+  margin-bottom: 16px;
+}
+
+.serviceform-gen-198 {
+  display: grid;
+  gap: 12px;
+}
+
+.serviceform-gen-199 {
+  padding: 12px 16px;
+  background: rgba(0,0,0,0.3);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 8px;
+  color: #fff;
+}
+
+.serviceform-gen-200 {
+  padding: 12px 16px;
+  background: rgba(0,0,0,0.3);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 8px;
+  color: #fff;
+}
+
+.serviceform-gen-201 {
+  padding: 8px;
+  background: rgba(239,68,68,0.2);
+  border: 1px solid #ef4444;
+  border-radius: 8px;
+  color: #ef4444;
+  cursor: pointer;
+}
+
+.serviceform-gen-202 {
+  text-align: center;
+  padding: 60px;
+  background: rgba(255,255,255,0.03);
+  border-radius: 16px;
+  color: rgba(255,255,255,0.4);
+}
+
+@media (max-width: 768px) {
+  .serviceform-gen-202 {
+    padding: 36px;
+  }
+}
+
+.serviceform-gen-203 {
+  font-size: 18px;
+  font-weight: 600;
+  color: #fff;
+  margin-bottom: 24px;
+}
+
+@media (max-width: 768px) {
+  .serviceform-gen-203 {
+    font-size: 15px;
+    margin-bottom: 14px;
+  }
+}
+
+@media (max-width: 480px) {
+  .serviceform-gen-203 {
+    font-size: 13px;
+  }
+}
+
+.serviceform-gen-204 {
+  display: grid;
+  gap: 20px;
+}
+
+.serviceform-gen-205 {
+  color: rgba(255,255,255,0.8);
+  margin-bottom: 8px;
+  display: block;
+}
+
+.serviceform-gen-206 {
+  width: 100%;
+  padding: 12px 16px;
+  background: rgba(0,0,0,0.3);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 8px;
+  color: #fff;
+}
+
+.serviceform-gen-207 {
+  color: rgba(255,255,255,0.8);
+  margin-bottom: 8px;
+  display: block;
+}
+
+.serviceform-gen-208 {
+  width: 100%;
+  padding: 12px 16px;
+  background: rgba(0,0,0,0.3);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 8px;
+  color: #fff;
+}
+
+.serviceform-gen-209 {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.serviceform-gen-210 {
+  color: rgba(255,255,255,0.8);
+}
+
+.serviceform-gen-211 {
+  padding: 8px 16px;
+  background: rgba(96,165,250,0.2);
+  border: 1px solid #60a5fa;
+  border-radius: 8px;
+  color: #60a5fa;
+  cursor: pointer;
+}
+
+.serviceform-gen-212 {
+  background: rgba(255,255,255,0.05);
+  border-radius: 12px;
+  padding: 16px;
+  margin-bottom: 16px;
+}
+
+.serviceform-gen-213 {
+  display: grid;
+  gap: 12px;
+}
+
+.serviceform-gen-214 {
+  padding: 12px 16px;
+  background: rgba(0,0,0,0.3);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 8px;
+  color: #fff;
+}
+
+.serviceform-gen-215 {
+  padding: 12px 16px;
+  background: rgba(0,0,0,0.3);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 8px;
+  color: #fff;
+}
+
+.serviceform-gen-216 {
+  padding: 8px;
+  background: rgba(239,68,68,0.2);
+  border: 1px solid #ef4444;
+  border-radius: 8px;
+  color: #ef4444;
+  cursor: pointer;
+}
+
+.serviceform-gen-217 {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+@media (max-width: 768px) {
+  .serviceform-gen-217 {
+    gap: 14px;
+  }
+}
+
+.serviceform-gen-218 {
+  font-size: 18px;
+  font-weight: 600;
+  color: #fff;
+  margin-bottom: 8px;
+}
+
+@media (max-width: 768px) {
+  .serviceform-gen-218 {
+    font-size: 15px;
+  }
+}
+
+@media (max-width: 480px) {
+  .serviceform-gen-218 {
+    font-size: 13px;
+  }
+}
+
+.serviceform-gen-219 {
+  color: rgba(255,255,255,0.5);
+  font-size: 13px;
+  margin-top: -12px;
+}
+
+.serviceform-gen-220 {
+  color: rgba(255,255,255,0.8);
+  margin-bottom: 8px;
+  display: block;
+}
+
+.serviceform-gen-221 {
+  width: 100%;
+  padding: 12px 16px;
+  background: rgba(0,0,0,0.3);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 8px;
+  color: #fff;
+  font-size: 14px;
+}
+
+.serviceform-gen-222 {
+  color: rgba(255,255,255,0.8);
+  margin-bottom: 8px;
+  display: block;
+}
+
+.serviceform-gen-223 {
+  width: 100%;
+  padding: 12px 16px;
+  background: rgba(0,0,0,0.3);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 8px;
+  color: #fff;
+  font-size: 14px;
+  resize: vertical;
+}
+
+.serviceform-gen-224 {
+  color: rgba(255,255,255,0.8);
+  margin-bottom: 8px;
+  display: block;
+}
+
+.serviceform-gen-225 {
+  display: flex;
+  gap: 8px;
+}
+
+.serviceform-gen-226 {
+  flex: 1;
+  padding: 12px 16px;
+  background: rgba(0,0,0,0.3);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 8px;
+  color: #fff;
+  font-size: 14px;
+}
+
+.serviceform-gen-227 {
+  padding: 12px 20px;
+  background: rgba(96,165,250,0.2);
+  border: 1px solid #60a5fa;
+  border-radius: 8px;
+  color: #60a5fa;
+  cursor: pointer;
+}
+
+.serviceform-gen-228 {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.serviceform-gen-229 {
+  padding: 6px 12px;
+  background: rgba(96,165,250,0.15);
+  border: 1px solid rgba(96,165,250,0.3);
+  border-radius: 6px;
+  color: #60a5fa;
+  font-size: 13px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.serviceform-gen-230 {
+  background: none;
+  border: none;
+  color: #ef4444;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+@media (max-width: 768px) {
+  .serviceform-gen-230 {
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 480px) {
+  .serviceform-gen-230 {
+    font-size: 11px;
+  }
+}
+
+.serviceform-gen-231 {
+  color: rgba(255,255,255,0.8);
+  margin-bottom: 8px;
+  display: block;
+}
+
+.serviceform-gen-232 {
+  width: 100%;
+  padding: 12px 16px;
+  background: rgba(0,0,0,0.3);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 8px;
+  color: #fff;
+  font-size: 14px;
+}
+
+.serviceform-gen-233 {
+  color: rgba(255,255,255,0.8);
+  margin-bottom: 8px;
+  display: block;
+}
+
+.serviceform-gen-234 {
+  width: 100%;
+  padding: 12px 16px;
+  background: rgba(0,0,0,0.3);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 8px;
+  color: #fff;
+  font-size: 14px;
+}
+
+.serviceform-gen-235 {
+  border: none;
+  border-top: 1px solid rgba(255,255,255,0.1);
+  margin: 8px 0;
+}
+
+.serviceform-gen-236 {
+  color: #60a5fa;
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.serviceform-gen-237 {
+  color: rgba(255,255,255,0.8);
+  margin-bottom: 8px;
+  display: block;
+}
+
+.serviceform-gen-238 {
+  width: 100%;
+  padding: 12px 16px;
+  background: rgba(0,0,0,0.3);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 8px;
+  color: #fff;
+  font-size: 14px;
+}
+
+.serviceform-gen-239 {
+  color: rgba(255,255,255,0.8);
+  margin-bottom: 8px;
+  display: block;
+}
+
+.serviceform-gen-240 {
+  width: 100%;
+  padding: 12px 16px;
+  background: rgba(0,0,0,0.3);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 8px;
+  color: #fff;
+  font-size: 14px;
+  resize: vertical;
+}
+
+.serviceform-gen-241 {
+  color: rgba(255,255,255,0.8);
+  margin-bottom: 8px;
+  display: block;
+}
+
+.serviceform-gen-242 {
+  width: 100%;
+  padding: 12px 16px;
+  background: rgba(0,0,0,0.3);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 8px;
+  color: #fff;
+  font-size: 14px;
+}
+
+.serviceform-gen-243 {
+  border: none;
+  border-top: 1px solid rgba(255,255,255,0.1);
+  margin: 8px 0;
+}
+
+.serviceform-gen-244 {
+  color: #60a5fa;
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.serviceform-gen-245 {
+  color: rgba(255,255,255,0.8);
+  margin-bottom: 8px;
+  display: block;
+}
+
+.serviceform-gen-246 {
+  width: 100%;
+  padding: 12px 16px;
+  background: rgba(0,0,0,0.3);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 8px;
+  color: #fff;
+  font-size: 14px;
+}
+
+.serviceform-gen-247 {
+  color: rgba(255,255,255,0.8);
+  margin-bottom: 8px;
+  display: block;
+}
+
+.serviceform-gen-248 {
+  width: 100%;
+  padding: 12px 16px;
+  background: rgba(0,0,0,0.3);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 8px;
+  color: #fff;
+  font-size: 14px;
+  resize: vertical;
+}
+
+.serviceform-gen-249 {
+  color: rgba(255,255,255,0.8);
+  margin-bottom: 8px;
+  display: block;
+}
+
+.serviceform-gen-250 {
+  width: 100%;
+  padding: 12px 16px;
+  background: rgba(0,0,0,0.3);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 8px;
+  color: #fff;
+  font-size: 14px;
+}
+
+.serviceform-gen-251 {
+  border: none;
+  border-top: 1px solid rgba(255,255,255,0.1);
+  margin: 8px 0;
+}
+
+.serviceform-gen-252 {
+  color: rgba(255,255,255,0.8);
+  margin-bottom: 8px;
+  display: block;
+}
+
+.serviceform-gen-253 {
+  width: 100%;
+  padding: 12px 16px;
+  background: rgba(0,0,0,0.3);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 8px;
+  color: #fff;
+  font-size: 13px;
+  font-family: monospace;
+  resize: vertical;
+}
+
+.serviceform-gen-254 {
+  display: flex;
+  gap: 16px;
+  justify-content: flex-end;
+  margin-top: 40px;
+  padding-top: 24px;
+  border-top: 1px solid rgba(255,255,255,0.1);
+}
+
+@media (max-width: 768px) {
+  .serviceform-gen-254 {
+    margin-top: 24px;
+    padding-top: 14px;
+  }
+}
+
+.serviceform-gen-255 {
+  padding: 12px 28px;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 10px;
+  color: rgba(255,255,255,0.7);
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.serviceform-gen-256 {
+  padding: 12px 32px;
+  background: linear-gradient(135deg, #60a5fa, #a78bfa);
+  border: none;
+  border-radius: 10px;
+  color: #fff;
+  font-size: 14px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.serviceform-gen-257 {
+  width: 16px;
+  height: 16px;
+  border: 2px solid #fff;
+  border-top-color: transparent;
+  border-radius: 50%;
+  animation: spin 0.6s linear infinite;
+}

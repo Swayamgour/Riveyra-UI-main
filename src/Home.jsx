@@ -11,19 +11,21 @@ import ParallaxSection from "./components/animations/ParallaxSection";
 import Clients from "./components/sections/Clients";
 import SEO from "./components/SEO";
 import { useGetPageSeoQuery } from "./redux/api";
-// import ContactPopup from "./components/ui/Contactpopup";
+ import ContactPopup from "./components/ui/Contactpopup";
 
 export default function Home() {
   const { data, isLoading } = useGetPageSeoQuery("home")
   let seo = data?.data?.seo
     // console.log(seo)
+  const DEFAULT_TITLE = "Leading IT Company in Kanpur | Riveyra Infotech"
+  const DEFAULT_DESC = "Riveyra Infotech is a leading IT company in Kanpur delivering innovative software, web & app development, SEO, cybersecurity, digital marketing, AI, and enterprise solutions to help businesses grow."
   return (
     <>
       {/* <SEO /> */}
       {!isLoading &&
         (<SEO
-          title={seo?.metaTitle}
-          description={seo?.metaDescription}
+          title={seo?.metaTitle || DEFAULT_TITLE}
+          description={seo?.metaDescription || DEFAULT_DESC}
           keywords={seo?.keywords}
           canonical={seo?.canonical}
           robots={seo?.robots}
@@ -34,7 +36,7 @@ export default function Home() {
           schema={seo?.schema}
         />)}
       <Hero />
-      {/* <ContactPopup /> */}
+      {/* <ContactPopup />  */}
       <ParallaxSection />
       <About />
       <Services />
@@ -45,6 +47,7 @@ export default function Home() {
       <Portfolio />
       <Testimonials />
       <CTA />
+      
     </>
   );
 }

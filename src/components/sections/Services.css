@@ -1,0 +1,47 @@
+/* Extracted inline styles for Services.jsx */
+
+.services-gen-1 {
+  max-width: 1200px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 1;
+  padding: 0 8px;
+}
+
+@media (max-width: 768px) {
+  .services-gen-1 {
+    max-width: 100%;
+  }
+}
+
+.services-gen-2 {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.services-gen-3 {
+  font-size: clamp(28px,4vw,56px);
+  font-family: var(--font-display);
+  font-weight: 800;
+  color: #ffffff;
+}
+
+.services-gen-4 {
+  cursor: pointer;
+}
+
+.services-gen-5 {
+  cursor: pointer;
+}
+
+.services-gen-6 {
+  margin-top: 20px;
+}
+
+@media (max-width: 767px) {
+  .services-gen-6 {
+    margin-top: 16px;
+  }
+}

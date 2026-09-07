@@ -189,7 +189,7 @@ export default function Clients() {
       >
         {[
           { val: '50+', lbl: 'Happy Clients' },
-          { val: '7+', lbl: 'Years Experience' },
+          { val: '10+', lbl: 'Years Experience' },
           { val: '100%', lbl: 'Retention Rate' },
         ].map(s => (
           <div key={s.lbl} style={{ textAlign: 'center' }}>

@@ -1,0 +1,141 @@
+/* Extracted inline styles for AdminLayout.jsx */
+
+.adminlayout-gen-1 {
+  display: flex;
+  min-height: 100vh;
+  background: var(--bg);
+}
+
+.adminlayout-gen-2 {
+  width: 260px;
+  background: rgba(10,15,31,0.95);
+  backdrop-filter: blur(16px);
+  border-right: 1px solid var(--border-subtle);
+  position: fixed;
+  height: 100vh;
+  z-index: 50;
+  display: flex;
+  flex-direction: column;
+}
+
+.adminlayout-gen-3 {
+  padding: 24px 20px;
+  border-bottom: 1px solid var(--border-subtle);
+  margin-bottom: 20px;
+}
+
+.adminlayout-gen-4 {
+  font-family: var(--font-display);
+  font-size: 20px;
+  font-weight: 700;
+  background: linear-gradient(135deg,#60a5fa,#c084fc);
+  -webkit--background-clip: text;
+  -webkit--text-fill-color: transparent;
+}
+
+@media (max-width: 768px) {
+  .adminlayout-gen-4 {
+    font-size: 17px;
+  }
+}
+
+@media (max-width: 480px) {
+  .adminlayout-gen-4 {
+    font-size: 14px;
+  }
+}
+
+.adminlayout-gen-5 {
+  color: #60a5fa;
+  background: none;
+  -webkit--text-fill-color: initial;
+}
+
+.adminlayout-gen-6 {
+  font-size: 10px;
+  color: var(--text-muted);
+  margin-top: 4px;
+  font-family: var(--font-mono);
+}
+
+.adminlayout-gen-7 {
+  flex: 1;
+  padding: 0 12px;
+}
+
+.adminlayout-gen-8 {
+  font-size: 18px;
+}
+
+@media (max-width: 768px) {
+  .adminlayout-gen-8 {
+    font-size: 15px;
+  }
+}
+
+@media (max-width: 480px) {
+  .adminlayout-gen-8 {
+    font-size: 13px;
+  }
+}
+
+.adminlayout-gen-9 {
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.adminlayout-gen-10 {
+  padding: 20px;
+  border-top: 1px solid var(--border-subtle);
+  font-size: 11px;
+  color: var(--text-muted);
+  text-align: center;
+}
+
+.adminlayout-gen-11 {
+  flex: 1;
+  transition: margin 0.3s;
+}
+
+.adminlayout-gen-12 {
+  padding: 16px 28px;
+  background: rgba(2,8,18,0.8);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border-subtle);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: sticky;
+  top: 0;
+  z-index: 40;
+}
+
+.adminlayout-gen-13 {
+  padding: 8px 12px;
+  cursor: pointer;
+}
+
+.adminlayout-gen-14 {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.adminlayout-gen-15 {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #4ade80;
+  box-shadow: 0 0 8px #4ade80;
+  animation: pulse 2s infinite;
+}
+
+.adminlayout-gen-16 {
+  font-size: 12px;
+  font-family: var(--font-mono);
+}
+
+.adminlayout-gen-17 {
+  padding: 28px 32px;
+}

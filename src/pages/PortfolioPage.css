@@ -1,0 +1,650 @@
+/* Extracted inline styles for PortfolioPage.jsx */
+
+.portfoliopage-gen-1 {
+  padding: 8px 18px;
+  border-radius: 100px;
+  font-size: 10.5px;
+  font-family: var(--font-mono);
+  font-weight: 600;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  cursor: pointer;
+  flex-shrink: 0;
+  white-space: nowrap;
+  transition: all 0.25s cubic-bezier(0.16,1,0.3,1);
+}
+
+.portfoliopage-gen-2 {
+  border-radius: 20px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  background: rgba(8,14,28,0.9);
+  transition: transform 0.38s cubic-bezier(0.16,1,0.3,1), box-shadow 0.38s cubic-bezier(0.16,1,0.3,1), border-color 0.28s;
+  backdrop-filter: blur(14px);
+  cursor: default;
+}
+
+.portfoliopage-gen-3 {
+  position: relative;
+  height: 210px;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.portfoliopage-gen-4 {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  z-index: 3;
+}
+
+.portfoliopage-gen-5 {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.55s cubic-bezier(0.16,1,0.3,1), filter 0.4s;
+}
+
+.portfoliopage-gen-6 {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom,transparent 45%,rgba(8,14,28,0.98) 100%);
+}
+
+.portfoliopage-gen-7 {
+  position: absolute;
+  inset: 0;
+  transition: opacity 0.4s;
+}
+
+.portfoliopage-gen-8 {
+  position: absolute;
+  top: 14px;
+  left: 14px;
+  z-index: 4;
+  font-size: 12px;
+  padding: 5px 11px;
+  border-radius: 100px;
+  font-family: var(--font-mono);
+  font-weight: 600;
+  letter-spacing: 1.4px;
+  backdrop-filter: blur(10px);
+}
+
+.portfoliopage-gen-9 {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  z-index: 4;
+  font-size: 12px;
+  padding: 5px 10px;
+  border-radius: 8px;
+  background: rgba(4,9,20,0.8);
+  color: rgba(255,255,255,0.42);
+  font-family: var(--font-mono);
+  backdrop-filter: blur(10px);
+}
+
+.portfoliopage-gen-10 {
+  position: absolute;
+  bottom: 14px;
+  left: 14px;
+  z-index: 4;
+  font-size: 10px;
+  color: rgba(255,255,255,0.55);
+  font-family: var(--font-mono);
+  letter-spacing: 1px;
+  transition: all 0.3s cubic-bezier(0.16,1,0.3,1);
+}
+
+.portfoliopage-gen-11 {
+  padding: 20px 22px 24px;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  position: relative;
+}
+
+.portfoliopage-gen-12 {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  transition: opacity 0.4s;
+}
+
+.portfoliopage-gen-13 {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 4px;
+}
+
+.portfoliopage-gen-14 {
+  font-size: 21px;
+  font-family: var(--font-display);
+  font-weight: 800;
+  color: #fff;
+  line-height: 1.08;
+}
+
+@media (max-width: 768px) {
+  .portfoliopage-gen-14 {
+    font-size: 18px;
+  }
+}
+
+@media (max-width: 480px) {
+  .portfoliopage-gen-14 {
+    font-size: 15px;
+  }
+}
+
+.portfoliopage-gen-15 {
+  flex-shrink: 0;
+  margin-top: 3px;
+  transition: all 0.3s cubic-bezier(0.16,1,0.3,1);
+}
+
+.portfoliopage-gen-16 {
+  font-size: 13.5px;
+  color: rgba(255,255,255,0.58);
+  line-height: 1.78;
+  font-family: var(--font-body);
+  flex: 1;
+  margin-bottom: 16px;
+}
+
+.portfoliopage-gen-17 {
+  display: flex;
+  gap: 5px;
+  flex-wrap: wrap;
+}
+
+.portfoliopage-gen-18 {
+  font-size: 12px;
+  padding: 3px 9px;
+  border-radius: 5px;
+  font-family: var(--font-mono);
+  font-weight: 600;
+  transition: background 0.2s, border-color 0.2s;
+}
+
+.portfoliopage-gen-19 {
+  font-size: 12px;
+  padding: 3px 8px;
+  border-radius: 5px;
+  background: rgba(255,255,255,0.04);
+  color: rgba(255,255,255,0.28);
+  font-family: var(--font-mono);
+}
+
+.portfoliopage-gen-20 {
+  height: 2px;
+  flex-shrink: 0;
+  transform-origin: left;
+  transition: transform 0.42s cubic-bezier(0.16,1,0.3,1);
+}
+
+.portfoliopage-gen-21 {
+  background: rgba(255,255,255,0.018);
+  border-top: 1px solid rgba(96,165,250,0.07);
+  border-bottom: 1px solid rgba(96,165,250,0.07);
+}
+
+.portfoliopage-gen-22 {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 48px 7%;
+  display: grid;
+  grid-template-columns: repeat(4,1fr);
+  gap: 0;
+}
+
+@media (max-width: 767px) {
+  .portfoliopage-gen-22 {
+    padding: 36px 5%;
+    grid-template-columns: repeat(2,1fr);
+    gap: 24px 16px;
+  }
+}
+
+@media (max-width: 768px) {
+  .portfoliopage-gen-22 {
+    max-width: 100%;
+  }
+}
+
+.portfoliopage-gen-23 {
+  text-align: center;
+  padding: 0 24px;
+}
+
+@media (max-width: 767px) {
+  .portfoliopage-gen-23 {
+    padding: 0;
+  }
+}
+
+.portfoliopage-gen-24 {
+  font-size: 48px;
+  font-family: var(--font-display);
+  font-weight: 800;
+  line-height: 1;
+}
+
+@media (max-width: 767px) {
+  .portfoliopage-gen-24 {
+    font-size: 34px;
+  }
+}
+
+.portfoliopage-gen-25 {
+  font-size: 10.5px;
+  color: rgba(255,255,255,0.38);
+  font-family: var(--font-mono);
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  margin-top: 8px;
+}
+
+@media (max-width: 767px) {
+  .portfoliopage-gen-25 {
+    font-size: 9px;
+  }
+}
+
+.portfoliopage-gen-26 {
+  background: var(--bg);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+.portfoliopage-gen-27 {
+  position: relative;
+  overflow: hidden;
+  min-height: 72vh;
+  display: flex;
+  align-items: center;
+}
+
+@media (max-width: 767px) {
+  .portfoliopage-gen-27 {
+    min-height: unset;
+  }
+}
+
+.portfoliopage-gen-28 {
+  position: absolute;
+  inset: -80px;
+  z-index: 0;
+}
+
+.portfoliopage-gen-29 {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: brightness(0.07) saturate(0.5);
+}
+
+.portfoliopage-gen-30 {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: linear-gradient(135deg,rgba(2,8,18,0.97) 0%,rgba(2,8,18,0.72) 55%,rgba(2,8,18,0.96) 100%);
+}
+
+.portfoliopage-gen-31 {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background-image: linear-gradient(rgba(96,165,250,0.024) 1px,transparent 1px),linear-gradient(90deg,rgba(96,165,250,0.024) 1px,transparent 1px);
+  background-size: 64px 64px;
+}
+
+.portfoliopage-gen-32 {
+  position: absolute;
+  top: -20%;
+  right: -4%;
+  width: 560px;
+  height: 560px;
+  border-radius: 50%;
+  background: radial-gradient(circle,rgba(96,165,250,0.09),transparent 70%);
+  z-index: 1;
+  pointer-events: none;
+}
+
+@media (max-width: 767px) {
+  .portfoliopage-gen-32 {
+    width: 260px;
+    height: 260px;
+  }
+}
+
+.portfoliopage-gen-33 {
+  position: absolute;
+  bottom: -10%;
+  left: -4%;
+  width: 440px;
+  height: 440px;
+  border-radius: 50%;
+  background: radial-gradient(circle,rgba(192,132,252,0.07),transparent 70%);
+  z-index: 1;
+  pointer-events: none;
+}
+
+@media (max-width: 767px) {
+  .portfoliopage-gen-33 {
+    width: 200px;
+    height: 200px;
+  }
+}
+
+.portfoliopage-gen-34 {
+  position: relative;
+  z-index: 2;
+  max-width: 780px;
+  width: 100%;
+}
+
+@media (max-width: 768px) {
+  .portfoliopage-gen-34 {
+    max-width: 100%;
+  }
+}
+
+.portfoliopage-gen-35 {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 24px;
+}
+
+@media (max-width: 768px) {
+  .portfoliopage-gen-35 {
+    margin-bottom: 14px;
+  }
+}
+
+.portfoliopage-gen-36 {
+  width: 28px;
+  height: 1px;
+  background: #60a5fa;
+}
+
+.portfoliopage-gen-37 {
+  font-size: 10px;
+  letter-spacing: 4px;
+  color: rgba(96,165,250,0.7);
+  font-family: var(--font-mono);
+  text-transform: uppercase;
+}
+
+.portfoliopage-gen-38 {
+  font-size: clamp(52px,6.5vw,88px);
+  font-family: var(--font-display);
+  font-weight: 800;
+  line-height: 0.94;
+  letter-spacing: -2.5px;
+  margin-bottom: 26px;
+  color: #fff;
+}
+
+@media (max-width: 767px) {
+  .portfoliopage-gen-38 {
+    font-size: clamp(36px,11vw,58px);
+  }
+}
+
+@media (max-width: 768px) {
+  .portfoliopage-gen-38 {
+    margin-bottom: 16px;
+  }
+}
+
+.portfoliopage-gen-39 {
+  font-size: 17px;
+  color: rgba(255,255,255,0.62);
+  max-width: 500px;
+  line-height: 1.85;
+  font-family: var(--font-body);
+}
+
+@media (max-width: 767px) {
+  .portfoliopage-gen-39 {
+    font-size: 15px;
+  }
+}
+
+@media (max-width: 768px) {
+  .portfoliopage-gen-39 {
+    max-width: 100%;
+  }
+}
+
+.portfoliopage-gen-40 {
+  position: sticky;
+  top: 64px;
+  z-index: 30;
+  background: linear-gradient(to bottom, var(--bg) 70%, transparent);
+}
+
+@media (max-width: 768px) {
+  .portfoliopage-gen-40 {
+    top: 38px;
+  }
+}
+
+.portfoliopage-gen-41 {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+}
+
+@media (max-width: 768px) {
+  .portfoliopage-gen-41 {
+    max-width: 100%;
+  }
+}
+
+.portfoliopage-gen-42 {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  scrollbar-width: none;
+  -webkit--overflow-scrolling: touch;
+  padding: 11px 18px;
+  border-radius: 100px;
+  background: rgba(8,14,28,0.88);
+  border: 1px solid rgba(96,165,250,0.1);
+  backdrop-filter: blur(20px);
+  width: fit-content;
+  max-width: 100%;
+}
+
+@media (max-width: 767px) {
+  .portfoliopage-gen-42 {
+    gap: 6px;
+    padding: 10px 12px;
+  }
+}
+
+.portfoliopage-gen-43 {
+  max-width: 1200px;
+  margin: 0 auto;
+  box-sizing: border-box;
+  width: 100%;
+}
+
+@media (max-width: 768px) {
+  .portfoliopage-gen-43 {
+    max-width: 100%;
+  }
+}
+
+.portfoliopage-gen-44 {
+  text-align: center;
+  padding: 100px 0;
+  color: rgba(255,255,255,0.2);
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  letter-spacing: 3px;
+}
+
+.portfoliopage-gen-45 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+
+@media (max-width: 767px) {
+  .portfoliopage-gen-45 {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1023px) {
+  .portfoliopage-gen-45 {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
+}
+
+.portfoliopage-gen-46 {
+  border-top: 1px solid rgba(96,165,250,0.07);
+  background: rgba(5,10,22,0.96);
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.portfoliopage-gen-47 {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at 50% 0%,rgba(96,165,250,0.06),transparent 65%);
+  pointer-events: none;
+}
+
+.portfoliopage-gen-48 {
+  position: absolute;
+  inset: 0;
+  background-image: linear-gradient(rgba(96,165,250,0.02) 1px,transparent 1px),linear-gradient(90deg,rgba(96,165,250,0.02) 1px,transparent 1px);
+  background-size: 64px 64px;
+  pointer-events: none;
+}
+
+.portfoliopage-gen-49 {
+  position: relative;
+  z-index: 1;
+}
+
+.portfoliopage-gen-50 {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.portfoliopage-gen-51 {
+  width: 32px;
+  height: 1px;
+  background: linear-gradient(90deg,transparent,rgba(96,165,250,0.6));
+}
+
+.portfoliopage-gen-52 {
+  font-size: 10px;
+  letter-spacing: 4px;
+  color: rgba(96,165,250,0.65);
+  font-family: var(--font-mono);
+  text-transform: uppercase;
+}
+
+.portfoliopage-gen-53 {
+  width: 32px;
+  height: 1px;
+  background: linear-gradient(90deg,rgba(96,165,250,0.6),transparent);
+}
+
+.portfoliopage-gen-54 {
+  font-size: clamp(34px,4.2vw,60px);
+  font-family: var(--font-display);
+  font-weight: 800;
+  line-height: 1.02;
+  letter-spacing: -1.5px;
+  margin-bottom: 16px;
+}
+
+@media (max-width: 767px) {
+  .portfoliopage-gen-54 {
+    font-size: clamp(26px,8vw,40px);
+  }
+}
+
+.portfoliopage-gen-55 {
+  font-size: 17px;
+  color: rgba(255,255,255,0.5);
+  max-width: 460px;
+  margin: 0 auto 36px;
+  font-family: var(--font-body);
+  line-height: 1.8;
+}
+
+@media (max-width: 767px) {
+  .portfoliopage-gen-55 {
+    font-size: 14.5px;
+  }
+}
+
+@media (max-width: 768px) {
+  .portfoliopage-gen-55 {
+    max-width: 100%;
+  }
+}
+
+.portfoliopage-gen-56 {
+  display: flex;
+  gap: 14px;
+  justify-content: center;
+  flex-direction: row;
+  align-items: center;
+}
+
+@media (max-width: 767px) {
+  .portfoliopage-gen-56 {
+    flex-direction: column;
+  }
+}
+
+.portfoliopage-gen-57 {
+  font-size: 15px;
+  padding: 15px 36px;
+  width: auto;
+}
+
+@media (max-width: 767px) {
+  .portfoliopage-gen-57 {
+    font-size: 14px;
+    padding: 14px 28px;
+    width: 100%;
+  }
+}
+
+.portfoliopage-gen-58 {
+  font-size: 15px;
+  padding: 15px 36px;
+  width: auto;
+}
+
+@media (max-width: 767px) {
+  .portfoliopage-gen-58 {
+    font-size: 14px;
+    padding: 14px 28px;
+    width: 100%;
+  }
+}

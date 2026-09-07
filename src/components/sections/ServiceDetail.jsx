@@ -827,10 +827,10 @@ export default function AIServiceDetail() {
   const navigate = useNavigate();
   const [openFaq, setOpenFaq] = useState(null);
 
-  const { id } = useParams();
+  const { slug } = useParams();
   // console.log(id)
 
-  const { data, isLoading } = useGetServiceBySlugQuery(id)
+  const { data, isLoading } = useGetServiceBySlugQuery(slug)
 
   // console.log()
 

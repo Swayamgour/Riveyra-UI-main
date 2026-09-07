@@ -47,7 +47,7 @@ const FACES = [
 const STATS = [
   { val: "9+", lbl: "Services" },
   { val: "50+", lbl: "Projects" },
-  { val: "7+", lbl: "Years" },
+  { val: "10+", lbl: "Years" },
   { val: "100%", lbl: "Delivery" },
 ];
 
@@ -321,7 +321,7 @@ export default function DraggableCube() {
 
         {/* ── TEXT ── */}
         <div>
-          <SectionTag>Your Vision. Our Execution.</SectionTag>
+          <SectionTag>Your Vision, Our Expertise</SectionTag>
 
           <motion.h2
             initial={{ opacity: 0, y: 30 }}
@@ -355,8 +355,8 @@ export default function DraggableCube() {
             }}
           >
             {isMobile
-              ? "Six specialisations. One unified team. Tap a face to explore what we do."
-              : "Six specialisations. One unified team. Every face of the cube is a discipline we've mastered — spin it, explore it, own it."}
+              ? "One team, every capability — from software to AI, under one roof. Tap a face to explore what we do."
+              : "At Riveyra Infotech, our team brings together diverse technology and digital expertise to deliver complete solutions under one roof. From software and web development to mobile apps, cybersecurity, digital marketing, AI, and business automation, we combine strategy, creativity, and technical excellence to turn your ideas into scalable digital solutions that support long-term business growth."}
           </motion.p>
 
           {/* Drag hint */}

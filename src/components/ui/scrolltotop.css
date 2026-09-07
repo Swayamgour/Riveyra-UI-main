@@ -1,0 +1,39 @@
+/* Extracted inline styles for scrolltotop.jsx */
+
+.scrolltotop-gen-1 {
+  position: fixed;
+  bottom: 32px;
+  right: 32px;
+  z-index: 990;
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  border: 1px solid rgba(96,165,250,0.35);
+  backdrop-filter: blur(16px);
+  -webkit--backdrop-filter: blur(16px);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.3s ease, transform 0.3s ease, background 0.2s ease, box-shadow 0.2s ease;
+}
+
+@media (max-width: 768px) {
+  .scrolltotop-gen-1 {
+    bottom: 19px;
+    right: 19px;
+  }
+}
+
+.scrolltotop-gen-2 {
+  transition: stroke 0.2s ease, transform 0.2s ease;
+}
+
+.scrolltotop-gen-3 {
+  position: absolute;
+  inset: -4px;
+  border-radius: 50%;
+  border: 1px solid rgba(96,165,250,0.25);
+  animation: pulse 1.5s ease-in-out infinite;
+  pointer-events: none;
+}

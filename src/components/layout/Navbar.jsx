@@ -5,12 +5,11 @@ import { useNavigate, useLocation } from 'react-router-dom'
 import Logo from '../ui/Logo'
 import { NAV_LINKS } from '../../utils/constants'
 import { useBreakpoint } from '../../hooks/useBreakpoint.jsx'
-import { useGetServicesQuery } from '../../redux/api.jsx'
+import { useGetNavDropdownItemsQuery } from '../../redux/api.jsx'
 
 const PAGE_ROUTES = {
   contact: '/contact',
   about: '/about',
-  services: '/services',
   portfolio: '/portfolio',
   career: '/career',
   blogs: '/blogs',
@@ -22,7 +21,7 @@ export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false)
   const [servicesOpen, setServicesOpen] = useState(false)
   const [mobileServicesOpen, setMobileServicesOpen] = useState(false)
-  const [hoveredItem, setHoveredItem] = useState(null)
+  const [expandedItem, setExpandedItem] = useState(null)
   const dropdownRef = useRef(null)
   const hoverTimeout = useRef(null)
 
@@ -30,7 +29,7 @@ export default function Navbar() {
   const navigate = useNavigate()
   const location = useLocation()
 
-  const { data } = useGetServicesQuery()
+  const { data } = useGetNavDropdownItemsQuery()
   const services = data?.data || []
 
   useEffect(() => {
@@ -45,6 +44,25 @@ export default function Navbar() {
     document.body.style.overflow = menuOpen ? 'hidden' : ''
     return () => { document.body.style.overflow = '' }
   }, [menuOpen])
+
+  // Reset mobile services state whenever the mobile menu closes
+  useEffect(() => {
+    if (!menuOpen) {
+      setMobileServicesOpen(false)
+      setExpandedItem(null)
+    }
+  }, [menuOpen])
+
+  // Close desktop dropdown on outside click (helps touch/tablet + keyboard users)
+  useEffect(() => {
+    const handleClickOutside = (e) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
+        setServicesOpen(false)
+      }
+    }
+    document.addEventListener('mousedown', handleClickOutside)
+    return () => document.removeEventListener('mousedown', handleClickOutside)
+  }, [])
 
   const handleLogoClick = () => {
     setMenuOpen(false)
@@ -85,6 +103,8 @@ export default function Navbar() {
   const openDropdown = () => { clearTimeout(hoverTimeout.current); setServicesOpen(true) }
   const closeDropdown = () => { hoverTimeout.current = setTimeout(() => setServicesOpen(false), 150) }
 
+  const navHeight = scrolled ? 66 : 78
+
   return (
     <>
       <style>{`
@@ -93,7 +113,7 @@ export default function Navbar() {
           position: relative;
           overflow: hidden;
         }
-        
+
         .dropdown-item::before {
           content: '';
           position: absolute;
@@ -105,26 +125,26 @@ export default function Navbar() {
           transition: left 0.5s ease;
           pointer-events: none;
         }
-        
+
         .dropdown-item:hover::before {
           left: 100%;
         }
-        
+
         @keyframes dropdownGlow {
           0% { box-shadow: 0 0 0 0 rgba(96,165,250,0); }
           50% { box-shadow: 0 0 20px 0 rgba(96,165,250,0.15); }
           100% { box-shadow: 0 0 0 0 rgba(96,165,250,0); }
         }
-        
+
         .dropdown-glow {
           animation: dropdownGlow 2s ease-in-out infinite;
         }
-        
+
         @keyframes iconPulse {
           0%, 100% { transform: scale(1); }
           50% { transform: scale(1.05); }
         }
-        
+
         .dropdown-item:hover .dropdown-icon {
           animation: iconPulse 0.4s ease;
         }
@@ -137,6 +157,31 @@ export default function Navbar() {
           background: rgba(96, 165, 250, 0.2);
           border-radius: 10px;
         }
+
+        /* Mega dropdown - responsive grid */
+        .mega-dropdown-grid {
+          display: grid;
+          grid-template-columns: repeat(4, 1fr);
+          gap: 20px 40px;
+        }
+        @media (max-width: 1200px) {
+          .mega-dropdown-grid {
+            grid-template-columns: repeat(3, 1fr);
+            gap: 18px 28px;
+          }
+        }
+        @media (max-width: 900px) {
+          .mega-dropdown-grid {
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px 22px;
+          }
+        }
+
+        /* Prevent any accidental horizontal overflow on small screens */
+        html, body {
+          max-width: 100%;
+          overflow-x: hidden;
+        }
       `}</style>
 
       <motion.nav
@@ -145,22 +190,27 @@ export default function Navbar() {
         transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
         style={{
           position: 'fixed', top: 0, left: 0, right: 0, zIndex: 900,
-          height: scrolled ? 60 : 78,
+          height: navHeight,
           display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-          padding: '0 5%',
-          background: scrolled ? 'rgba(5,11,24,0.95)' : 'transparent',
-          backdropFilter: scrolled ? 'blur(24px) saturate(1.8)' : 'none',
-          borderBottom: scrolled ? '1px solid rgba(96,165,250,0.12)' : 'none',
-          transition: 'height 0.4s, background 0.4s',
+          padding: '0 4%',
+          background: '#05070d',
+          borderBottom: '1px solid rgba(255,255,255,0.08)',
+          transition: 'height 0.3s ease',
         }}
       >
-        <div onClick={handleLogoClick} style={{ cursor: 'pointer', zIndex: 1001 }} data-hover>
-          <Logo height={52} animate />
+        <div onClick={handleLogoClick} style={{ cursor: 'pointer', zIndex: 1001, flexShrink: 0 }} data-hover>
+          <Logo height={isMobile ? 46 : isTablet ? 56 : 65} animate />
         </div>
 
-        {/* ── Desktop Nav ── */}
+        {/* ── Desktop / Tablet Nav ── */}
         {!isMobile && (
-          <div style={{ display: 'flex', gap: isTablet ? 24 : 38, alignItems: 'center' }}>
+          <div style={{
+            display: 'flex',
+            gap: isTablet ? 16 : 34,
+            alignItems: 'center',
+            flexWrap: 'nowrap',
+            overflow: 'hidden',
+          }}>
             {NAV_LINKS.map((link, i) => {
               const active = isActivePage(link)
               const isServices = link.toLowerCase() === 'services'
@@ -172,30 +222,30 @@ export default function Navbar() {
                     ref={dropdownRef}
                     onMouseEnter={openDropdown}
                     onMouseLeave={closeDropdown}
-                    style={{ position: 'relative' }}
                   >
                     <motion.a
                       href="#"
-                      onClick={e => { e.preventDefault(); handleNavClick(link) }}
+                      onClick={e => { e.preventDefault(); setServicesOpen(o => !o) }}
                       initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }}
                       transition={{ delay: 0.1 + i * 0.07 }}
                       style={{
-                        fontSize: 12.5, letterSpacing: 1.5, textTransform: 'uppercase',
-                        fontFamily: 'var(--font-body)', fontWeight: 600,
-                        color: active || servicesOpen ? 'var(--accent)' : 'var(--text-sub)',
+                        fontSize: isTablet ? 'clamp(13px, 1.4vw, 14.5px)' : 'clamp(14px, 1vw, 15.5px)',
+                        fontFamily: 'var(--font-body)', fontWeight: 500,
+                        color: '#ffffff',
                         transition: 'all 0.2s', cursor: 'pointer',
-                        borderBottom: active ? '1px solid var(--accent)' : '1px solid transparent',
-                        paddingBottom: 2,
+                        borderBottom: active || servicesOpen ? '2px solid var(--accent)' : '2px solid transparent',
+                        paddingBottom: 6,
                         display: 'flex', alignItems: 'center', gap: 5,
+                        whiteSpace: 'nowrap',
                       }}
                       data-hover
                     >
                       {link}
                       <motion.svg
-                        width="10" height="10" viewBox="0 0 10 10" fill="none"
+                        width="12" height="12" viewBox="0 0 10 10" fill="none"
                         animate={{ rotate: servicesOpen ? 180 : 0 }}
                         transition={{ duration: 0.25 }}
-                        style={{ opacity: 0.7 }}
+                        style={{ opacity: 0.8, flexShrink: 0 }}
                       >
                         <path d="M2 3.5L5 6.5L8 3.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
                       </motion.svg>
@@ -204,98 +254,91 @@ export default function Navbar() {
                     <AnimatePresence>
                       {servicesOpen && (
                         <motion.div
-                          initial={{ opacity: 0, y: 10, scale: 0.96 }}
-                          animate={{ opacity: 1, y: 0, scale: 1 }}
-                          exit={{ opacity: 0, y: 8, scale: 0.96 }}
-                          transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
+                          initial={{ opacity: 0, y: -8 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          exit={{ opacity: 0, y: -8 }}
+                          transition={{ duration: 0.22, ease: [0.16, 1, 0.3, 1] }}
                           onMouseEnter={openDropdown}
                           onMouseLeave={closeDropdown}
                           style={{
-                            position: 'absolute',
-                            top: 'calc(100% + 18px)',
-                            left: '50%',
-                            transform: 'translateX(-50%)',
-                            width: 560,
-                            background: 'linear-gradient(135deg, rgba(8,18,38,0.98) 0%, rgba(5,11,24,0.98) 100%)',
-                            backdropFilter: 'blur(32px) saturate(1.8)',
-                            border: '1px solid rgba(96,165,250,0.15)',
-                            borderRadius: 20,
-                            padding: '8px',
-                            boxShadow: '0 30px 60px rgba(0,0,0,0.6), 0 0 0.5px rgba(96,165,250,0.1), 0 20px 40px -12px rgba(0,0,0,0.5)',
-                            overflow: 'hidden',
+                            position: 'fixed',
+                            top: navHeight,
+                            left: 0,
+                            right: 0,
+                            width: '100vw',
+                            maxHeight: `calc(100vh - ${navHeight}px)`,
+                            overflowY: 'auto',
+                            background: '#0a0d16',
+                            borderTop: '1px solid rgba(255,255,255,0.06)',
+                            borderBottom: '1px solid rgba(96,165,250,0.15)',
+                            padding: '36px 6% 40px',
+                            boxShadow: '0 40px 60px rgba(0,0,0,0.5)',
                           }}
                         >
-                          <div style={{
-                            padding: '12px 16px 8px 16px',
-                            borderBottom: '1px solid rgba(96,165,250,0.08)',
-                            marginBottom: 8,
-                          }}>
-                            <span style={{
-                              fontSize: 10,
-                              letterSpacing: 2,
-                              color: 'rgba(96,165,250,0.7)',
-                              textTransform: 'uppercase',
-                              fontFamily: 'monospace',
-                            }}>✦ Our Expertise</span>
-                          </div>
-
-                          <div style={{
-                            display: 'grid',
-                            gridTemplateColumns: '1fr 1fr',
-                            gap: 6,
-                            padding: '4px 8px 12px 8px',
-                          }}>
+                          <div className="mega-dropdown-grid">
                             {services.map((item, idx) => (
                               <motion.div
                                 key={item._id || idx}
                                 initial={{ opacity: 0, y: 8 }}
                                 animate={{ opacity: 1, y: 0 }}
-                                transition={{ delay: idx * 0.03 }}
-                                onClick={() => { setServicesOpen(false); navigate(`/Service/${item.slug}`) }}
-                                onMouseEnter={() => setHoveredItem(idx)}
-                                onMouseLeave={() => setHoveredItem(null)}
-                                className="dropdown-item"
-                                style={{
-                                  display: 'flex',
-                                  alignItems: 'center',
-                                  gap: 14,
-                                  padding: '12px 16px',
-                                  borderRadius: 14,
-                                  cursor: 'pointer',
-                                  transition: 'all 0.25s cubic-bezier(0.16, 1, 0.3, 1)',
-                                  background: hoveredItem === idx ? 'rgba(96,165,250,0.08)' : 'transparent',
-                                  transform: hoveredItem === idx ? 'translateX(4px)' : 'translateX(0)',
-                                }}
+                                transition={{ delay: idx * 0.02 }}
+                                style={{ display: 'flex', flexDirection: 'column', minWidth: 0 }}
                               >
-                                <div className="dropdown-icon" style={{
-                                  width: 35, height: 35, borderRadius: 12,
-                                  background: hoveredItem === idx
-                                    ? `linear-gradient(135deg, ${item.accent || '#4facfe'}20, ${item.accent || '#00f2fe'}10)`
-                                    : `rgba(96,165,250,0.05)`,
-                                  display: 'flex', alignItems: 'center', justifyContent: 'center',
-                                  transition: 'all 0.3s ease',
-                                  border: hoveredItem === idx
-                                    ? `1px solid ${item.accent || '#4facfe'}40`
-                                    : '1px solid rgba(96,165,250,0.1)',
-                                }}>
-                                  <img
-                                    src={item.icons}
-                                    alt={item.title}
-                                    style={{ width: 20, height: 20, objectFit: 'contain' }}
-                                  />
+                                <div
+                                  onClick={() => { setServicesOpen(false); navigate(`/ServiceCategories/${item.categorySlug}`) }}
+                                  onMouseEnter={(e) => e.currentTarget.style.color = 'var(--accent)'}
+                                  onMouseLeave={(e) => e.currentTarget.style.color = '#ffffff'}
+                                  style={{
+                                    fontSize: 'clamp(15px, 1.3vw, 18px)',
+                                    fontWeight: 600,
+                                    fontFamily: 'var(--font-body)',
+                                    color: '#ffffff',
+                                    marginBottom: 14,
+                                    cursor: 'pointer',
+                                    transition: 'color 0.2s ease',
+                                    lineHeight: 1.3,
+                                    display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+                                    gap: 8,
+                                  }}
+                                >
+                                  <span style={{ display: 'flex', alignItems: 'center', gap: 10, minWidth: 0 }}>
+                                    {item.categories}
+                                  </span>
                                 </div>
-
-                                <div style={{ flex: 1 }}>
-                                  <div style={{
-                                    fontSize: 13.5, fontWeight: 700,
-                                    fontFamily: 'var(--font-body)', color: hoveredItem === idx ? '#ffffff' : 'rgba(255,255,255,0.9)',
-                                    marginBottom: 4, transition: 'color 0.2s',
-                                  }}>
-                                    {item.title}
-                                  </div>
-                                  <div style={{ fontSize: 11, color: 'rgba(148,163,184,0.7)', lineHeight: 1.3 }}>
-                                    {item.desc?.substring(0, 60)}...
-                                  </div>
+                                <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+                                  {item?.subcategories?.length > 0 ? (
+                                    item.subcategories.map((sub, i) => (
+                                      <span
+                                        key={i}
+                                        onClick={(e) => {
+                                          e.stopPropagation();
+                                          setServicesOpen(false);
+                                          navigate(`/services/${encodeURIComponent(item.categorySlug)}/${encodeURIComponent(typeof sub === 'string' ? sub : sub.slug)}`);
+                                        }}
+                                        onMouseEnter={(e) => {
+                                          e.currentTarget.style.color = 'var(--accent)';
+                                          e.currentTarget.style.transform = 'translateX(4px)';
+                                        }}
+                                        onMouseLeave={(e) => {
+                                          e.currentTarget.style.color = 'rgba(148,163,184,0.8)';
+                                          e.currentTarget.style.transform = 'translateX(0)';
+                                        }}
+                                        style={{
+                                          fontSize: 'clamp(13px, 1vw, 16px)',
+                                          color: 'rgba(148,163,184,0.85)',
+                                          cursor: 'pointer',
+                                          transition: 'all 0.2s ease',
+                                          display: 'flex',
+                                          alignItems: 'center',
+                                          gap: 6,
+                                          lineHeight: 1.4,
+                                          textTransform: 'capitalize',
+                                        }}
+                                      >
+                                        {typeof sub === 'string' ? sub : sub.name}
+                                      </span>
+                                    ))
+                                  ) : null}
                                 </div>
                               </motion.div>
                             ))}
@@ -314,28 +357,19 @@ export default function Navbar() {
                   initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.1 + i * 0.07 }}
                   style={{
-                    fontSize: 12.5, letterSpacing: 1.5, textTransform: 'uppercase',
-                    fontFamily: 'var(--font-body)', fontWeight: 600,
-                    color: active ? 'var(--accent)' : 'var(--text-sub)',
+                    fontSize: isTablet ? 'clamp(13px, 1.4vw, 14.5px)' : 'clamp(14px, 1vw, 15.5px)',
+                    fontFamily: 'var(--font-body)', fontWeight: 500,
+                    color: '#ffffff',
                     transition: 'color 0.2s', cursor: 'pointer',
-                    borderBottom: active ? '1px solid var(--accent)' : '1px solid transparent',
-                    paddingBottom: 2, position: 'relative',
+                    borderBottom: active ? '2px solid var(--accent)' : '2px solid transparent',
+                    paddingBottom: 6, position: 'relative',
+                    whiteSpace: 'nowrap',
                   }}
                   data-hover
-                  onMouseEnter={e => e.currentTarget.style.color = 'var(--text)'}
-                  onMouseLeave={e => e.currentTarget.style.color = active ? 'var(--accent)' : 'var(--text-sub)'}
+                  onMouseEnter={e => e.currentTarget.style.color = 'var(--accent)'}
+                  onMouseLeave={e => e.currentTarget.style.color = '#ffffff'}
                 >
                   {link}
-                  {!active && (
-                    <motion.div
-                      initial={{ scaleX: 0 }} whileHover={{ scaleX: 1 }}
-                      transition={{ duration: 0.3 }}
-                      style={{
-                        position: 'absolute', bottom: -2, left: 0, right: 0, height: 1,
-                        background: 'var(--accent)', transformOrigin: 'left',
-                      }}
-                    />
-                  )}
                 </motion.a>
               )
             })}
@@ -343,24 +377,30 @@ export default function Navbar() {
         )}
 
         {!isMobile && (
-          <motion.button className="btn-primary"
-            initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }}
-            transition={{ delay: 0.55 }}
-            style={{ fontSize: 11.5, padding: '10px 24px', position: 'relative', overflow: 'hidden' }}
-            data-hover
-            onClick={() => navigate('/contact')}
-            whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.98 }}
-          >
-            <span style={{ position: 'relative', zIndex: 1 }}>Get Started</span>
-            <motion.div
-              style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent)', x: '-100%' }}
-              animate={{ x: ['-100%', '100%'] }}
-              transition={{ duration: 2, repeat: Infinity, repeatDelay: 1 }}
-            />
-          </motion.button>
+          <div style={{ display: 'flex', alignItems: 'center', gap: isTablet ? 14 : 26, flexShrink: 0 }}>
+            <motion.button
+              initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }}
+              transition={{ delay: 0.55 }}
+              data-hover
+              onClick={() => navigate('/contact')}
+              whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.98 }}
+              style={{
+                display: 'flex', alignItems: 'center', gap: 8,
+                fontFamily: 'var(--font-body)', fontWeight: 600,
+                fontSize: isTablet ? 13 : 14,
+                color: '#05070d', background: 'var(--accent)',
+                border: 'none', borderRadius: 100,
+                padding: isTablet ? '9px 16px' : '11px 22px',
+                cursor: 'pointer', whiteSpace: 'nowrap',
+              }}
+            >
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none"><path d="M6.6 10.8c1.4 2.8 3.8 5.2 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1C10.9 21 3 13.1 3 3.4c0-.6.4-1 1-1h3.4c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.4 0 .8-.2 1L6.6 10.8z" fill="currentColor"/></svg>
+              Contact Us
+            </motion.button>
+          </div>
         )}
 
-        {/* Mobile Hamburguer Trigger */}
+        {/* Mobile Hamburger Trigger */}
         {isMobile && (
           <button onClick={() => setMenuOpen(o => !o)}
             style={{ background: 'none', border: 'none', cursor: 'pointer', padding: 8, zIndex: 1001, display: 'flex', flexDirection: 'column', gap: 5 }}
@@ -389,10 +429,11 @@ export default function Navbar() {
               display: 'flex', flexDirection: 'column',
               alignItems: 'stretch', justifyContent: 'flex-start',
               overflowY: 'auto',
-              padding: '100px 6vw 40px 6vw',
+              overflowX: 'hidden',
+              padding: 'calc(90px + env(safe-area-inset-top)) 6vw calc(40px + env(safe-area-inset-bottom)) 6vw',
             }}
           >
-            <div style={{ display: 'flex', flexDirection: 'column',  width: '100%' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', width: '100%', minWidth: 0 }}>
               {NAV_LINKS.map((link, i) => {
                 const isServices = link.toLowerCase() === 'services'
                 const active = isActivePage(link)
@@ -406,7 +447,7 @@ export default function Navbar() {
                         transition={{ delay: i * 0.05 }}
                         onClick={() => setMobileServicesOpen(o => !o)}
                         style={{
-                          fontSize: 16,
+                          fontSize: 'clamp(15px, 4vw, 16px)',
                           fontFamily: 'var(--font-display)',
                           fontWeight: 700,
                           color: active || mobileServicesOpen ? 'var(--accent)' : '#ffffff',
@@ -423,13 +464,13 @@ export default function Navbar() {
                           width="20" height="20" viewBox="0 0 20 20" fill="none"
                           animate={{ rotate: mobileServicesOpen ? 180 : 0 }}
                           transition={{ duration: 0.25 }}
-                          style={{ color: 'var(--accent)' }}
+                          style={{ color: 'var(--accent)', flexShrink: 0 }}
                         >
                           <path d="M5 7.5L10 12.5L15 7.5" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
                         </motion.svg>
                       </motion.div>
 
-                      {/* Dynamic Expandable Services List */}
+                      {/* Categories list */}
                       <AnimatePresence initial={false}>
                         {mobileServicesOpen && (
                           <motion.div
@@ -441,7 +482,7 @@ export default function Navbar() {
                             style={{
                               overflowX: 'hidden',
                               overflowY: 'auto',
-                              maxHeight: '320px',
+                              maxHeight: '360px',
                               background: 'rgba(255, 255, 255, 0.03)',
                               border: '1px solid rgba(96, 165, 250, 0.1)',
                               borderRadius: '16px',
@@ -449,43 +490,109 @@ export default function Navbar() {
                             }}
                           >
                             {services.map((item, idx) => (
-                              <motion.div
-                                key={item._id || idx}
-                                initial={{ opacity: 0, y: 10 }}
-                                animate={{ opacity: 1, y: 0 }}
-                                transition={{ delay: idx * 0.04 }}
-                                onClick={() => { setMenuOpen(false); setMobileServicesOpen(false); navigate(`/Service/${item.slug}`) }}
-                                style={{
-                                  display: 'flex',
-                                  alignItems: 'center',
-                                  gap: 12,
-                                  padding: '12px',
-                                  borderRadius: '12px',
-                                  cursor: 'pointer',
-                                  marginBottom: idx === services.length - 1 ? 0 : 4,
-                                }}
-                                whileTap={{ background: 'rgba(96,165,250,0.12)', x: 4 }}
-                              >
-                                <div style={{
-                                  width: 36, height: 36, borderRadius: '10px',
-                                  background: `linear-gradient(135deg, ${item.accent || '#4facfe'}20, ${item.accent || '#00f2fe'}10)`,
-                                  display: 'flex', alignItems: 'center', justifyContent: 'center',
-                                  border: `1px solid ${item.accent || '#4facfe'}30`,
-                                  flexShrink: 0
-                                }}>
-                                  <img src={item.icons} alt={item.title} style={{ width: 18, height: 18, objectFit: 'contain' }} />
-                                </div>
-                                <div style={{ flex: 1 }}>
-                                  <div style={{ color: '#fff', fontSize: 14, fontWeight: 600 }}>
-                                    {item.title}
+                              <div key={item._id || idx} style={{ marginBottom: idx === services.length - 1 ? 0 : 4 }}>
+                                <motion.div
+                                  initial={{ opacity: 0, y: 10 }}
+                                  animate={{ opacity: 1, y: 0 }}
+                                  transition={{ delay: idx * 0.04 }}
+                                  onClick={() => {
+                                    if (item?.subcategories?.length > 0) {
+                                      setExpandedItem(expandedItem === idx ? null : idx)
+                                    } else {
+                                      setMenuOpen(false)
+                                      setMobileServicesOpen(false)
+                                      navigate(`/ServiceCategories/${item.categorySlug}`)
+                                    }
+                                  }}
+                                  style={{
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    gap: 12,
+                                    padding: '12px',
+                                    borderRadius: '12px',
+                                    cursor: 'pointer',
+                                    minWidth: 0,
+                                  }}
+                                  whileTap={{ background: 'rgba(96,165,250,0.12)' }}
+                                >
+                                  <div style={{
+                                    width: 36, height: 36, borderRadius: '10px',
+                                    background: `linear-gradient(135deg, ${item.accent || '#4facfe'}20, ${item.accent || '#00f2fe'}10)`,
+                                    display: 'flex', alignItems: 'center', justifyContent: 'center',
+                                    border: `1px solid ${item.accent || '#4facfe'}30`,
+                                    flexShrink: 0
+                                  }}>
+                                    {item.icons && (
+                                      <img src={item.icons} alt={item.categories} style={{ width: 18, height: 18, objectFit: 'contain' }} />
+                                    )}
                                   </div>
-                                  {item.desc && (
-                                    <div style={{ fontSize: 11, color: 'rgba(148,163,184,0.6)', marginTop: 2, lineHeight: 1.3 }}>
-                                      {item.desc.substring(0, 50)}...
+                                  <div style={{ flex: 1, minWidth: 0 }}>
+                                    <div style={{
+                                      color: '#fff', fontSize: 14, fontWeight: 600,
+                                      display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 8,
+                                    }}>
+                                      <span style={{
+                                        overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', minWidth: 0,
+                                      }}>
+                                        {item.categories}
+                                      </span>
+                                      {item?.subcategories?.length > 0 && (
+                                        <motion.svg
+                                          width="14" height="14" viewBox="0 0 20 20" fill="none"
+                                          animate={{ rotate: expandedItem === idx ? 180 : 0 }}
+                                          transition={{ duration: 0.2 }}
+                                          style={{ color: 'var(--accent)', flexShrink: 0 }}
+                                        >
+                                          <path d="M5 7.5L10 12.5L15 7.5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                                        </motion.svg>
+                                      )}
                                     </div>
+                                    {item.desc && (
+                                      <div style={{
+                                        fontSize: 11, color: 'rgba(148,163,184,0.6)', marginTop: 2, lineHeight: 1.3,
+                                        overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap',
+                                      }}>
+                                        {item.desc.substring(0, 50)}...
+                                      </div>
+                                    )}
+                                  </div>
+                                </motion.div>
+
+                                {/* Subcategories */}
+                                <AnimatePresence initial={false}>
+                                  {expandedItem === idx && item?.subcategories?.length > 0 && (
+                                    <motion.div
+                                      initial={{ height: 0, opacity: 0 }}
+                                      animate={{ height: 'auto', opacity: 1 }}
+                                      exit={{ height: 0, opacity: 0 }}
+                                      transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
+                                      style={{ overflow: 'hidden', paddingLeft: 48, paddingRight: 8 }}
+                                    >
+                                      {item.subcategories.map((sub, i) => (
+                                        <div
+                                          key={i}
+                                          onClick={(e) => {
+                                            e.stopPropagation()
+                                            setMenuOpen(false)
+                                            setMobileServicesOpen(false)
+                                            setExpandedItem(null)
+                                            navigate(`/services/${encodeURIComponent(item.categorySlug)}/${encodeURIComponent(typeof sub === 'string' ? sub : sub.slug)}`)
+                                          }}
+                                          style={{
+                                            fontSize: 13,
+                                            color: 'rgba(148,163,184,0.85)',
+                                            padding: '9px 4px',
+                                            cursor: 'pointer',
+                                            borderBottom: '1px solid rgba(255,255,255,0.04)',
+                                          }}
+                                        >
+                                          {typeof sub === 'string' ? sub : sub.name}
+                                        </div>
+                                      ))}
+                                    </motion.div>
                                   )}
-                                </div>
-                              </motion.div>
+                                </AnimatePresence>
+                              </div>
                             ))}
                           </motion.div>
                         )}
@@ -502,7 +609,7 @@ export default function Navbar() {
                     transition={{ delay: i * 0.05 }}
                     onClick={() => handleNavClick(link)}
                     style={{
-                      fontSize: 16,
+                      fontSize: 'clamp(15px, 4vw, 16px)',
                       fontFamily: 'var(--font-display)',
                       fontWeight: 700,
                       color: active ? 'var(--accent)' : '#ffffff',

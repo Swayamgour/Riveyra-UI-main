@@ -358,7 +358,7 @@ export default function About() {
             initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.2 }}
             style={{ fontSize: isMobile ? 14.5 : 16, lineHeight: 1.85, color: 'rgba(255,255,255,0.82)', marginBottom: 14, fontFamily: 'var(--font-body)' }}
           >
-            Riveyra Infotech is Kanpur's premier software development company with over 7 years of proven excellence, delivering reliable and innovative digital solutions across India and beyond.
+            Riveyra Infotech is Kanpur's premier software development company with over 10 years of proven excellence, delivering reliable and innovative digital solutions across India and beyond. As a leading IT company in Kanpur, we help businesses turn ideas into scalable, secure, and high-performing technology products.
           </motion.p>
 
           {/* <motion.p

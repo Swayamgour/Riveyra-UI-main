@@ -2,22 +2,36 @@
   --bg: #060912;
   --surface: #0d1424;
   --card: #0a1020;
-  --border: rgba(148,163,184,0.08);
+  --border: rgba(148, 163, 184, 0.08);
   --text: #f1f5f9;
-  --muted: rgba(148,163,184,0.60);
+  --muted: rgba(148, 163, 184, 0.60);
   --accent: #60a5fa;
   --violet: #a78bfa;
+  --font-body: 'Plus Jakarta Sans', sans-serif;
 }
 
 body {
   margin: 0;
-  font-family: 'Outfit', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+  /* font-family: 'Outfit', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
+    sans-serif; */
+  font-family: "Plus Jakarta Sans", sans-serif;
+
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background: var(--bg);
   color: var(--text);
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+a {
+  /* font-family: "Oswald", sans-serif; */
+  font-family: "Plus Jakarta Sans", sans-serif;
 }
 
 code {

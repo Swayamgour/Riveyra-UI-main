@@ -10,7 +10,7 @@ export const SERVICES = [
 ]
 
 export const STATS = [
-  { value: 7, suffix: '+', label: 'Years Excellence', accent: '#60a5fa' },
+  { value: 10, suffix: '+', label: 'Years Excellence', accent: '#60a5fa' },
   { value: 3, suffix: '+', label: 'Office Locations', accent: '#c084fc' },
   { value: 100, suffix: '+', label: 'Team Members', accent: '#34d399' },
   { value: 500, suffix: '+', label: 'Projects Done', accent: '#f87171' },
@@ -46,7 +46,7 @@ export const FLOATING_CARDS = [
   { title: 'ISO Certified', sub: 'Quality Assured', iconKey: 'Trophy', accent: '#fbbf24' },
   { title: 'Startup India', sub: 'Govt. Recognised', iconKey: 'Verified', accent: '#34d399' },
   { title: '500+ Projects', sub: 'Delivered On Time', iconKey: 'Rocket', accent: '#60a5fa' },
-  { title: '7+ Years', sub: 'Of Excellence', iconKey: 'Star', accent: '#c084fc' },
+  { title: '10+ Years', sub: 'Of Excellence', iconKey: 'Star', accent: '#c084fc' },
   { title: '24/7 Support', sub: 'Always Online', iconKey: 'Clock', accent: '#f87171' },
   { title: '100+ Team', sub: 'Expert Developers', iconKey: 'Team', accent: '#34d399' },
 ]

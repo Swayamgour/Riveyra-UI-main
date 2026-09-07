@@ -1,0 +1,13 @@
+/* Extracted inline styles for TypeWriter.jsx */
+
+.typewriter-gen-1 {
+  display: inline-block;
+  width: 2px;
+  height: 0.88em;
+  background: currentColor;
+  margin-left: 3px;
+  vertical-align: middle;
+  animation: pulse 0.75s ease-in-out infinite;
+  opacity: 0.85;
+  border-radius: 1px;
+}

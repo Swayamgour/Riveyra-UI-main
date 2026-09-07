@@ -1,0 +1,14 @@
+/* Extracted inline styles for TiltCard.jsx */
+
+.tiltcard-gen-1 {
+  transform-style: preserve-3d;
+  position: relative;
+  overflow: hidden;
+}
+
+.tiltcard-gen-2 {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  border-radius: inherit;
+}

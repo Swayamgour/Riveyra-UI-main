@@ -3,7 +3,19 @@ import { motion } from 'framer-motion'
 import { useBreakpoint } from '../../hooks/useBreakpoint.jsx'
 // import { SERVICES } from '../data.jsx'
 import { useNavigate } from 'react-router-dom'
-import { useGetServicesQuery } from '../../redux/api.jsx'
+import { useGetNavDropdownItemsQuery } from '../../redux/api.jsx'
+import { FiTrendingUp, FiMonitor, FiSmartphone, FiShield, FiSearch, FiPenTool } from 'react-icons/fi'
+
+const CATEGORY_STYLES = {
+  "Digital Marketing": { icon: <FiTrendingUp size={22} />, accent: '#f87171' },
+  "Web Development": { icon: <FiMonitor size={22} />, accent: '#60a5fa' },
+  "App Development": { icon: <FiSmartphone size={22} />, accent: '#c084fc' },
+  "Cyber Security": { icon: <FiShield size={22} />, accent: '#34d399' },
+  "Cybersecurity": { icon: <FiShield size={22} />, accent: '#34d399' },
+  "SEO": { icon: <FiSearch size={22} />, accent: '#fbbf24' },
+  "Graphic Designing": { icon: <FiPenTool size={22} />, accent: '#818cf8' },
+  "Graphic Design": { icon: <FiPenTool size={22} />, accent: '#818cf8' },
+}
 
 // ─── Service data ─────────────────────────────────────────────────────────────
 // {SERVICES}
@@ -104,7 +116,7 @@ const STYLE = `
   .srv-card:hover .srv-card-top-bar { opacity: 1; }
 
   .srv-icon-wrap {
-    width: 30px; 
+    width: 48px; 
     height: 48px;
     border-radius: 10px;
     display: flex; align-items: center; justify-content: center;
@@ -112,7 +124,7 @@ const STYLE = `
     transition: transform 0.3s ease;
   }
   @media (max-width: 560px) {
-    .srv-icon-wrap { width: 30px; height: 40px; margin-bottom: 14px; }
+    .srv-icon-wrap { width: 48px; height: 40px; margin-bottom: 14px; }
   }
   .srv-card:hover .srv-icon-wrap { transform: scale(1.08); }
 
@@ -213,13 +225,59 @@ if (typeof document !== 'undefined' && !document.getElementById('srv-styles')) {
 export default function Services() {
   const [hovered, setHovered] = useState(null)
   const { isMobile } = useBreakpoint()
-  // use
 
-  const { data } = useGetServicesQuery()
-
-  // console.log()
+  const { data } = useGetNavDropdownItemsQuery()
 
   const navigate = useNavigate()
+
+  const services = [
+    {
+      id: 1,
+      title: "Web Development",
+      description:
+        "Build powerful, responsive, and scalable websites and web applications tailored to your business goals. Our development team combines modern technologies, intuitive experiences, and performance-focused architecture to create digital platforms that are secure, fast, and ready to grow with your business.",
+      cta: "Explore Web Development",
+    },
+    {
+      id: 2,
+      title: "App Development",
+      description:
+        "Turn your ideas into engaging and high-performance mobile applications for iOS and Android. We create user-friendly, scalable apps with seamless functionality and modern interfaces that help businesses connect with their customers and deliver exceptional mobile experiences.",
+      cta: "Explore App Development",
+    },
+    {
+      id: 3,
+      title: "Digital Marketing",
+      description:
+        "Grow your brand and reach the right audience with data-driven digital marketing strategies. From building your online presence to generating qualified leads, we combine creative campaigns, performance insights, and targeted strategies to help your business achieve measurable digital growth.",
+      cta: "Explore Digital Marketing",
+    },
+    {
+      id: 4,
+      title: "Cybersecurity",
+      description:
+        "Protect your digital assets, applications, and business infrastructure with robust cybersecurity solutions. Our security-focused approach helps identify vulnerabilities, strengthen protection, and reduce digital risks so your business can operate with greater confidence.",
+      cta: "Explore Cybersecurity",
+    },
+    {
+      id: 5,
+      title: "SEO",
+      description:
+        "Improve your search visibility and attract more qualified customers with strategic SEO solutions. We optimize your website, content, technical foundation, and overall search presence to build sustainable organic traffic and help your business compete more effectively in search results.",
+      cta: "Explore SEO Services",
+    },
+    {
+      id: 6,
+      title: "Graphic Designing",
+      description:
+        "Create a memorable brand presence with professional and visually engaging graphic design. From brand identity and social media creatives to marketing materials and digital assets, we combine creativity and strategy to ensure your brand communicates clearly and consistently across every platform.",
+      cta: "Explore Graphic Design",
+    },
+  ];
+
+  // Depend on how your API returns the data, it might be in `data.data` or `data` directly
+  // const items = data?.data || data || []
+  const items = services
 
   return (
     <section id="services" className="srv-section">
@@ -238,22 +296,24 @@ export default function Services() {
           <motion.h2 initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
             style={{ fontSize: 'clamp(28px,4vw,56px)', fontFamily: 'var(--font-display)', fontWeight: 800, color: '#ffffff' }}
           >
-            Deep Technical Expertise, <span className="gt">Supporting Modern Systems</span>
+            Complete IT & Digital Solutions <span className="gt">for Modern Businesses</span>
           </motion.h2>
 
-
           <p className="srv-sub">
-            End-to-end solutions across AI, blockchain, cloud, and security — engineered to scale with your ambitions.
+            From software development and cybersecurity to SEO and creative design, we deliver end-to-end digital solutions built to strengthen your online presence, streamline operations, and accelerate business growth.
           </p>
         </motion.div>
 
         {/* Grid */}
         <div className="srv-grid">
-          {data?.data?.map((s, i) => {
+          {items.map((item, i) => {
             const isHov = hovered === i
+            const catStyle = CATEGORY_STYLES[item.categories] || { icon: <FiMonitor size={22} />, accent: '#60a5fa' }
+            const accent = catStyle.accent
+
             return (
               <motion.div
-                key={s.title}
+                key={item._id || i}
                 className="srv-card"
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
@@ -261,54 +321,64 @@ export default function Services() {
                 transition={{ delay: i * 0.06, duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
                 onMouseEnter={() => setHovered(i)}
                 onMouseLeave={() => setHovered(null)}
-                onClick={() => navigate(`Service/${s.slug}`)}
+                onClick={() => navigate(`/ServiceCategories/${item.categorySlug}`)}
+                style={{ cursor: 'pointer' }}
               >
-                {/* Top accent bar — always visible on mobile via CSS, hover-only on desktop */}
                 <div
                   className="srv-card-top-bar"
-                  style={{ background: `linear-gradient(90deg, ${s.accent}, transparent)` }}
+                  style={{ background: `linear-gradient(90deg, ${accent}, transparent)` }}
                 />
 
                 <div
                   className="srv-icon-wrap"
                   style={{
-                    background: `${s.accent}14`,
-                    border: `1px solid ${s.accent}30`,
-                    color: s.accent,
-                    boxShadow: isHov ? `0 0 20px ${s.accent}22` : 'none',
+                    background: `${accent}14`,
+                    border: `1px solid ${accent}30`,
+                    color: accent,
+                    boxShadow: isHov ? `0 0 20px ${accent}22` : 'none',
                   }}
                 >
-                  <div>
-
-
-                    <img src={s.icons} />
-                  </div>
-                  {/* {s.icons} */}
+                  {catStyle.icon}
                 </div>
 
-                <h3 className="srv-title">{s.title}</h3>
-                <p className="srv-desc">{s.desc}</p>
+                <h3 className="srv-title">{item.title}</h3>
+                <p className="srv-desc">{item.description}</p>
 
-                <div className="srv-tags">
-                  {s.tags.map(t => (
-                    <span key={t} className="srv-tag" style={{ background: `${s.accent}10`, color: s.accent, border: `1px solid ${s.accent}22` }}>
-                      {t}
+                {/* <div className="srv-tags">
+                  {item.subcategories?.slice(0, 3).map((sub, idx) => {
+                    const subName = typeof sub === 'string' ? sub : sub.name;
+                    const subSlug = typeof sub === 'string' ? sub : sub.slug;
+                    return (
+                      <span
+                        key={idx}
+                        className="srv-tag"
+                        style={{ background: `${accent}10`, color: accent, border: `1px solid ${accent}22`, cursor: 'pointer' }}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          navigate(`/services/${encodeURIComponent(item.categorySlug)}/${encodeURIComponent(subSlug)}`);
+                        }}
+                      >
+                        {subName}
+                      </span>
+                    )
+                  })}
+                  {item.subcategories?.length > 3 && (
+                    <span className="srv-tag" style={{ background: `${accent}10`, color: accent, border: `1px solid ${accent}22` }}>
+                      +{item.subcategories.length - 3} more
                     </span>
-                  ))}
-                </div>
+                  )}
+                </div> */}
 
-                {/* Arrow — always visible on mobile (isMobile bypasses framer opacity:0),
-                    hover-animated on desktop */}
                 <motion.div
                   className="srv-arrow"
-                  animate={{
-                    opacity: isMobile ? 1 : isHov ? 1 : 0,
-                    x: isMobile ? 0 : isHov ? 0 : -8,
-                  }}
+                  // animate={{
+                  //   opacity: isMobile ? 1 : isHov ? 1 : 0,
+                  //   x: isMobile ? 0 : isHov ? 0 : -8,
+                  // }}
                   transition={{ duration: 0.25 }}
-                  style={{ color: s.accent, marginTop: isMobile ? 16 : 20 }}
+                  style={{ color: accent, marginTop: isMobile ? 16 : 20 }}
                 >
-                  Explore Service
+                  {item?.cta}
                   <svg viewBox="0 0 16 16" width="14" height="14" fill="none" stroke="currentColor" strokeWidth="2">
                     <path d="M3 8h10M9 4l4 4-4 4" />
                   </svg>

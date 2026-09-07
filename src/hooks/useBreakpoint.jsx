@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 
 function get(w) {
-  if (w < 768) return 'mobile'
+  if (w < 769) return 'mobile'
   if (w < 1024) return 'tablet'
   return 'desktop'
 }

@@ -1,0 +1,346 @@
+/* Extracted inline styles for PageSeoForm.jsx */
+
+.pageseoform-gen-1 {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  justify-content: center;
+  align-items: center;
+  color: #fff;
+  background: linear-gradient(135deg, #0a0e1a 0%, #0f1422 100%);
+}
+
+.pageseoform-gen-2 {
+  font-size: 18px;
+}
+
+@media (max-width: 768px) {
+  .pageseoform-gen-2 {
+    font-size: 15px;
+  }
+}
+
+@media (max-width: 480px) {
+  .pageseoform-gen-2 {
+    font-size: 13px;
+  }
+}
+
+.pageseoform-gen-3 {
+  padding: 10px 24px;
+  background: rgba(96,165,250,0.2);
+  border: 1px solid #60a5fa;
+  border-radius: 8px;
+  color: #60a5fa;
+  cursor: pointer;
+}
+
+.pageseoform-gen-4 {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #fff;
+  font-size: 18px;
+  background: linear-gradient(135deg, #0a0e1a 0%, #0f1422 100%);
+}
+
+@media (max-width: 768px) {
+  .pageseoform-gen-4 {
+    font-size: 15px;
+  }
+}
+
+@media (max-width: 480px) {
+  .pageseoform-gen-4 {
+    font-size: 13px;
+  }
+}
+
+.pageseoform-gen-5 {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #0a0e1a 0%, #0f1422 100%);
+  padding: 40px 5%;
+}
+
+.pageseoform-gen-6 {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+@media (max-width: 768px) {
+  .pageseoform-gen-6 {
+    max-width: 100%;
+  }
+}
+
+.pageseoform-gen-7 {
+  margin-bottom: 40px;
+}
+
+@media (max-width: 768px) {
+  .pageseoform-gen-7 {
+    margin-bottom: 24px;
+  }
+}
+
+.pageseoform-gen-8 {
+  font-size: clamp(28px, 5vw, 42px);
+  font-weight: 800;
+  background: linear-gradient(135deg, #60a5fa, #a78bfa);
+  -webkit--background-clip: text;
+  -webkit--text-fill-color: transparent;
+  margin-bottom: 8px;
+}
+
+.pageseoform-gen-9 {
+  color: rgba(255,255,255,0.6);
+  font-size: 15px;
+}
+
+.pageseoform-gen-10 {
+  padding: 14px 18px;
+  border-radius: 10px;
+  margin-bottom: 24px;
+  font-size: 14px;
+}
+
+@media (max-width: 768px) {
+  .pageseoform-gen-10 {
+    margin-bottom: 14px;
+  }
+}
+
+.pageseoform-gen-11 {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+@media (max-width: 768px) {
+  .pageseoform-gen-11 {
+    gap: 19px;
+  }
+}
+
+.pageseoform-gen-12 {
+  color: rgba(255,255,255,.45);
+  font-size: 13px;
+  margin-bottom: 20px;
+}
+
+.pageseoform-gen-13 {
+  display: grid;
+  gap: 20px;
+}
+
+.pageseoform-gen-14 {
+  resize: vertical;
+  font-family: inherit;
+}
+
+.pageseoform-gen-15 {
+  margin-top: 32px;
+  padding-top: 32px;
+  border-top: 1px solid rgba(255,255,255,.1);
+}
+
+@media (max-width: 768px) {
+  .pageseoform-gen-15 {
+    margin-top: 19px;
+    padding-top: 19px;
+  }
+}
+
+.pageseoform-gen-16 {
+  color: rgba(255,255,255,.45);
+  font-size: 13px;
+  margin-bottom: 24px;
+}
+
+@media (max-width: 768px) {
+  .pageseoform-gen-16 {
+    margin-bottom: 14px;
+  }
+}
+
+.pageseoform-gen-17 {
+  display: grid;
+  gap: 24px;
+}
+
+@media (max-width: 768px) {
+  .pageseoform-gen-17 {
+    gap: 14px;
+  }
+}
+
+.pageseoform-gen-18 {
+  resize: vertical;
+  min-height: 110px;
+  font-family: inherit;
+}
+
+.pageseoform-gen-19 {
+  display: flex;
+  gap: 8px;
+}
+
+.pageseoform-gen-20 {
+  padding: 0 20px;
+  background: rgba(96,165,250,0.2);
+  border: 1px solid #60a5fa;
+  border-radius: 8px;
+  color: #60a5fa;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.pageseoform-gen-21 {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.pageseoform-gen-22 {
+  padding: 6px 12px;
+  background: rgba(96,165,250,0.15);
+  border: 1px solid rgba(96,165,250,0.3);
+  border-radius: 6px;
+  color: #60a5fa;
+  font-size: 13px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.pageseoform-gen-23 {
+  background: none;
+  border: none;
+  color: #ef4444;
+  cursor: pointer;
+  font-size: 16px;
+  line-height: 1;
+}
+
+@media (max-width: 768px) {
+  .pageseoform-gen-23 {
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 480px) {
+  .pageseoform-gen-23 {
+    font-size: 11px;
+  }
+}
+
+.pageseoform-gen-24 {
+  cursor: pointer;
+}
+
+.pageseoform-gen-25 {
+  background: #0f1422;
+  color: #fff;
+}
+
+.pageseoform-gen-26 {
+  background: #0f1422;
+  color: #fff;
+}
+
+.pageseoform-gen-27 {
+  background: #0f1422;
+  color: #fff;
+}
+
+.pageseoform-gen-28 {
+  background: #0f1422;
+  color: #fff;
+}
+
+.pageseoform-gen-29 {
+  border: none;
+  border-top: 1px solid rgba(255,255,255,0.1);
+  margin: 8px 0;
+}
+
+.pageseoform-gen-30 {
+  color: #60a5fa;
+  font-size: 15px;
+  font-weight: 600;
+  margin: 0;
+}
+
+.pageseoform-gen-31 {
+  resize: vertical;
+  font-family: inherit;
+}
+
+.pageseoform-gen-32 {
+  border: none;
+  border-top: 1px solid rgba(255,255,255,0.1);
+  margin: 8px 0;
+}
+
+.pageseoform-gen-33 {
+  color: #60a5fa;
+  font-size: 15px;
+  font-weight: 600;
+  margin: 0;
+}
+
+.pageseoform-gen-34 {
+  resize: vertical;
+  font-family: inherit;
+}
+
+.pageseoform-gen-35 {
+  border: none;
+  border-top: 1px solid rgba(255,255,255,0.1);
+  margin: 8px 0;
+}
+
+.pageseoform-gen-36 {
+  font-size: 13px;
+  font-family: monospace;
+  resize: vertical;
+}
+
+.pageseoform-gen-37 {
+  display: flex;
+  gap: 16px;
+  justify-content: flex-end;
+  margin-top: 32px;
+  padding-top: 24px;
+  border-top: 1px solid rgba(255,255,255,0.1);
+}
+
+@media (max-width: 768px) {
+  .pageseoform-gen-37 {
+    margin-top: 19px;
+    padding-top: 14px;
+  }
+}
+
+.pageseoform-gen-38 {
+  padding: 12px 28px;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 10px;
+  color: rgba(255,255,255,0.7);
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.pageseoform-gen-39 {
+  padding: 12px 32px;
+  background: linear-gradient(135deg, #60a5fa, #a78bfa);
+  border: none;
+  border-radius: 10px;
+  color: #fff;
+  font-size: 14px;
+  font-weight: 600;
+}

@@ -12,18 +12,15 @@
   box-sizing: border-box;
 }
 
-:root {
-  --font-display: 'Times New Roman', Times, serif !important;
-}
-
 html {
-  scroll-behavior: smooth;
+  /* Lenis drives the smooth scroll (see App.jsx) — CSS smooth-scroll would fight it */
+  scroll-behavior: auto;
 }
 
 body {
   background: var(--bg);
   color: #ffffff;
-
+  font-family: var(--font-body);
   font-size: 16px;
   line-height: 1.7;
   overflow-x: hidden;
@@ -38,11 +35,11 @@ h3,
 h4,
 h5,
 h6 {
-  /* font-family: var(--font-display); */
+  font-family: var(--font-display);
   color: #ffffff !important;
   -webkit-text-fill-color: #ffffff !important;
   line-height: 1.1;
-  font-family: 'Times New Roman', Times, serif !important;
+  letter-spacing: -0.02em;
 }
 
 
@@ -53,7 +50,7 @@ p {
 }
 
 span {
-  font-family: 'Times New Roman', Times, serif !important;
+  font-family: inherit;
 }
 
 span:not(.gt):not(.gt2):not(.gt3) {

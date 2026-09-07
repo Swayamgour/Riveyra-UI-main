@@ -1,0 +1,346 @@
+/* Extracted inline styles for PortfolioManager.jsx */
+
+.portfoliomanager-gen-1 {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  border-radius: 20px;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s cubic-bezier(0.16,1,0.3,1);
+  backdrop-filter: blur(12px);
+}
+
+.portfoliomanager-gen-2 {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  transition: opacity 0.3s;
+  z-index: 2;
+}
+
+.portfoliomanager-gen-3 {
+  position: relative;
+  height: 220px;
+  overflow: hidden;
+}
+
+@media (max-width: 767px) {
+  .portfoliomanager-gen-3 {
+    height: 200px;
+  }
+}
+
+.portfoliomanager-gen-4 {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.portfoliomanager-gen-5 {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(2,8,18,0.9) 0%, rgba(2,8,18,0.3) 50%, transparent 100%);
+}
+
+.portfoliomanager-gen-6 {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  padding: 4px 12px;
+  border-radius: 20px;
+  backdrop-filter: blur(8px);
+  font-size: 10px;
+  font-family: var(--font-mono);
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+
+.portfoliomanager-gen-7 {
+  position: absolute;
+  bottom: 16px;
+  right: 16px;
+  padding: 4px 10px;
+  border-radius: 6px;
+  background: rgba(0,0,0,0.6);
+  backdrop-filter: blur(4px);
+  font-size: 11px;
+  font-family: var(--font-mono);
+  color: rgba(255,255,255,0.8);
+}
+
+.portfoliomanager-gen-8 {
+  padding: 24px 20px 28px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+@media (max-width: 767px) {
+  .portfoliomanager-gen-8 {
+    padding: 20px 16px 24px;
+  }
+}
+
+.portfoliomanager-gen-9 {
+  font-size: 18px;
+  font-family: var(--font-display);
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 8px;
+  letter-spacing: -0.3px;
+}
+
+@media (max-width: 767px) {
+  .portfoliomanager-gen-9 {
+    font-size: 17px;
+  }
+}
+
+.portfoliomanager-gen-10 {
+  font-size: 12px;
+  font-family: var(--font-mono);
+  letter-spacing: 1px;
+  margin-bottom: 12px;
+  opacity: 0.8;
+}
+
+@media (max-width: 767px) {
+  .portfoliomanager-gen-10 {
+    font-size: 11px;
+    letter-spacing: 0.5px;
+  }
+}
+
+.portfoliomanager-gen-11 {
+  font-size: 13.5px;
+  line-height: 1.65;
+  color: rgba(255,255,255,0.55);
+  margin-bottom: 20px;
+  font-family: var(--font-body);
+  flex: 1;
+}
+
+@media (max-width: 767px) {
+  .portfoliomanager-gen-11 {
+    font-size: 13px;
+  }
+}
+
+.portfoliomanager-gen-12 {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 20px;
+}
+
+@media (max-width: 767px) {
+  .portfoliomanager-gen-12 {
+    margin-bottom: 16px;
+  }
+}
+
+.portfoliomanager-gen-13 {
+  font-size: 10px;
+  font-family: var(--font-mono);
+  padding: 4px 10px;
+  border-radius: 6px;
+}
+
+@media (max-width: 767px) {
+  .portfoliomanager-gen-13 {
+    font-size: 9px;
+  }
+}
+
+.portfoliomanager-gen-14 {
+  font-size: 10px;
+  font-family: var(--font-mono);
+  padding: 4px 10px;
+  border-radius: 6px;
+  background: rgba(255,255,255,0.05);
+  color: rgba(255,255,255,0.5);
+  border: 1px solid rgba(255,255,255,0.1);
+}
+
+@media (max-width: 767px) {
+  .portfoliomanager-gen-14 {
+    font-size: 9px;
+  }
+}
+
+.portfoliomanager-gen-15 {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  font-family: var(--font-mono);
+  font-weight: 600;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  transition: all 0.25s ease;
+}
+
+.portfoliomanager-gen-16 {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  z-index: 10;
+  display: flex;
+  gap: 6px;
+}
+
+.portfoliomanager-gen-17 {
+  padding: 6px 12px;
+  background: rgba(96,165,250,0.1);
+  border: 1px solid rgba(96,165,250,0.3);
+  border-radius: 6px;
+  color: #60a5fa;
+  font-size: 11px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.portfoliomanager-gen-18 {
+  padding: 6px 12px;
+  background: rgba(248,113,113,0.1);
+  border: 1px solid rgba(248,113,113,0.3);
+  border-radius: 6px;
+  color: #f87171;
+  font-size: 11px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.portfoliomanager-gen-19 {
+  background: var(--bg);
+  min-height: 100vh;
+}
+
+.portfoliomanager-gen-20 {
+  padding: 60px 8% 80px;
+}
+
+@media (max-width: 767px) {
+  .portfoliomanager-gen-20 {
+    padding: 48px 5% 64px;
+  }
+}
+
+.portfoliomanager-gen-21 {
+  display: flex;
+  justify-content: end;
+  width: 100%;
+}
+
+.portfoliomanager-gen-22 {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+@media (max-width: 768px) {
+  .portfoliomanager-gen-22 {
+    max-width: 100%;
+  }
+}
+
+.portfoliomanager-gen-23 {
+  text-align: center;
+  margin-bottom: 48px;
+}
+
+@media (max-width: 768px) {
+  .portfoliomanager-gen-23 {
+    margin-bottom: 29px;
+  }
+}
+
+.portfoliomanager-gen-24 {
+  font-size: 11px;
+  letter-spacing: 3px;
+  color: #60a5fa;
+  font-family: var(--font-mono);
+  text-transform: uppercase;
+  display: inline-block;
+  margin-bottom: 12px;
+}
+
+.portfoliomanager-gen-25 {
+  font-size: clamp(36px, 4vw, 48px);
+  font-family: var(--font-display);
+  font-weight: 700;
+  color: #fff;
+  line-height: 1.2;
+}
+
+@media (max-width: 767px) {
+  .portfoliomanager-gen-25 {
+    font-size: clamp(28px, 7vw, 36px);
+  }
+}
+
+.portfoliomanager-gen-26 {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-bottom: 48px;
+}
+
+@media (max-width: 767px) {
+  .portfoliomanager-gen-26 {
+    gap: 8px;
+  }
+}
+
+@media (max-width: 768px) {
+  .portfoliomanager-gen-26 {
+    margin-bottom: 29px;
+  }
+}
+
+.portfoliomanager-gen-27 {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 28px;
+  align-items: stretch;
+}
+
+@media (max-width: 767px) {
+  .portfoliomanager-gen-27 {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1023px) {
+  .portfoliomanager-gen-27 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .portfoliomanager-gen-27 {
+    gap: 17px;
+  }
+}
+
+.portfoliomanager-gen-28 {
+  text-align: center;
+  padding: 60px;
+  color: var(--text-muted);
+  font-family: var(--font-body);
+}
+
+@media (max-width: 768px) {
+  .portfoliomanager-gen-28 {
+    padding: 36px;
+  }
+}

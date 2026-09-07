@@ -1,0 +1,148 @@
+/* Extracted inline styles for LegalPageLayout.jsx */
+
+.legalpagelayout-gen-1 {
+  background: var(--bg);
+  min-height: 100vh;
+}
+
+.legalpagelayout-gen-2 {
+  padding: 80px 8% 56px;
+  border-bottom: 1px solid rgba(255,255,255,0.07);
+}
+
+.legalpagelayout-gen-3 {
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+@media (max-width: 768px) {
+  .legalpagelayout-gen-3 {
+    max-width: 100%;
+  }
+}
+
+.legalpagelayout-gen-4 {
+  font-size: 11px;
+  letter-spacing: 3px;
+  color: #60a5fa;
+  text-transform: uppercase;
+  display: inline-block;
+  margin-bottom: 16px;
+  font-family: var(--font-mono);
+}
+
+.legalpagelayout-gen-5 {
+  font-size: clamp(32px, 5vw, 52px);
+  font-family: var(--font-display);
+  font-weight: 700;
+  color: #fff;
+  line-height: 1.15;
+  margin-bottom: 16px;
+}
+
+.legalpagelayout-gen-6 {
+  color: rgba(255,255,255,0.5);
+  font-size: 14px;
+  font-family: var(--font-mono);
+}
+
+.legalpagelayout-gen-7 {
+  padding: 56px 8% 100px;
+}
+
+.legalpagelayout-gen-8 {
+  max-width: 1000px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 220px 1fr;
+  gap: 56px;
+  align-items: start;
+}
+
+@media (max-width: 768px) {
+  .legalpagelayout-gen-8 {
+    max-width: 100%;
+    gap: 34px;
+    grid-template-columns: 1fr;
+  }
+}
+
+.legalpagelayout-gen-9 {
+  position: sticky;
+  top: 100px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+@media (max-width: 768px) {
+  .legalpagelayout-gen-9 {
+    top: 60px;
+  }
+}
+
+.legalpagelayout-gen-10 {
+  font-size: 11px;
+  letter-spacing: 1.5px;
+  color: rgba(255,255,255,0.4);
+  text-transform: uppercase;
+  margin-bottom: 8px;
+  font-family: var(--font-mono);
+}
+
+.legalpagelayout-gen-11 {
+  text-align: left;
+  border: none;
+  padding: 7px 10px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 13px;
+  line-height: 1.4;
+  transition: all 0.2s;
+}
+
+.legalpagelayout-gen-12 {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
+@media (max-width: 768px) {
+  .legalpagelayout-gen-12 {
+    gap: 24px;
+  }
+}
+
+.legalpagelayout-gen-13 {
+  scroll-margin-top: 100px;
+}
+
+.legalpagelayout-gen-14 {
+  font-size: 20px;
+  font-family: var(--font-display);
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 14px;
+}
+
+@media (max-width: 768px) {
+  .legalpagelayout-gen-14 {
+    font-size: 17px;
+  }
+}
+
+@media (max-width: 480px) {
+  .legalpagelayout-gen-14 {
+    font-size: 14px;
+  }
+}
+
+.legalpagelayout-gen-15 {
+  font-size: 14.5px;
+  line-height: 1.85;
+  color: rgba(255,255,255,0.65);
+  font-family: var(--font-body);
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}

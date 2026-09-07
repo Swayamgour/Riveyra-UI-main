@@ -61,7 +61,7 @@ export default function CTA() {
   }
 
   const contacts = [
-    { Icon: Icons.Mail, label: 'hr@riveyrainfotech.com sales@riveyrainfotech.com' },
+    { Icon: Icons.Mail, label: 'hr@riveyrainfotech.com, sales@riveyrainfotech.com' },
     { Icon: Icons.Phone, label: '+91 9919888269' },
     { Icon: Icons.MapPin, label: 'Kanpur, Uttar Pradesh STPI,8th floor,A-1/4 UPSIDC Complex, Lakhanpur, 208024.' },
   ]
@@ -131,9 +131,9 @@ export default function CTA() {
 
           <p style={{
             fontSize: 15.5, lineHeight: 1.88, color: 'rgba(255,255,255,0.58)',
-            marginBottom: 48, fontFamily: 'var(--font-body)', maxWidth: 400
+            marginBottom: 48, fontFamily: 'var(--font-body)', maxWidth: 480
           }}>
-            Have a project in mind? Get in touch and let's turn your vision into a digital reality that exceeds every expectation.
+            Have a project in mind? Connect with Riveyra Infotech, a trusted IT company in Kanpur, and let's turn your vision into a powerful digital reality — from websites and mobile apps to custom software, AI-powered solutions, and complete digital transformation.
           </p>
 
           {/* CTA Buttons — stack to full-width on mobile */}

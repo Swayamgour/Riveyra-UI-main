@@ -1,0 +1,115 @@
+/* Extracted inline styles for CategoryCard.jsx */
+
+.categorycard-gen-1 {
+  position: relative;
+  overflow: hidden;
+  border-radius: 20px;
+  padding: 26px;
+  transition: .3s;
+  backdrop-filter: blur(12px);
+  display: flex;
+  flex-direction: column;
+  min-height: 220px;
+}
+
+@media (max-width: 767px) {
+  .categorycard-gen-1 {
+    padding: 22px;
+  }
+}
+
+.categorycard-gen-2 {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg,#60a5fa,#a855f7);
+  transition: .3s;
+}
+
+.categorycard-gen-3 {
+  width: 62px;
+  height: 62px;
+  border-radius: 18px;
+  background: rgba(96,165,250,.12);
+  border: 1px solid rgba(96,165,250,.25);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 22px;
+  transition: .3s;
+}
+
+.categorycard-gen-4 {
+  font-size: 22px;
+  font-family: var(--font-display);
+  margin-bottom: 8px;
+  color: #fff;
+}
+
+@media (max-width: 768px) {
+  .categorycard-gen-4 {
+    font-size: 19px;
+  }
+}
+
+@media (max-width: 480px) {
+  .categorycard-gen-4 {
+    font-size: 15px;
+  }
+}
+
+.categorycard-gen-5 {
+  display: inline-flex;
+  align-items: center;
+  width: fit-content;
+  padding: 6px 12px;
+  border-radius: 30px;
+  background: rgba(96,165,250,.08);
+  border: 1px solid rgba(96,165,250,.18);
+  color: #60a5fa;
+  font-size: 12px;
+  margin-bottom: 18px;
+  font-family: monospace;
+}
+
+.categorycard-gen-6 {
+  margin-top: auto;
+  color: rgba(255,255,255,.5);
+  font-size: 12px;
+  margin-bottom: 18px;
+}
+
+.categorycard-gen-7 {
+  display: flex;
+  gap: 10px;
+}
+
+.categorycard-gen-8 {
+  flex: 1;
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid rgba(96,165,250,.25);
+  background: rgba(96,165,250,.08);
+  color: #60a5fa;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  cursor: pointer;
+}
+
+.categorycard-gen-9 {
+  flex: 1;
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid rgba(248,113,113,.25);
+  background: rgba(248,113,113,.08);
+  color: #f87171;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  cursor: pointer;
+}

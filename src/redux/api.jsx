@@ -1,8 +1,8 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 // const BASE_URL = "https://lead-crm-backend-1cq8.onrender.com/api";
-const BASE_URL = "https://riveyra.admin.amaxjobs.com/api/v1";
-// const BASE_URL = "http://localhost:5000/api/v1";
+// const BASE_URL = "https://riveyra.admin.amaxjobs.com/api/v1";
+const BASE_URL = "http://localhost:5007/api/v1";
 
 const baseQuery = fetchBaseQuery({
     baseUrl: BASE_URL,
@@ -24,7 +24,8 @@ const baseQuery = fetchBaseQuery({
             endpoint !== "createProject" &&
             endpoint !== "updateProject" &&
             endpoint !== "createBlog" &&
-            endpoint !== "updateBlog"
+            endpoint !== "updateBlog" &&
+            endpoint !== "uploadServiceImage"
         ) {
             headers.set("Content-Type", "application/json");
         }
@@ -43,7 +44,9 @@ export const api = createApi({
         "Categories",
         "Blogs",
         "contact",
-        "PageSeo"
+        "PageSeo",
+        "ServicesDetailTwo",
+        "NavDropdown"
     ],
 
     endpoints: (builder) => ({
@@ -129,6 +132,39 @@ export const api = createApi({
 
 
 
+        /* ================= SERVICE DETAILS (subcategory page content) ================= */
+        // Fetched/saved by slug reference: { categorySlug, subcategorySlug }
+        getServicesDetailTwo: builder.query({
+            query: ({ categorySlug, subcategorySlug }) => `/service-details/${encodeURIComponent(categorySlug)}/${encodeURIComponent(subcategorySlug)}`,
+            providesTags: ["ServicesDetailTwo"],
+        }),
+        updateServicesDetailTwo: builder.mutation({
+            query: (data) => ({
+                url: "/service-details",
+                method: "PUT",
+                body: data,
+            }),
+            invalidatesTags: ["ServicesDetailTwo"],
+        }),
+        deleteServicesDetailTwo: builder.mutation({
+            query: ({ categorySlug, subcategorySlug }) => ({
+                url: `/service-details/${encodeURIComponent(categorySlug)}/${encodeURIComponent(subcategorySlug)}`,
+                method: "DELETE",
+            }),
+            invalidatesTags: ["ServicesDetailTwo"],
+        }),
+        getLatestTestimonials: builder.query({
+            query: () => "/service-details/testimonials/latest",
+            providesTags: ["ServicesDetailTwo"],
+        }),
+        uploadServiceImage: builder.mutation({
+            query: (formData) => ({
+                url: "/service-details/upload",
+                method: "POST",
+                body: formData,
+            }),
+        }),
+
         /* ================= APPLY JOB ================= */
         applyJob: builder.mutation({
             query: (formData) => ({
@@ -186,6 +222,76 @@ export const api = createApi({
         }),
 
 
+
+        // ✅ GET ALL CATEGORIES (level 1, each with nested subcategories)
+        getNavDropdownItems: builder.query({
+            query: () => "/service-categories",
+            providesTags: ["NavDropdown"],
+        }),
+
+        // ✅ GET SINGLE CATEGORY BY SLUG
+        getNavDropdownItemByCategory: builder.query({
+            query: (categorySlug) => `/service-categories/category/${categorySlug}`,
+            providesTags: ["NavDropdown"],
+        }),
+
+        // ✅ CREATE CATEGORY (level 1)
+        createNavDropdownItem: builder.mutation({
+            query: (data) => ({
+                url: "/service-categories",
+                method: "POST",
+                body: data,
+            }),
+            invalidatesTags: ["NavDropdown"],
+        }),
+
+        // ✅ UPDATE CATEGORY (level 1, by mongo _id)
+        updateNavDropdownItem: builder.mutation({
+            query: ({ id, data }) => ({
+                url: `/service-categories/${id}`,
+                method: "PUT",
+                body: data,
+            }),
+            invalidatesTags: ["NavDropdown"],
+        }),
+
+        // ✅ DELETE CATEGORY
+        deleteNavDropdownItem: builder.mutation({
+            query: (id) => ({
+                url: `/service-categories/${id}`,
+                method: "DELETE",
+            }),
+            invalidatesTags: ["NavDropdown"],
+        }),
+
+        // ✅ ADD SUBCATEGORY (level 2, nested under a category)
+        addSubcategory: builder.mutation({
+            query: ({ categorySlug, data }) => ({
+                url: `/service-categories/${categorySlug}/subcategories`,
+                method: "POST",
+                body: data,
+            }),
+            invalidatesTags: ["NavDropdown"],
+        }),
+
+        // ✅ UPDATE SUBCATEGORY
+        updateSubcategory: builder.mutation({
+            query: ({ categorySlug, subcategorySlug, data }) => ({
+                url: `/service-categories/${categorySlug}/subcategories/${subcategorySlug}`,
+                method: "PUT",
+                body: data,
+            }),
+            invalidatesTags: ["NavDropdown"],
+        }),
+
+        // ✅ DELETE SUBCATEGORY
+        deleteSubcategory: builder.mutation({
+            query: ({ categorySlug, subcategorySlug }) => ({
+                url: `/service-categories/${categorySlug}/subcategories/${subcategorySlug}`,
+                method: "DELETE",
+            }),
+            invalidatesTags: ["NavDropdown"],
+        }),
 
         // ✅ GET ALL SERVICES
         getServices: builder.query({
@@ -470,6 +576,21 @@ export const {
     useUpdateServiceMutation,
     useDeleteServiceMutation,
     useGetServiceByIdQuery,
+
+    useGetNavDropdownItemsQuery,
+    useGetNavDropdownItemByCategoryQuery,
+    useCreateNavDropdownItemMutation,
+    useUpdateNavDropdownItemMutation,
+    useDeleteNavDropdownItemMutation,
+    useAddSubcategoryMutation,
+    useUpdateSubcategoryMutation,
+    useDeleteSubcategoryMutation,
+
+    useGetServicesDetailTwoQuery,
+    useUpdateServicesDetailTwoMutation,
+    useDeleteServicesDetailTwoMutation,
+    useUploadServiceImageMutation,
+    useGetLatestTestimonialsQuery,
 
     // Categories
     useGetCategoriesQuery,
